@@ -1,0 +1,13 @@
+# Dependencias y builds
+node_modules/
+dist/
+.vercel/
+
+# Claves (nunca se suben)
+.env
+.env.*
+!.env.ejemplo
+
+# Sistema
+Thumbs.db
+.DS_Store

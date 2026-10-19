@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sean's Store · Inicio final en celular</title>
+
+
+
+<style>
+body{margin:0;background:#FAF8F5}
+a{color:#E5007D}a:hover{color:#B8006A}
+.tinta{transform-origin:left center;animation:estampar 1.3s cubic-bezier(.2,.8,.2,1) .4s both}
+.vapor{animation:vapor 2.6s ease-in-out 1.6s infinite}
+.entra{animation:entra .6s ease-out both}
+.entra2{animation:entra .6s ease-out .15s both}
+.pista{animation:desliza 26s linear infinite}
+.btn:active{transform:scale(.97)}
+a:focus-visible,button:focus-visible{outline:2px solid #E5007D;outline-offset:3px}
+@keyframes estampar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes vapor{0%,100%{opacity:0;transform:translateY(6px)}50%{opacity:.7;transform:translateY(-4px)}}
+@keyframes entra{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes desliza{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.piezam{backface-visibility:hidden;animation:cintam 12.5s cubic-bezier(.45,0,.55,1) infinite}
+.diseno{transform-origin:left center;animation:diseno 12.5s ease-out infinite}
+.calor{animation:calor 2.5s ease-in-out infinite}
+.gota{animation:gota 2.5s ease-out infinite}
+@keyframes cintam{0%{transform:translate(250px,-120px) rotate(10deg) scale(.75);opacity:0}12%{opacity:1}45%,55%{transform:translate(0,0) rotate(0) scale(1);opacity:1}86%{opacity:1}100%{transform:translate(-250px,120px) rotate(-10deg) scale(.75);opacity:0}}
+@keyframes diseno{0%,44%{transform:scaleX(0)}52%,100%{transform:scaleX(1)}}
+@keyframes calor{0%,30%{transform:scale(.85);opacity:0}50%{transform:scale(1.05);opacity:1}75%,100%{transform:scale(1.25);opacity:0}}
+@keyframes gota{0%,40%{transform:translate(0,0) scale(.4);opacity:0}50%{opacity:1}100%{transform:translate(var(--dx),-100px) scale(1);opacity:0}}
+.d{opacity:0;animation:cambio 12s infinite}
+.chip{animation:chipon 12s infinite}
+.goteo{transform-origin:top center;animation:goteo 3.2s ease-in-out infinite alternate}
+.remera{animation:flota 6s ease-in-out infinite}
+@keyframes cambio{0%{opacity:1;clip-path:inset(0 0 100% 0)}7%{clip-path:inset(0 0 0 0)}24%{opacity:1;clip-path:inset(0 0 0 0)}29%,100%{opacity:0}}
+@keyframes chipon{0%,24%{background:#E5007D;color:#FFFFFF;border-color:#E5007D}29%,100%{background:transparent;color:#D9D3E6;border-color:#6B5C8F}}
+@keyframes goteo{from{transform:scaleY(.55)}to{transform:scaleY(1.15)}}
+@keyframes flota{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(1deg)}}
+@media (prefers-reduced-motion:reduce){.d,.chip,.goteo,.remera{animation:none}.d.primero{opacity:1}}
+@media (prefers-reduced-motion:reduce){.tinta,.vapor,.entra,.entra2,.pista,.calor,.gota,.diseno{animation:none}.piezam{animation:none;opacity:0}.piezam.quieta{opacity:1}}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Russo+One&display=swap" rel="stylesheet"></head>
+<body>
+
+
+<div style="width: 390px; height: 4700px; background: #FAF8F5; color: #2B1B4D; font-family: 'Nunito', sans-serif; position: relative; overflow: hidden">
+
+  <div style="background: #FFB627; font-weight: 800; font-size: 13px; text-align: center; padding: 9px 16px">
+    <a href="#" style="color: #2B1B4D; text-decoration: none">Día de la Madre: tazas y termos con su foto</a>
+  </div>
+
+  <header style="background: #2B1B4D; padding: 10px 12px 10px 16px; display: flex; align-items: center; gap: 4px">
+    <a href="#" aria-label="Sean's Store, inicio" style="line-height: 0; flex: 1"><img src="../marca/logo-seanstore-negativo.png" alt="Sean's Store" style="height: 48px; width: auto"></a>
+    <button aria-label="Buscar" style="width: 44px; height: 44px; border: 0; background: transparent; color: #FFFFFF; display: grid; place-items: center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg></button>
+    <button aria-label="Carrito, 2 productos" style="width: 44px; height: 44px; border: 0; background: transparent; color: #FFFFFF; display: grid; place-items: center; position: relative"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"></path><circle cx="9" cy="20" r="1.5"></circle><circle cx="17" cy="20" r="1.5"></circle></svg><span style="position: absolute; top: 4px; right: 2px; min-width: 18px; height: 18px; border-radius: 9px; background: #FFB627; color: #2B1B4D; font-size: 11px; font-weight: 800; display: grid; place-items: center">2</span></button>
+    <button aria-label="Abrir el menú" style="width: 44px; height: 44px; border: 0; background: transparent; color: #FFFFFF; display: grid; place-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"></path></svg></button>
+  </header>
+
+<div style="background: #2B1B4D; color: #FFFFFF; position: relative; overflow: hidden">
+  <svg aria-hidden="true" viewBox="0 0 1440 120" preserveAspectRatio="none" style="display: block; width: 100%; height: 70px; position: absolute; top: 0; left: 0">
+    <rect x="0" y="0" width="1440" height="18" fill="#E5007D"></rect>
+    <g fill="#E5007D">
+      <path class="goteo" d="M120 10h28v40a14 14 0 0 1-28 0z"></path>
+      <path class="goteo" style="animation-delay: -.8s" d="M330 10h20v70a10 10 0 0 1-20 0z"></path>
+      <path class="goteo" style="animation-delay: -1.6s" d="M610 10h34v30a17 17 0 0 1-34 0z"></path>
+      <path class="goteo" style="animation-delay: -.4s" d="M880 10h18v84a9 9 0 0 1-18 0z"></path>
+      <path class="goteo" style="animation-delay: -2.2s" d="M1120 10h26v50a13 13 0 0 1-26 0z"></path>
+      <path class="goteo" style="animation-delay: -1.2s" d="M1330 10h20v36a10 10 0 0 1-20 0z"></path>
+    </g>
+  </svg>
+  <section style="position: relative; padding: 70px 20px 48px; display: flex; flex-direction: column; gap: 18px">
+      <h1 class="entra" style="margin: 0; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 48px; line-height: .95; color: #FFFFFF; transform: skewX(-6deg); transform-origin: left">Tu diseño, en lo que quieras.</h1>
+      <p class="entra2" style="margin: 0; font-size: 17px; line-height: 1.6; color: #D9D3E6">Una foto, tu logo, una frase o el número de tu equipo.</p>
+      <div class="entra3" style="display: flex; gap: 10px; flex-wrap: wrap" aria-label="Qué podés estampar">
+        <span class="chip" style="padding: 6px 12px; font-size: 13px; border-radius: 999px; border: 2px solid #6B5C8F; color: #D9D3E6; font-weight: 800; animation-delay: 0s">Tu foto</span>
+        <span class="chip" style="padding: 6px 12px; font-size: 13px; border-radius: 999px; border: 2px solid #6B5C8F; color: #D9D3E6; font-weight: 800; animation-delay: 3s">Tu número</span>
+        <span class="chip" style="padding: 6px 12px; font-size: 13px; border-radius: 999px; border: 2px solid #6B5C8F; color: #D9D3E6; font-weight: 800; animation-delay: 6s">Tu frase</span>
+        <span class="chip" style="padding: 6px 12px; font-size: 13px; border-radius: 999px; border: 2px solid #6B5C8F; color: #D9D3E6; font-weight: 800; animation-delay: 9s">Tu logo</span>
+      </div>
+      <div style="position: relative; display: flex; justify-content: center; margin: 4px 0">
+        <div aria-hidden="true" style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: #3A2866; top: 50%; left: 50%; margin: -150px 0 0 -150px"></div>
+      <svg class="remera" viewBox="0 0 400 420" style="width: 100%; height: auto; position: relative" role="img" aria-label="Remera blanca a la que se le estampan distintos diseños: una foto, un número, una frase y un logo">
+        <clipPath id="pechom"><rect x="128" y="120" width="144" height="190" rx="6"></rect></clipPath>
+        <g transform="translate(-4 0) scale(3.4)"><path d="M40 22 28 28 14 44 26 54 34 48 34 100 86 100 86 48 94 54 106 44 92 28 80 22C76 30 66 34 60 34 54 34 44 30 40 22Z" fill="#FFFFFF" stroke="#D9D3E6" stroke-width=".8" stroke-linejoin="round"></path></g>
+        <g clip-path="url(#pechom)">
+          <g class="d primero" style="animation-delay: 0s">
+            <rect x="128" y="120" width="144" height="190" fill="#ECEAF0"></rect>
+            <circle cx="200" cy="190" r="34" fill="#FFB627"></circle>
+            <polygon points="128,310 180,220 220,270 250,240 272,280 272,310" fill="#2B1B4D"></polygon>
+            <polygon points="150,310 200,250 240,310" fill="#E5007D"></polygon>
+          </g>
+          <g class="d" style="animation-delay: 3s">
+            <text x="200" y="250" text-anchor="middle" font-family="Russo One, sans-serif" font-size="120" fill="#E5007D">10</text>
+            <text x="200" y="290" text-anchor="middle" font-family="Russo One, sans-serif" font-size="22" fill="#2B1B4D">Tu nombre</text>
+          </g>
+          <g class="d" style="animation-delay: 6s">
+            <text x="200" y="200" text-anchor="middle" font-family="Russo One, sans-serif" font-size="34" fill="#2B1B4D">Feliz</text>
+            <text x="200" y="240" text-anchor="middle" font-family="Russo One, sans-serif" font-size="34" fill="#2B1B4D">día, ma</text>
+            <rect x="150" y="254" width="100" height="8" fill="#FFB627" transform="skewX(-12)"></rect>
+          </g>
+          <g class="d" style="animation-delay: 9s">
+            <rect x="148" y="160" width="104" height="104" rx="10" fill="none" stroke="#2B1B4D" stroke-width="3" stroke-dasharray="8 6"></rect>
+            <polygon points="176,240 200,186 224,240" fill="#E5007D"></polygon>
+            <text x="200" y="292" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="800" font-size="18" fill="#2B1B4D">Tu logo</text>
+          </g>
+        </g>
+      </svg>
+      </div>
+      <a class="btn" href="#" style="display: flex; justify-content: center; align-items: center; min-height: 54px; border-radius: 10px; background: #E5007D; color: #FFFFFF; text-decoration: none; font-family: 'Russo One', sans-serif; font-size: 18px">Ver catálogo</a>
+      <a class="btn" href="#" style="display: flex; justify-content: center; align-items: center; min-height: 52px; border-radius: 10px; border: 2px solid #FFFFFF; color: #FFFFFF; text-decoration: none; font-weight: 800; box-sizing: border-box">Pedir presupuesto</a>
+  </section>
+</div>
+
+  <section aria-label="Categorías y garantías" style="position: relative; z-index: 2; margin-top: -24px; transform: skewY(-3deg)">
+    <div style="background: #E5007D; overflow: hidden; padding: 14px 0">
+    <div class="pista" style="display: flex; gap: 28px; width: max-content; font-family: 'Russo One', sans-serif; font-size: 22px; color: #FFFFFF; white-space: nowrap">
+      <a href="#" style="color: #FFFFFF; text-decoration: none">Tazas y termos</a><span aria-hidden="true" style="color: #FFB627">/</span><span>Indumentaria</span><span aria-hidden="true" style="color: #FFB627">/</span><span>Deportes</span><span aria-hidden="true" style="color: #FFB627">/</span><span>Accesorios</span><span aria-hidden="true" style="color: #FFB627">/</span>
+      <span aria-hidden="true">Tazas y termos</span><span aria-hidden="true" style="color: #FFB627">/</span><span aria-hidden="true">Indumentaria</span><span aria-hidden="true" style="color: #FFB627">/</span><span aria-hidden="true">Deportes</span><span aria-hidden="true" style="color: #FFB627">/</span><span aria-hidden="true">Accesorios</span><span aria-hidden="true" style="color: #FFB627">/</span>
+    </div>
+    </div>
+    <div style="background: #FFFFFF; padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 14px 28px -18px rgba(43,27,77,.45)">
+    <div style="display: flex; gap: 12px; align-items: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E5007D" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"></path><path d="m9 12 2 2 4-4"></path></svg><span style="font-weight: 800">Pago seguro con Mercado Pago</span></div>
+    <div style="display: flex; gap: 12px; align-items: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E5007D" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7"></path><circle cx="7" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg><span style="font-weight: 800">Retiro en el local o envío</span></div>
+    <div style="display: flex; gap: 12px; align-items: center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#E5007D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"></path></svg><span style="font-weight: 800">Te atendemos por WhatsApp</span></div>
+    </div>
+  </section>
+
+  <section style="padding: 44px 20px 8px">
+    <h2 style="margin: 0 0 10px; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 32px; padding-bottom: 8px; background: linear-gradient(#FFB627,#FFB627) left bottom / 90px 6px no-repeat; display: inline-block">Elegí qué personalizar</h2>
+    <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #5A5566">Todo sale en blanco y lo estampamos con tu diseño.</p>
+      <div role="img" aria-label="Tazas, remeras, gorras, termos y canilleras que pasan por la plancha y salen estampados con un diseño de tinta" style="position: relative; height: 400px; margin: 0 -20px; overflow: hidden; border-radius: 18px">
+        <div aria-hidden="true" style="position: absolute; left: 12%; bottom: 74px; width: 120px; height: 12px; background: #FFB627; transform: skewX(-12deg)"></div>
+        <div aria-hidden="true" style="position: absolute; inset: 24px 60px; background: #2B1B4D; transform: skewX(-12deg); border-radius: 22px; overflow: hidden"><div style="position: absolute; inset: 0; transform: skewX(12deg)">
+        <div aria-hidden="true" class="calor" style="position: absolute; left: calc(50% - 105px); top: calc(50% - 105px); width: 210px; height: 210px; border-radius: 50%; border: 4px solid #FFB627; box-sizing: border-box"></div>
+        <div aria-hidden="true" class="calor" style="position: absolute; left: calc(50% - 90px); top: calc(50% - 90px); width: 180px; height: 180px; border-radius: 50%; border: 2px solid #E5007D; box-sizing: border-box; animation-delay: .15s"></div>
+        <span aria-hidden="true" class="gota" style="position: absolute; left: calc(50% - 60px); top: 50%; width: 12px; height: 12px; border-radius: 50%; background: #E5007D; --dx: -40px"></span>
+        <span aria-hidden="true" class="gota" style="position: absolute; left: calc(50% + 50px); top: 50%; width: 10px; height: 10px; border-radius: 50%; background: #FFB627; --dx: 36px; animation-delay: .1s"></span>
+        <span aria-hidden="true" class="gota" style="position: absolute; left: calc(50% - 10px); top: calc(50% - 30px); width: 14px; height: 14px; border-radius: 50%; background: #FFFFFF; --dx: 10px; animation-delay: .2s"></span>
+        <span aria-hidden="true" class="gota" style="position: absolute; left: calc(50% + 90px); top: calc(50% + 20px); width: 8px; height: 8px; border-radius: 50%; background: #E5007D; --dx: 50px; animation-delay: .05s"></span>
+        <span aria-hidden="true" class="gota" style="position: absolute; left: calc(50% - 100px); top: calc(50% + 10px); width: 9px; height: 9px; border-radius: 50%; background: #FFB627; --dx: -55px; animation-delay: .15s"></span>
+
+        <div aria-hidden="true" class="piezam" style="position: absolute; left: calc(50% - 68px); top: calc(50% - 76px); width: 136px; height: 152px; border-radius: 18px; background: #FFFFFF; box-shadow: 0 18px 40px -12px rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; animation-delay: 0s">
+          <svg viewBox="0 0 120 120" width="96" height="96"><clipPath id="m-taza"><rect x="26" y="30" width="56" height="66" rx="9"></rect></clipPath><path d="M82 44h8c9 0 14 6 14 14s-5 14-14 14h-8" fill="none" stroke="#2B1B4D" stroke-width="4"></path><rect x="26" y="30" width="56" height="66" rx="9" fill="#FAF8F5"></rect><g clip-path="url(#m-taza)"><g class="diseno" style="animation-delay: 0s"><polygon points="0,110 50,10 72,10 22,110" fill="#E5007D"></polygon><polygon points="34,110 84,10 100,10 50,110" fill="#2B1B4D"></polygon><polygon points="64,110 110,20 118,20 72,110" fill="#FFB627"></polygon><circle cx="38" cy="42" r="7" fill="#FFB627"></circle></g></g><rect x="26" y="30" width="56" height="66" rx="9" fill="none" stroke="#2B1B4D" stroke-width="3"></rect></svg>
+          <span style="font-weight: 800; font-size: 12px; color: #2B1B4D">Tazas</span>
+        </div>
+        <div aria-hidden="true" class="piezam" style="position: absolute; left: calc(50% - 68px); top: calc(50% - 76px); width: 136px; height: 152px; border-radius: 18px; background: #FFFFFF; box-shadow: 0 18px 40px -12px rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; animation-delay: -2.5s">
+          <svg viewBox="0 0 120 120" width="96" height="96"><clipPath id="m-remera"><path d="M40 22 28 28 14 44 26 54 34 48 34 100 86 100 86 48 94 54 106 44 92 28 80 22C76 30 66 34 60 34 54 34 44 30 40 22Z"></path></clipPath><path d="M40 22 28 28 14 44 26 54 34 48 34 100 86 100 86 48 94 54 106 44 92 28 80 22C76 30 66 34 60 34 54 34 44 30 40 22Z" fill="#FAF8F5"></path><g clip-path="url(#m-remera)"><g class="diseno" style="animation-delay: -2.5s"><polygon points="0,110 50,10 72,10 22,110" fill="#E5007D"></polygon><polygon points="34,110 84,10 100,10 50,110" fill="#2B1B4D"></polygon><polygon points="64,110 110,20 118,20 72,110" fill="#FFB627"></polygon></g></g><path d="M40 22 28 28 14 44 26 54 34 48 34 100 86 100 86 48 94 54 106 44 92 28 80 22C76 30 66 34 60 34 54 34 44 30 40 22Z" fill="none" stroke="#2B1B4D" stroke-width="3" stroke-linejoin="round"></path></svg>
+          <span style="font-weight: 800; font-size: 12px; color: #2B1B4D">Remeras</span>
+        </div>
+        <div aria-hidden="true" class="piezam" style="position: absolute; left: calc(50% - 68px); top: calc(50% - 76px); width: 136px; height: 152px; border-radius: 18px; background: #FFFFFF; box-shadow: 0 18px 40px -12px rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; animation-delay: -5s">
+          <svg viewBox="0 0 120 120" width="96" height="96"><clipPath id="m-gorra"><path d="M20 78C20 48 38 30 60 30S100 48 100 78Z"></path></clipPath><path d="M60 78H112C110 86 100 90 88 90H60Z" fill="#FAF8F5" stroke="#2B1B4D" stroke-width="3" stroke-linejoin="round"></path><path d="M20 78C20 48 38 30 60 30S100 48 100 78Z" fill="#FAF8F5"></path><g clip-path="url(#m-gorra)"><g class="diseno" style="animation-delay: -5s"><polygon points="0,110 50,10 72,10 22,110" fill="#E5007D"></polygon><polygon points="34,110 84,10 100,10 50,110" fill="#2B1B4D"></polygon><polygon points="64,110 110,20 118,20 72,110" fill="#FFB627"></polygon></g></g><path d="M20 78C20 48 38 30 60 30S100 48 100 78Z" fill="none" stroke="#2B1B4D" stroke-width="3" stroke-linejoin="round"></path><circle cx="60" cy="30" r="4" fill="#2B1B4D"></circle></svg>
+          <span style="font-weight: 800; font-size: 12px; color: #2B1B4D">Gorras</span>
+        </div>
+        <div aria-hidden="true" class="piezam" style="position: absolute; left: calc(50% - 68px); top: calc(50% - 76px); width: 136px; height: 152px; border-radius: 18px; background: #FFFFFF; box-shadow: 0 18px 40px -12px rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; animation-delay: -7.5s">
+          <svg viewBox="0 0 120 120" width="96" height="96"><clipPath id="m-termo"><rect x="40" y="32" width="40" height="76" rx="11"></rect></clipPath><rect x="45" y="14" width="30" height="18" rx="5" fill="#2B1B4D"></rect><rect x="40" y="32" width="40" height="76" rx="11" fill="#FAF8F5"></rect><g clip-path="url(#m-termo)"><g class="diseno" style="animation-delay: -7.5s"><polygon points="0,110 50,10 72,10 22,110" fill="#E5007D"></polygon><polygon points="34,110 84,10 100,10 50,110" fill="#2B1B4D"></polygon><polygon points="64,110 110,20 118,20 72,110" fill="#FFB627"></polygon></g></g><rect x="40" y="32" width="40" height="76" rx="11" fill="none" stroke="#2B1B4D" stroke-width="3"></rect></svg>
+          <span style="font-weight: 800; font-size: 12px; color: #2B1B4D">Termos</span>
+        </div>
+        <div aria-hidden="true" class="piezam quieta" style="position: absolute; left: calc(50% - 68px); top: calc(50% - 76px); width: 136px; height: 152px; border-radius: 18px; background: #FFFFFF; box-shadow: 0 18px 40px -12px rgba(0,0,0,.45); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; animation-delay: -10s">
+          <svg viewBox="0 0 120 120" width="96" height="96"><clipPath id="m-canillera"><path d="M38 16H82C88 16 92 20 92 26V68C92 90 76 104 60 108 44 104 28 90 28 68V26C28 20 32 16 38 16Z"></path></clipPath><path d="M38 16H82C88 16 92 20 92 26V68C92 90 76 104 60 108 44 104 28 90 28 68V26C28 20 32 16 38 16Z" fill="#FAF8F5"></path><g clip-path="url(#m-canillera)"><g class="diseno" style="animation-delay: -10s"><polygon points="0,110 50,10 72,10 22,110" fill="#E5007D"></polygon><polygon points="34,110 84,10 100,10 50,110" fill="#2B1B4D"></polygon><polygon points="64,110 110,20 118,20 72,110" fill="#FFB627"></polygon><circle cx="44" cy="36" r="7" fill="#FFB627"></circle></g></g><path d="M38 16H82C88 16 92 20 92 26V68C92 90 76 104 60 108 44 104 28 90 28 68V26C28 20 32 16 38 16Z" fill="none" stroke="#2B1B4D" stroke-width="3" stroke-linejoin="round"></path></svg>
+          <span style="font-weight: 800; font-size: 12px; color: #2B1B4D">Canilleras</span>
+        </div>
+        </div></div>
+      </div>
+    <nav aria-label="Categorías" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <a href="#" style="display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 14px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(43,27,77,.08); color: #2B1B4D; text-decoration: none; font-family: 'Russo One', sans-serif; font-size: 15px">Tazas y termos<span aria-hidden="true" style="color: #E5007D">›</span></a>
+      <a href="#" style="display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 14px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(43,27,77,.08); color: #2B1B4D; text-decoration: none; font-family: 'Russo One', sans-serif; font-size: 15px">Indumentaria<span aria-hidden="true" style="color: #E5007D">›</span></a>
+      <a href="#" style="display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 14px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(43,27,77,.08); color: #2B1B4D; text-decoration: none; font-family: 'Russo One', sans-serif; font-size: 15px">Deportes<span aria-hidden="true" style="color: #E5007D">›</span></a>
+      <a href="#" style="display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 14px; border-radius: 10px; background: #FFFFFF; box-shadow: 0 2px 8px rgba(43,27,77,.08); color: #2B1B4D; text-decoration: none; font-family: 'Russo One', sans-serif; font-size: 15px">Accesorios<span aria-hidden="true" style="color: #E5007D">›</span></a>
+    </nav>
+  </section>
+
+  <section style="padding: 40px 20px 32px">
+    <h2 style="margin: 0 0 24px; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 32px; padding-bottom: 8px; background: linear-gradient(#FFB627,#FFB627) left bottom / 90px 6px no-repeat; display: inline-block">Los más pedidos</h2>
+    <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+      
+        <article style="background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 8px rgba(43,27,77,.08); overflow: hidden; display: flex; flex-direction: column">
+          <div style="aspect-ratio: 1; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; box-sizing: border-box">[Foto: Taza cerámica 325 ml]</div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+            <span style="align-self: flex-start; background: #FFB627; color: #2B1B4D; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px">Personalizable</span>
+            <h3 style="margin: 0; font-size: 15px; font-weight: 800; line-height: 1.3">Taza cerámica 325 ml</h3>
+            <p style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 18px; color: #E5007D">$ [precio]</p>
+          </div>
+        </article>
+      
+        <article style="background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 8px rgba(43,27,77,.08); overflow: hidden; display: flex; flex-direction: column">
+          <div style="aspect-ratio: 1; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; box-sizing: border-box">[Foto: Termo acero 500 ml]</div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+            <span style="align-self: flex-start; background: #FFB627; color: #2B1B4D; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px">Personalizable</span>
+            <h3 style="margin: 0; font-size: 15px; font-weight: 800; line-height: 1.3">Termo acero 500 ml</h3>
+            <p style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 18px; color: #E5007D">$ [precio]</p>
+          </div>
+        </article>
+      
+        <article style="background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 8px rgba(43,27,77,.08); overflow: hidden; display: flex; flex-direction: column">
+          <div style="aspect-ratio: 1; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; box-sizing: border-box">[Foto: Remera poliéster]</div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+            <span style="align-self: flex-start; background: #FFB627; color: #2B1B4D; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px">Personalizable</span>
+            <h3 style="margin: 0; font-size: 15px; font-weight: 800; line-height: 1.3">Remera poliéster</h3>
+            <p style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 18px; color: #E5007D">$ [precio]</p>
+          </div>
+        </article>
+      
+        <article style="background: #FFFFFF; border-radius: 10px; box-shadow: 0 2px 8px rgba(43,27,77,.08); overflow: hidden; display: flex; flex-direction: column">
+          <div style="aspect-ratio: 1; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-size: 12px; font-weight: 700; text-align: center; padding: 8px; box-sizing: border-box">[Foto: Gorra trucker]</div>
+          <div style="padding: 12px; display: flex; flex-direction: column; gap: 6px">
+            <span style="align-self: flex-start; background: #FFB627; color: #2B1B4D; font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px">Personalizable</span>
+            <h3 style="margin: 0; font-size: 15px; font-weight: 800; line-height: 1.3">Gorra trucker</h3>
+            <p style="margin: 0; font-family: 'Russo One', sans-serif; font-size: 18px; color: #E5007D">$ [precio]</p>
+          </div>
+        </article>
+      
+    </div>
+    <a href="#" style="display: block; margin-top: 18px; text-align: center; font-weight: 800; min-height: 44px; line-height: 44px">Ver todo el catálogo</a>
+  </section>
+
+  <section style="background: #2B1B4D; color: #FFFFFF; padding: 64px 20px; transform: skewY(-3deg); margin: 24px 0">
+    <div style="transform: skewY(3deg)">
+      <h2 style="margin: 0 0 32px; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 32px">Así de fácil</h2>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px">
+        
+          <li style="display: flex; gap: 16px; align-items: flex-start">
+            <span style="font-family: 'Russo One', sans-serif; font-size: 44px; line-height: 1; color: #FFB627; transform: skewX(-8deg); min-width: 34px">1</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <h3 style="margin: 0; font-size: 18px; font-weight: 800">Elegí tu producto</h3>
+              <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #D9D3E6">Con el talle y el color que quieras.</p>
+            </div>
+          </li>
+        
+          <li style="display: flex; gap: 16px; align-items: flex-start">
+            <span style="font-family: 'Russo One', sans-serif; font-size: 44px; line-height: 1; color: #FFB627; transform: skewX(-8deg); min-width: 34px">2</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <h3 style="margin: 0; font-size: 18px; font-weight: 800">Subí tu diseño</h3>
+              <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #D9D3E6">Foto, logo o frase. Si no tenés, te lo hacemos.</p>
+            </div>
+          </li>
+        
+          <li style="display: flex; gap: 16px; align-items: flex-start">
+            <span style="font-family: 'Russo One', sans-serif; font-size: 44px; line-height: 1; color: #FFB627; transform: skewX(-8deg); min-width: 34px">3</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <h3 style="margin: 0; font-size: 18px; font-weight: 800">Pagá como quieras</h3>
+              <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #D9D3E6">Mercado Pago o efectivo al retirar.</p>
+            </div>
+          </li>
+        
+          <li style="display: flex; gap: 16px; align-items: flex-start">
+            <span style="font-family: 'Russo One', sans-serif; font-size: 44px; line-height: 1; color: #FFB627; transform: skewX(-8deg); min-width: 34px">4</span>
+            <div style="display: flex; flex-direction: column; gap: 4px">
+              <h3 style="margin: 0; font-size: 18px; font-weight: 800">Retiralo o te lo enviamos</h3>
+              <p style="margin: 0; font-size: 15px; line-height: 1.55; color: #D9D3E6">Te avisamos por email en cada paso.</p>
+            </div>
+          </li>
+        
+      </ol>
+    </div>
+  </section>
+
+  <section style="padding: 48px 20px">
+    <div style="background: #FFFFFF; border-radius: 14px; padding: 28px 22px; box-shadow: 0 2px 8px rgba(43,27,77,.08); display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 28px; line-height: 1.1">¿No tenés diseño? Te lo hacemos.</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #5A5566">Contanos tu idea por WhatsApp y armamos el diseño con vos.</p>
+      <a class="btn" href="#" style="display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 54px; border-radius: 10px; background: #25D366; color: #0B3D20; text-decoration: none; font-weight: 800; font-size: 17px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"></path></svg>Consultar por WhatsApp</a>
+    </div>
+  </section>
+
+  <section style="padding: 8px 0 40px">
+    <h2 style="margin: 0 20px 20px; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 32px; padding-bottom: 8px; background: linear-gradient(#FFB627,#FFB627) left bottom / 90px 6px no-repeat; display: inline-block">Trabajos que ya hicimos</h2>
+    <div style="display: flex; gap: 14px; overflow-x: auto; padding: 8px 20px 12px">
+      <div style="flex: 0 0 220px; aspect-ratio: 4 / 5; border-radius: 10px; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-weight: 700; font-size: 14px; text-align: center; transform: rotate(-2deg)">[Foto: camperas de egresados]</div>
+      <div style="flex: 0 0 220px; aspect-ratio: 4 / 5; border-radius: 10px; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-weight: 700; font-size: 14px; text-align: center; transform: rotate(1.5deg)">[Foto: tazas con foto]</div>
+      <div style="flex: 0 0 220px; aspect-ratio: 4 / 5; border-radius: 10px; background: #ECEAF0; display: grid; place-items: center; color: #5A5566; font-weight: 700; font-size: 14px; text-align: center; transform: rotate(-1deg)">[Foto: canilleras]</div>
+    </div>
+  </section>
+
+  <section style="padding: 16px 20px 48px">
+    <h2 style="margin: 0 0 20px; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 30px; line-height: 1.1">Lo que dicen nuestros clientes</h2>
+    <figure style="margin: 0; background: #FFFFFF; border-radius: 10px; padding: 22px; box-shadow: 0 2px 8px rgba(43,27,77,.08); display: flex; flex-direction: column; gap: 12px">
+      <div role="img" aria-label="5 de 5 estrellas" style="display: flex; gap: 3px; color: #FFB627"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"></path></svg></div>
+      <blockquote style="margin: 0; font-size: 16px; line-height: 1.6">[Opinión real de un cliente que compró una taza]</blockquote>
+      <figcaption style="display: flex; justify-content: space-between; font-size: 13px"><span style="font-weight: 800">[Nombre C.]</span><span style="font-weight: 800; color: #2E7D32">Compra verificada</span></figcaption>
+    </figure>
+  </section>
+
+
+
+  <footer style="background: #2B1B4D; color: #D9D3E6; padding: 40px 20px 120px; display: flex; flex-direction: column; gap: 22px">
+    <img src="../marca/isotipo-seanstore-fondo.png" alt="Sean's Store" style="width: 72px; height: auto; border-radius: 12px">
+    <div style="display: flex; flex-direction: column; gap: 6px"><h3 style="margin: 0 0 4px; font-family: 'Russo One', sans-serif; font-weight: 400; font-size: 17px; color: #FFFFFF">Visitanos</h3><p style="margin: 0">[Dirección del local]</p><p style="margin: 0">[Días y horarios]</p></div>
+    <div style="display: flex; flex-direction: column; gap: 10px"><a href="#" style="color: #D9D3E6">Seguí tu pedido</a><a href="#" style="color: #D9D3E6">Cambios y devoluciones</a><a href="#" style="color: #D9D3E6">Términos y condiciones</a><a href="#" style="color: #D9D3E6">Política de privacidad</a></div>
+    <a href="#" style="display: flex; justify-content: center; align-items: center; min-height: 48px; border-radius: 10px; border: 2px solid #FFB627; color: #FFB627; text-decoration: none; font-weight: 800; box-sizing: border-box">Botón de arrepentimiento</a>
+    <p style="margin: 0; font-size: 13px; color: #B9B0CC">© 2026 Sean's Store</p>
+  </footer>
+
+  <div style="position: absolute; right: 16px; top: 760px; display: flex; flex-direction: column; gap: 10px; align-items: flex-end">
+    <button aria-label="Abrir el asistente de preguntas" style="width: 50px; height: 50px; border-radius: 25px; border: 0; background: #2B1B4D; color: #FFFFFF; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(43,27,77,.5)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg></button>
+    <a href="#" aria-label="Escribinos por WhatsApp" style="width: 56px; height: 56px; border-radius: 28px; background: #25D366; color: #0B3D20; display: grid; place-items: center; box-shadow: 0 10px 24px -8px rgba(11,61,32,.6)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20l1.3-4A8 8 0 1 1 8 18.7z"></path><path d="M9 9.5c.5 2 2 3.5 4 4l1.2-1.2 2 1-.5 1.7c-3.5.3-7.3-3.5-7-7l1.7-.5 1 2z"></path></svg></a>
+  </div>
+</div>
+
+
+</body>
+</html>
