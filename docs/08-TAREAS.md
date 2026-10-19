@@ -12,7 +12,7 @@ Se trabaja **una tarea por vez**, se prueba y se marca con `[x]` al terminarla.
 - [x] Crear el repositorio público `iest-tfi_seanstore` en GitHub y subir el kit (docs, specs, arnés, marca y diseño)
 - [ ] Conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega (ver `memory.md`)
 - [x] Crear el frontend: React + Vite + React Router + Tailwind CSS v4 + Motion + Lucide, con el `@theme` de `IDENTIDAD-MARCA.md`
-- [ ] Configurar Vitest y Testing Library en el frontend, con un primer test que pase (`npm test`)
+- [x] Configurar Vitest y Testing Library en el frontend, con un primer test que pase (`npm test`)
 - [ ] Crear el backend: Express con helmet y cors, `app.js` + `servidor.js` y la ruta `GET /api/salud` con su test (Vitest + Supertest)
 - [ ] Crear la base en Neon con las tablas de la versión 1 (`categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`) y cargar los datos reales
 - [ ] Publicar el frontend y la API en Vercel (versión mínima) y probar las dos URL

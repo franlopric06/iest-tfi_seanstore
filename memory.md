@@ -9,8 +9,8 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 ## Estado actual
 
 - **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación).
-- **Última tarea hecha:** frontend creado (`frontend/`): React + Vite 8 + React Router + Tailwind CSS v4 + Motion + Lucide, `@theme` de `IDENTIDAD-MARCA.md` en `src/styles/index.css`, logos de `marca/` en `public/img/` e isotipo como favicon. Build y lint en verde.
-- **Próxima tarea:** configurar Vitest y Testing Library con un primer test que pase (`npm test`).
+- **Última tarea hecha:** Vitest + Testing Library configurados en `frontend/` (`vite.config.js` con jsdom y globals, `tests/setup.js` con jest-dom), script `npm test`, y primer test en verde (`tests/App.test.jsx`: título "Sean's Store").
+- **Próxima tarea:** crear el backend: Express con helmet y cors, `app.js` + `servidor.js` y la ruta `GET /api/salud` con su test (Vitest + Supertest).
 - **Datos reales que faltan del negocio:** lista de productos con precios, talles y colores; dirección; horarios; número de WhatsApp; tiempos de entrega; medidas de las guías de talles.
 
 ## Datos del proyecto
@@ -38,6 +38,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | 19/10/2026 | Tests con Vitest (+ Testing Library y Supertest) | El TFI pide tests automáticos en verde |
 | 19/10/2026 | React 19 y oxlint en el template de Vite 8 | Es lo que trae `npm create vite@latest` hoy; se actualizó `03-TECNOLOGIAS.md` |
 | 19/10/2026 | Fuentes (Russo One y Nunito) se cargan desde `index.html` con Google Fonts | Permite `preconnect` y carga más rápida que el `@import` en el CSS |
+| 19/10/2026 | Vitest con `globals: true` en `vite.config.js` | Sin él, `describe`/`it`/`expect` no existen en los archivos de test (Error N° 2 en `docs/PROMPTS.md`) |
 
 ## Problemas resueltos
 
