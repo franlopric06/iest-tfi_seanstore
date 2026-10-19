@@ -1,0 +1,27 @@
+/* frontend/src/styles/index.css */
+@import "tailwindcss";
+
+@theme {
+  --color-fondo: #FAF8F5;
+  --color-violeta: #2B1B4D;
+  --color-grafito: #5A5566;
+  --color-magenta: #E5007D;
+  --color-amarillo: #FFB627;
+  --color-exito: #2E7D32;
+  --color-error: #C62828;
+  --color-gris-claro: #ECEAF0;
+  --color-whatsapp: #25D366;
+  --color-whatsapp-texto: #0B3D20; /* texto sobre el verde: el blanco no tiene contraste suficiente */
+
+  --font-titulos: "Russo One", sans-serif;
+  --font-textos: "Nunito", sans-serif;
+
+  --radius-marca: 10px;
+  --shadow-tarjeta: 0 2px 8px rgb(43 27 77 / 0.08);
+  --shadow-elevada: 0 18px 40px -12px rgb(43 27 77 / 0.28);
+}
+
+@layer base {
+  body { @apply bg-fondo font-textos text-violeta antialiased; }
+  h1, h2, h3 { @apply font-titulos; }
+}

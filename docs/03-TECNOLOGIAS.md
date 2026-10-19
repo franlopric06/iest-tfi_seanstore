@@ -4,7 +4,7 @@
 
 | Parte | Herramienta | Por qué |
 | --- | --- | --- |
-| Interfaz | **React 18** | Componentes reutilizables (tarjetas, carrito, formularios, panel) |
+| Interfaz | **React 19** | Componentes reutilizables (tarjetas, carrito, formularios, panel) |
 | Empaquetador | **Vite** | Arranque y recarga rápidos, configuración simple |
 | Rutas del frontend | **React Router** | Navegar entre tienda, checkout, cuenta y panel sin recargar |
 | Estilos | **Tailwind CSS v4** (`@tailwindcss/vite`) | Clases utilitarias con los colores y fuentes de la marca definidos una sola vez en `@theme`; diseño responsive rápido y consistente |
@@ -44,7 +44,7 @@ Se eligió una tienda en **React con Vite** y una **API en Express** aparte, en 
 frontend: react, react-dom, react-router-dom, tailwindcss, @tailwindcss/vite, motion,
           lucide-react, embla-carousel-react, @mercadopago/sdk-react, @vercel/analytics
 dev:      prettier, prettier-plugin-tailwindcss, vitest, @testing-library/react,
-          @testing-library/jest-dom, @testing-library/user-event, jsdom
+          @testing-library/jest-dom, @testing-library/user-event, jsdom, oxlint
 backend:  express, pg, bcrypt, jsonwebtoken, cookie-parser, multer, cloudinary,
           mercadopago, @getbrevo/brevo, helmet, express-rate-limit, cors, dotenv
 backend dev: vitest, supertest

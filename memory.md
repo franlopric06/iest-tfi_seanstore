@@ -8,9 +8,9 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 
 ## Estado actual
 
-- **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación). Todavía no hay código.
-- **Última tarea hecha:** kit corregido para el TFI y arnés armado (constitución, comandos, skills, memoria).
-- **Próxima tarea:** subir el kit al repositorio `iest-tfi_seanstore` (primer commit).
+- **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación).
+- **Última tarea hecha:** frontend creado (`frontend/`): React + Vite 8 + React Router + Tailwind CSS v4 + Motion + Lucide, `@theme` de `IDENTIDAD-MARCA.md` en `src/styles/index.css`, logos de `marca/` en `public/img/` e isotipo como favicon. Build y lint en verde.
+- **Próxima tarea:** configurar Vitest y Testing Library con un primer test que pase (`npm test`).
 - **Datos reales que faltan del negocio:** lista de productos con precios, talles y colores; dirección; horarios; número de WhatsApp; tiempos de entrega; medidas de las guías de talles.
 
 ## Datos del proyecto
@@ -19,8 +19,8 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 - **Materia:** Inteligencia Artificial (Prof. Ana Camila Barrionuevo). TFI = TP N.° 4.
 - **Fechas:** entrega 28/10/2026 · defensa 30/10/2026.
 - **Negocio:** Sean's Store, del hermano del alumno.
-- **Agente:** OpenCode en la terminal de VS Code, modelo gratuito Big Pickle.
-- **Repositorio:** `[se completa al crearlo]`
+- **Agente:** OpenCode en la terminal de VS Code, modelo gratuito GLM-5.3-Flash Free (política de cero retención: no guarda ni entrena con lo que conversamos).
+- **Repositorio:** https://github.com/franlopric06/iest-tfi_seanstore
 - **Sitio publicado:** `[se completa al publicarlo]` · **API:** `[se completa al publicarla]`
 
 ## Decisiones
@@ -36,6 +36,8 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | 19/10/2026 | Versión 1 = catálogo, pedido por WhatsApp y asistente | Mínimo 3 funcionalidades y 9 días; los pagos y las cuentas pasan a la versión 2 |
 | 19/10/2026 | API en Vercel en lugar de Railway | Railway solo da USD 1 por mes en su plan gratuito |
 | 19/10/2026 | Tests con Vitest (+ Testing Library y Supertest) | El TFI pide tests automáticos en verde |
+| 19/10/2026 | React 19 y oxlint en el template de Vite 8 | Es lo que trae `npm create vite@latest` hoy; se actualizó `03-TECNOLOGIAS.md` |
+| 19/10/2026 | Fuentes (Russo One y Nunito) se cargan desde `index.html` con Google Fonts | Permite `preconnect` y carga más rápida que el `@import` en el CSS |
 
 ## Problemas resueltos
 
