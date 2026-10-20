@@ -33,6 +33,19 @@ const textos = {
       { altRemera: 'Remera blanca con "Tu logo" en un recuadro punteado estampado en el pecho' },
     ],
   },
+  franja: {
+    categorias: [
+      { nombre: 'Tazas y termos', slug: 'tazas-termos' },
+      { nombre: 'Indumentaria', slug: 'indumentaria' },
+      { nombre: 'Deportes', slug: 'deportes' },
+      { nombre: 'Accesorios', slug: 'accesorios' },
+    ],
+    sellos: [
+      'Pago seguro con Mercado Pago',
+      'Retiro en el local o envío',
+      'Te atendemos por WhatsApp',
+    ],
+  },
 }
 
 export default textos
