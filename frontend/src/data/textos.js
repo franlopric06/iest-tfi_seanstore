@@ -46,6 +46,19 @@ const textos = {
       'Te atendemos por WhatsApp',
     ],
   },
+  cinta: {
+    titulo: 'Elegí qué personalizar',
+    frase: 'Todo sale en blanco y lo estampamos con tu diseño, con tintas que no se borran con el lavado.',
+    etiqueta:
+      'Tazas, remeras, gorras, termos y canilleras que pasan por la plancha y salen estampadas con un diseño de tinta',
+    productos: [
+      { id: 'taza', nombre: 'Tazas' },
+      { id: 'remera', nombre: 'Remeras' },
+      { id: 'gorra', nombre: 'Gorras' },
+      { id: 'termo', nombre: 'Termos' },
+      { id: 'canilleras', nombre: 'Canilleras' },
+    ],
+  },
 }
 
 export default textos
