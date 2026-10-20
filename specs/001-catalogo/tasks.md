@@ -7,7 +7,7 @@ T01 y T02 sí generan commit (los archivos SQL están en el repo); lo manual es 
 
 ## Base de datos (R14)
 
-- [ ] **T01** · Crear el esquema de la versión 1: las 5 tablas (`categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`), sin tablas de la v2 · Requisito: R14 · Archivos: crear `backend/src/db/esquema-v1.sql` · Test: manual — el estudiante lo ejecuta en el SQL Editor de Neon (la `DATABASE_URL` nunca pasa por el chat)
+- [x] **T01** · Crear el esquema de la versión 1: las 5 tablas (`categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`), sin tablas de la v2 · Requisito: R14 · Archivos: crear `backend/src/db/esquema-v1.sql` · Test: manual — el estudiante lo ejecuta en el SQL Editor de Neon (la `DATABASE_URL` nunca pasa por el chat)
   **Listo cuando:** en Neon existen las 5 tablas de la v1 y ninguna de la v2.
 - [ ] **T02** · Crear la carga inicial: 4 categorías y los 13 productos reales (talles y colores de la spec), `precio NULL`, `destacado FALSE`, `activo TRUE`, sin filas en `producto_fotos` · Requisito: R14 · Archivos: crear `backend/src/db/carga-catalogo.sql` · Test: manual en Neon
   **Listo cuando:** los conteos en Neon dan 4 categorías, 13 productos, 0 fotos, 0 destacados y 13 activos.
