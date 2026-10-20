@@ -9,9 +9,9 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 ## Estado actual
 
 - **Etapa:** primera etapa (`ETAPA-1.md`), funcionalidad 001-catalogo, fase 5 (`/implementar`). Spec, clarificación, plan y tareas aprobados.
-- **Hecho:** T01 (esquema en Neon), T02 (4 categorías y 12 productos en Neon), T03 (`backend/src/db/datos-demo.sql` escrito; el estudiante lo ejecuta en Neon: 12 con precio/stock/descripción y 4 destacados) y T04 (Header, Footer y `data/textos.js` con el aviso de demostración; test `Layout.test.jsx` en verde).
+- **Hecho:** T01 (esquema en Neon), T02 (4 categorías y 12 productos en Neon), T03 (`backend/src/db/datos-demo.sql` escrito; el estudiante lo ejecuta en Neon: 12 con precio/stock/descripción y 4 destacados), T04 (Header, Footer y `data/textos.js` con el aviso de demostración; test `Layout.test.jsx` en verde) y T05 (HeroSublimado "Tu diseño en vivo": tinta magenta que chorrea, título/bajada, chips sincronizados cada 3 s, botones y remera SVG en `RemeraHero.jsx` con 4 diseños del pecho; test `HeroSublimado.test.jsx` en verde, con movimiento reducido queda quieta con el primer diseño).
 - **Reorganización (20/10/2026):** `docs/` describe la tienda completa y `ETAPA-1.md` dice qué se construye ahora: catálogo, pedido por WhatsApp, asistente y un panel chico, con datos de demostración (precio, stock, descripción y destacados definidos por el equipo). Spec, plan y tareas de 001 ajustados; tareas reordenadas para construir primero el inicio.
-- **Próxima tarea:** T05 — HeroSublimado "Tu diseño en vivo" con la remera SVG que cicla 4 diseños, con test `HeroSublimado.test.jsx` (con movimiento reducido queda quieto).
+- **Próxima tarea:** T06 — FranjaCategorias: franja inclinada con la cinta magenta en loop (32 s, pausa al pasar el mouse) + 3 sellos, con los 4 enlaces a `/catalogo/:slug`; test `FranjaCategorias.test.jsx`.
 
 ## Datos del proyecto
 
