@@ -15,7 +15,7 @@ Se trabaja **una tarea por vez**, se prueba y se marca con `[x]` al terminarla.
 - [x] Configurar Vitest y Testing Library en el frontend, con un primer test que pase (`npm test`)
 - [x] Crear el backend: Express con helmet y cors, `app.js` + `servidor.js` y la ruta `GET /api/salud` con su test (Vitest + Supertest)
 - [ ] Crear la base en Neon con las tablas de la versión 1 (`categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`) y cargar los datos reales
-- [ ] Publicar el frontend y la API en Vercel (versión mínima) y probar las dos URL
+- [x] Publicar el frontend y la API en Vercel (versión mínima) y probar las dos URL
 
 ## Etapa 1 · Funcionalidad 001 · Inicio, catálogo y detalle
 

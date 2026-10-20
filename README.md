@@ -9,7 +9,8 @@ Autor: Francisco Ricardo Lopez · Docente: Prof. Ana Camila Barrionuevo
 
 | | |
 | --- | --- |
-| Sitio publicado | `[se completa al publicar]` |
+| Sitio publicado | https://sean-store.vercel.app |
+| API | https://sean-store-api.vercel.app |
 | Video promocional | `[se completa al subirlo]` |
 | Video demo | `[se completa al subirlo]` |
 

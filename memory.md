@@ -9,8 +9,8 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 ## Estado actual
 
 - **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación).
-- **Última tarea hecha:** preparación de la publicación en Vercel: `frontend/vercel.json` (rewrite `/(.*)` → `/index.html`, patrón SPA de Vercel: el filesystem tiene prioridad, así que los assets sigue funcionando y solo las rutas de React Router caen en `index.html`) y `frontend/.env.ejemplo` (`VITE_API_URL=http://localhost:3000`, no es secreta; el `.gitignore` de la raíz deja pasar `.env.ejemplo`). El backend **no necesita cambios**: Vercel detecta Express con configuración cero buscando `src/app.js` cuando importa express y exporta la app como default y no llama a `listen` (eso está solo en `servidor.js`); también sin `dotenv`: en Vercel las variables van en el panel (`FRONTEND_URL` para el cors y `DATABASE_URL` en el proyecto de la API). Verde: `npm test` frontend (1 test), `npm test` backend (3 tests, uno más que el registro anterior), `npm run build` frontend. Falta crear los dos proyectos en Vercel (Root Directory `frontend/` y `backend/`) y probar las dos URL; recién ahí se marca la tarea en `08-TAREAS.md`.
-- **Próxima tarea:** publicar en Vercel (2 proyectos del mismo repo + variables en el panel) y probar las dos URL; además sigue pendiente conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega.
+- **Última tarea hecha:** publicación en Vercel lista y probada. Dos proyectos del mismo repo: tienda (Root Directory `frontend/`, https://sean-store.vercel.app) y API (Root Directory `backend/`, https://sean-store-api.vercel.app). `GET /api/salud` responde `{"estado":"ok"}` y la variable `FRONTEND_URL=https://sean-store.vercel.app` está cargada en el panel. El frontend lleva `vercel.json` con el rewrite `/(.*)` → `/index.html` (patrón SPA para React Router) y un `.env.ejemplo` con `VITE_API_URL` (en el frontend de Vercel se configura la variable con la URL de la API cuando el código la empiece a usar). El backend sin cambios: Vercel detecta Express con configuración cero en `src/app.js` (importa express, export default, sin `listen`, que está solo en `servidor.js`); variables en el panel, sin `dotenv`. Verde: `npm test` frontend (1), `npm test` backend (3), `npm run build`. Tarea marcada con `[x]` en `08-TAREAS.md`.
+- **Próxima tarea:** conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega.
 - **Datos reales que faltan del negocio:** lista de productos con precios, talles y colores; dirección; horarios; número de WhatsApp; tiempos de entrega; medidas de las guías de talles.
 
 ## Datos del proyecto
@@ -21,7 +21,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 - **Negocio:** Sean's Store, del hermano del alumno.
 - **Agente:** OpenCode en la terminal de VS Code, modelo gratuito GLM-5.3-Flash Free (política de cero retención: no guarda ni entrena con lo que conversamos).
 - **Repositorio:** https://github.com/franlopric06/iest-tfi_seanstore
-- **Sitio publicado:** `[se completa al publicarlo]` · **API:** `[se completa al publicarla]`
+- **Sitio publicado:** https://sean-store.vercel.app · **API:** https://sean-store-api.vercel.app
 
 ## Decisiones
 
