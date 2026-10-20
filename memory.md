@@ -8,9 +8,9 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 
 ## Estado actual
 
-- **Etapa:** specs de la versión 1. `001-catalogo/` tiene `spec.md` **aprobada** y `clarificacion.md` con las 10 decisiones cerradas (19/10/2026). Pendientes: `002-pedido-whatsapp/` y `003-asistente/`.
-- **Última tarea hecha:** fase 2 de 001-catalogo (QA + clarificación). Docs alineados a la spec: `09-SEO.md` (JSON-LD de producto sin `offers` en la v1, Open Graph por producto → v2), `05-DATOS.md` (columna `generada_con_ia` en `producto_fotos`, `precio` nullable en v1, nota de tablas de la v1) y `04-ARQUITECTURA.md` (detalle sin stock ni reseñas en la v1). `PROMPTS.md` con el Error N° 6 (texto mezclado en el chat, 4 veces detectadas por el estudiante).
-- **Próxima tarea:** `/plan` de 001-catalogo (y después `/tareas`).
+- **Etapa:** fases 3 de 001-catalogo (`/plan`). `spec.md` **aprobada** con `clarificacion.md` cerrada (19/10/2026). `plan.md` corregido tras la revisión del estudiante (6 correcciones) y esperando su aprobación; después `/tareas`. Pendientes: `002-pedido-whatsapp/` y `003-asistente/`.
+- **Última tarea hecha:** plan de 001-catalogo corregido con: `vi.mock` de `conexion.js` en los tests de API (Error N° 7 en `PROMPTS.md`, detectado por el estudiante), archivos de Etapa 0 como "modificar" (rutas `*.routes.js` en `routes/index.js`), `carga-catalogo.sql` sin filas de `producto_fotos` (fotos después con `carga-fotos.sql`), header mínimo y footer sin legales en la v1 anotado en `DESIGN.md`, `express-rate-limit` en 002, `robots.txt` sí y sitemap en v2. Los tests y el build de Etapa 0 siguen en verde.
+- **Próxima tarea:** aprobación del plan (ok del estudiante) y `/tareas` de 001-catalogo.
 - **Pendiente del negocio:** preguntar al hermano los 4 productos destacados de "Los más pedidos". Hasta que responda, ningún producto va con `destacado = TRUE` y la sección queda oculta por R3; cuando conteste, se marcan con `/cambio`.
 - **Datos reales ya cerrados:** lista de los 13 productos por categoría, talles (S–XXL indumentaria; S/M/L canilleras; talle único el resto), colores blanco y catálogo de `specs/001-catalogo/spec.md`. Sin precios en pantalla: se cotiza por WhatsApp.
 

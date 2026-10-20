@@ -73,3 +73,13 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Corrección humana:** el estudiante apartó la pregunta afectada y la volvió a responder en texto simple; en el hallazgo 1 pidió "evitá eso" y la IA reformuló.
 - **Para que no se repita:** en el chat, cada pregunta con opciones va corta y de a una, sin textos largos de relleno; si algo sale ilegible, se avisa y se reescribe antes de seguir.
 - **Ocurrencias adicionales (19/10/2026):** tercera y cuarta vez en la misma conversación (final de la pregunta del hallazgo 6 y criterio de finalización de `spec.md` con "destacadosNames"). El estudiante detectó ambas; se mantiene la regla: frases completas en español, texto corto, releer el archivo escrito antes de avisar y reescritura inmediata cuando sale ilegible.
+
+### Error N° 7 · El plan proponía tests contra la base real de Neon
+
+- **Fecha y fase:** 19/10/2026 · Plan de 001-catalogo (fase 3 del ciclo SDD)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** crear `specs/001-catalogo/plan.md` con, entre otras cosas, los tests de los requisitos R14 (las rutas de la API) y la tabla de riesgos.
+- **Qué hizo mal la IA:** el plan proponía correr los tests de la API contra la base real de Neon ("Los tests de la API tocan la base real de Neon"), contradiciendo `docs/07-CONVENCIONES.md`, que dice que la base se reemplaza por datos de prueba porque "no se usa la base real en los tests".
+- **Cómo se detectó:** lo detectó el estudiante al revisar el plan antes de aprobarlo.
+- **Corrección humana:** el estudiante pidió corregir la tabla de riesgos y los tests de R14: los tests simulan `db/conexion.js` con `vi.mock` de Vitest y devuelven datos de prueba, sin tocar Neón nunca.
+- **Para que no se repita:** antes de definir los tests de una spec se lee `07-CONVENCIONES.md`; en el backend, todo test de ruta hace `vi.mock` de `db/conexion.js` con datos de prueba.
