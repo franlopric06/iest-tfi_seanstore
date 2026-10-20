@@ -74,13 +74,18 @@ const FranjaCategorias = () => {
         </div>
       </nav>
 
-      <ul className="-skew-y-3 md:-skew-y-2 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 bg-white px-5 py-6 text-violeta">
+      <ul className="-skew-y-3 md:-skew-y-2 grid grid-cols-3 gap-2 bg-white px-5 py-3 text-violeta md:flex md:flex-wrap md:items-center md:justify-center md:gap-x-10 md:gap-y-4 md:py-6">
         {textos.franja.sellos.map((sello, indice) => {
           const Icono = ICONO_SELLOS[indice]
           return (
-            <li key={sello} className="flex items-center gap-2 skew-y-3 md:skew-y-2">
-              <Icono aria-hidden="true" className="h-6 w-6 shrink-0" />
-              <span className="text-sm font-bold md:text-base">{sello}</span>
+            <li
+              key={sello}
+              className="flex flex-col items-center gap-1 text-center md:flex-row md:gap-2 md:text-left"
+            >
+              <Icono aria-hidden="true" className="h-4 w-4 shrink-0 md:h-6 md:w-6" />
+              <span className="text-[10px] font-bold leading-tight md:text-base md:leading-normal">
+                {sello}
+              </span>
             </li>
           )
         })}
