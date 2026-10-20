@@ -35,7 +35,7 @@ const textos = {
         altRemera: 'Remera blanca con el número 10 y "Tu nombre" estampados en el pecho',
       },
       {
-        altRemera: 'Remera blanca con la frase "Feliz día, ma" y subrayado amarillo estampada en el pecho',
+        altRemera: 'Remera blanca con la frase "Feliz cumple" y subrayado amarillo estampada en el pecho',
       },
       { altRemera: 'Remera blanca con "Tu logo" en un recuadro punteado estampado en el pecho' },
     ],

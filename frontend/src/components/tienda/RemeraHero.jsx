@@ -87,7 +87,7 @@ const RemeraHero = ({ diseno, quieto }) => (
                     fontSize="9.5"
                     className="fill-violeta font-titulos"
                   >
-                    Feliz día,
+                    Feliz
                   </text>
                   <text
                     x="110"
@@ -96,7 +96,7 @@ const RemeraHero = ({ diseno, quieto }) => (
                     fontSize="9.5"
                     className="fill-violeta font-titulos"
                   >
-                    ma
+                    cumple
                   </text>
                   <rect
                     x="88"

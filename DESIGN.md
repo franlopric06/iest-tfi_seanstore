@@ -49,7 +49,7 @@ Fondo `bg-violeta` con texto blanco. Dos columnas en PC (texto a la izquierda, r
 | Chips | "Tu foto", "Tu número", "Tu frase", "Tu logo" | El chip del diseño que se ve en la remera se pinta magenta (sincronizado con la remera) |
 | Botones | "Ver catálogo" (primario magenta) y "Pedir presupuesto" (borde blanco) | Microinteracción de botón |
 | Remera | Remera blanca dibujada en SVG sobre un círculo violeta más claro | Flota suave (sube 10 px y gira ±2°), 6 s en loop |
-| Diseño del pecho | Cambia cada **3 s** entre 4 diseños: una foto (paisaje con sol amarillo), el **10** con "Tu nombre", la frase **"Feliz día, ma"** con subrayado amarillo, y **"Tu logo"** en un recuadro punteado | Cada diseño aparece "estampándose" de arriba hacia abajo (máscara que se abre) y se va con un fundido. Ciclo total de 12 s |
+| Diseño del pecho | Cambia cada **3 s** entre 4 diseños: una foto (paisaje con sol amarillo), el **10** con "Tu nombre", la frase **"Feliz cumple"** con subrayado amarillo, y **"Tu logo"** en un recuadro punteado | Cada diseño aparece "estampándose" de arriba hacia abajo (máscara que se abre) y se va con un fundido. Ciclo total de 12 s |
 
 **Sin movimiento:** se ve la remera quieta con el primer diseño y el primer chip marcado.
 
