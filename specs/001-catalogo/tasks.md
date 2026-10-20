@@ -17,7 +17,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
 
 ## Inicio (lo que se ve primero)
 
-- [ ] **T04** · Header (logo + "Catálogo") y Footer (isotipo, descripción, contacto por WhatsApp y aviso "Sitio de demostración: precios y datos de ejemplo.") + textos fijos en `data/textos.js` · Requisito: R1, R19 · Archivos: crear `frontend/src/components/layout/Header.jsx`, `Footer.jsx`, `frontend/src/data/textos.js`, `frontend/tests/Layout.test.jsx` · Test: el header muestra el logo y "Catálogo"; el footer, la descripción, el contacto y el aviso
+- [x] **T04** · Header (logo + "Catálogo") y Footer (isotipo, descripción, contacto por WhatsApp y aviso "Sitio de demostración: precios y datos de ejemplo.") + textos fijos en `data/textos.js` · Requisito: R1, R19 · Archivos: crear `frontend/src/components/layout/Header.jsx`, `Footer.jsx`, `frontend/src/data/textos.js`, `frontend/tests/Layout.test.jsx` · Test: el header muestra el logo y "Catálogo"; el footer, la descripción, el contacto y el aviso
   **Listo cuando:** el test pasa y los textos no están escritos dentro de los componentes.
 - [ ] **T05** · HeroSublimado "Tu diseño en vivo": remera SVG que cicla 4 diseños (3 s c/u), chips sincronizados, título y botones · Requisito: R1, R16 · Archivos: crear `frontend/src/components/tienda/HeroSublimado.jsx` (y un subarchivo si pasa ~150 líneas), `frontend/tests/HeroSublimado.test.jsx` · Test: se dibuja con su título y sus chips; con movimiento reducido queda quieto con el primer diseño
   **Listo cuando:** el test pasa y solo anima `transform` y `opacity`.
