@@ -11,8 +11,6 @@
 | Confianza | `resenas`, `testimonios` |
 | Contenido | `preguntas_frecuentes`, `promociones`, `medios_pago`, `trabajos` |
 
-> **Versión 1 (19/10/2026):** la v1 solo usa `categorias`, `productos`, `producto_fotos`, `consultas` y `preguntas_frecuentes`. Las demás tablas (ventas, clientes, confianza y contenido de la v2) son referencia para la versión 2. Las tablas de la v1 son las que crea el esquema de la carga (clarificación de 001-catalogo, decisión 8).
-
 ## Relaciones
 
 ```text
@@ -80,7 +78,7 @@ Un pedido en `pendiente_pago` por más de 48 horas pasa solo a `cancelado`, sin 
 | nombre | VARCHAR(120) | Obligatorio |
 | categoria_id | INTEGER | Referencia a `categorias` |
 | descripcion | TEXT | Medidas, material y cuidados |
-| precio | NUMERIC(12,2) | Puede ser NULL en la v1 (el negocio cotiza por WhatsApp); `0` solo como marcador de ejemplo |
+| precio | NUMERIC(12,2) | Precio de venta |
 | precio_anterior | NUMERIC(12,2) | Si tiene valor mayor al precio, se muestra tachado |
 | stock | INTEGER | Unidades disponibles |
 | talles | TEXT[] | Ej. `{S,M,L,XL}` (vacío si no aplica) |
@@ -97,7 +95,7 @@ Un pedido en `pendiente_pago` por más de 48 horas pasa solo a `cancelado`, sin 
 | --- | --- | --- |
 | id | SERIAL | Clave primaria |
 | producto_id | INTEGER | Referencia a `productos` |
-| url | VARCHAR(255) | Imagen en Cloudinary |
+| url | VARCHAR(255) | Ruta o URL de la imagen |
 | alt | VARCHAR(160) | Texto alternativo |
 | generada_con_ia | BOOLEAN | `TRUE` si la foto se generó con IA: obliga a mostrar la leyenda «Generado con IA» (RNF12) |
 | orden | INTEGER | La de orden 1 es la principal |
@@ -247,8 +245,6 @@ Solo puede haber una reseña por producto y pedido. El negocio puede aprobar, oc
 | orden | INTEGER | Orden en la galería |
 
 ## Esquema SQL
-
-> **Versión 1 (19/10/2026):** el esquema de la v1 crea solo `categorias`, `productos`, `producto_fotos`, `consultas` y `preguntas_frecuentes`; el resto de las tablas de acá abajo es referencia de la versión 2. `precio` puede ser NULL en la v1.
 
 ```sql
 -- backend/src/db/esquema.sql

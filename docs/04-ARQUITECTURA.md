@@ -11,6 +11,7 @@ iest-tfi_seanstore/
 ├── memory.md                            ← estado del proyecto y decisiones
 ├── README.md                            ← qué es, enlaces y cómo correrlo
 ├── DESIGN.md                            ← diseño aprobado y animaciones
+├── ETAPA-1.md                           ← qué se construye en la primera etapa (TFI)
 ├── opencode.json                        ← permisos del agente
 ├── .opencode/commands/                  ← /spec, /clarificar, /plan, /tareas, /implementar, /verificar, /cambio
 ├── .agents/skills/                      ← verificar-criterios, revisar-marca, registrar-error-ia
@@ -195,7 +196,7 @@ iest-tfi_seanstore/
 | Método | Ruta | Qué hace |
 | --- | --- | --- |
 | GET | `/api/productos` | Lista productos (`?categoria=`, `?buscar=`, `?orden=precio_asc\|precio_desc\|nuevos\|vendidos`, `?destacados=1`) |
-| GET | `/api/productos/:slug` | Detalle con fotos, talles y colores. En la versión 1 no incluye stock (el negocio produce a pedido) ni reseñas aprobadas (v2: no existe la tabla `resenas`) |
+| GET | `/api/productos/:slug` | Detalle con fotos, stock, guía de talles y reseñas aprobadas |
 | GET | `/api/categorias` | Lista de categorías |
 | GET | `/api/contenido` | Promociones vigentes, medios de pago, preguntas frecuentes, testimonios y trabajos destacados |
 | GET | `/api/trabajos` | Galería de trabajos (`?tipo=`) |

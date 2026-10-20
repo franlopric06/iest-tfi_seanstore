@@ -2,15 +2,12 @@
 
 Sean's Store es un negocio de **sublimación y productos personalizados** (tazas, termos, remeras, buzos, camperas, gorras, canilleras y más) de Tinogasta, Catamarca, con local físico y atención por WhatsApp. Este repositorio es su **tienda online**, desarrollada con agentes de IA siguiendo el ciclo **Spec-Driven Development (SDD)**.
 
-**Versión 1 (TFI, entrega 28/10/2026):** vidriera online con pedido por WhatsApp. Tres funcionalidades:
+## Primera etapa: leé `ETAPA-1.md`
 
-| Carpeta | Funcionalidad | RF |
-| --- | --- | --- |
-| `specs/001-catalogo/` | Inicio, catálogo y detalle del producto | RF01, RF02, RF04 |
-| `specs/002-pedido-whatsapp/` | Pedido por WhatsApp con o sin diseño + botón flotante | RF07, RF24 |
-| `specs/003-asistente/` | Asistente de preguntas frecuentes | RF25 |
+La carpeta `docs/` describe **la tienda completa**. **`ETAPA-1.md`** dice **qué se construye ahora** (la entrega del TFI, 28/10/2026): catálogo, pedido por WhatsApp, asistente y un panel chico, con datos de demostración.
 
-Pagos, carrito, cuentas, emails y panel son de la **versión 2**: no se construyen ahora.
+- Leé `docs/` para entender el proyecto, pero **construí solo lo que dice `ETAPA-1.md`**.
+- **Si algo de `docs/` choca con `ETAPA-1.md`, manda `ETAPA-1.md`.** No corrijas ni preguntes por esas diferencias: `docs/` describe la tienda terminada y está bien que tenga más cosas.
 
 **Stack:** React + Vite + Tailwind CSS v4 + Motion · Node.js + Express · PostgreSQL (Neon) · Vitest · Vercel
 **Repositorio:** GitHub (`iest-tfi_seanstore`)
@@ -18,9 +15,10 @@ Pagos, carrito, cuentas, emails y panel son de la **versión 2**: no se construy
 ## Al empezar cada conversación
 
 1. Leé `memory.md`: etapa actual, próxima tarea y decisiones.
-2. Leé `docs/CONSTITUCION.md`. Sus 8 principios mandan sobre todo lo demás.
+2. Leé `ETAPA-1.md` y `docs/CONSTITUCION.md` (sus 8 principios mandan sobre todo lo demás).
 3. Leé los archivos que necesite la tarea (tabla de abajo). **Abrilos de verdad con la herramienta de lectura**: nunca respondas sobre un archivo sin haberlo leído en esta conversación. Si te piden un dato de un archivo, citá el texto exacto.
 4. Antes de modificar archivos, explicá qué vas a hacer y en qué archivos, y esperá el "ok".
+5. Hacé **solo lo que se pidió en el mensaje**. Si ves algo más para corregir, mencionalo al final en una línea, pero no lo hagas.
 
 Una tarea, una conversación. Lo que haya que recordar va a `memory.md`, no al chat.
 
@@ -28,12 +26,13 @@ Una tarea, una conversación. Lo que haya que recordar va a `memory.md`, no al c
 
 | Archivo | Para qué sirve |
 | --- | --- |
+| `ETAPA-1.md` | **Qué se construye ahora** (manda sobre `docs/` si algo choca) |
 | `docs/CONSTITUCION.md` | Los 8 principios que no se negocian |
 | `memory.md` | Estado actual, próxima tarea, decisiones y problemas resueltos |
 | `DESIGN.md` | Diseño aprobado: secciones del inicio, animaciones y prototipos de `diseno/` |
 | `docs/IDENTIDAD-MARCA.md` | Nombre, logo, colores, tipografías, tema de Tailwind y tono de voz |
-| `docs/01-CONTEXTO.md` | Por qué existe la tienda, para quién es, versiones y qué no incluye |
-| `docs/02-REQUERIMIENTOS.md` | RF01 a RF41 con prioridad (Alta = versión 1), historias de usuario y RNF |
+| `docs/01-CONTEXTO.md` | Por qué existe la tienda, para quién es y qué no incluye |
+| `docs/02-REQUERIMIENTOS.md` | RF01 a RF41 de la tienda completa, historias de usuario y RNF |
 | `docs/03-TECNOLOGIAS.md` | Herramientas y dependencias permitidas |
 | `docs/04-ARQUITECTURA.md` | Carpetas, archivos y rutas de la API |
 | `docs/05-DATOS.md` | Tablas y esquema SQL |
@@ -76,7 +75,7 @@ No se salta ninguna fase y no se escribe código antes de que el estudiante apru
 - Animaciones **solo con Motion** (solo `transform` y `opacity`, sin `blur`, con `useReducedMotion`). **No agregar efectos** que no estén en `DESIGN.md`.
 - Cada componente, página o función va en **su propio archivo**, de no más de ~150 líneas.
 - Toda pantalla que carga datos muestra estado de carga, vacío y error.
-- Todo el texto que ve el cliente va en español rioplatense (vos). **Sin textos de relleno:** si falta un dato real, se pregunta.
+- Todo el texto que ve el cliente va en español rioplatense (vos). **Sin textos de relleno** ("lorem ipsum", "Producto 1", "[a completar]").
 
 ### Datos y servidor
 
@@ -91,7 +90,7 @@ No se salta ninguna fase y no se escribe código antes de que el estudiante apru
 
 ### Honestidad
 
-- **Nunca** inventar reseñas, testimonios, contadores, precios, direcciones, teléfonos ni horarios.
+- **Nunca** inventar reseñas, testimonios ni contadores de ventas. Los precios, el stock y las descripciones son los **datos de demostración** de `ETAPA-1.md`; no se inventan otros.
 - Toda imagen o video hecho con IA se muestra con la leyenda «Generado con IA».
 
 ### Usuarios y seguridad
@@ -111,7 +110,7 @@ No se salta ninguna fase y no se escribe código antes de que el estudiante apru
 
 - Usar `/init` ni reescribir completos `AGENTS.md`, `CLAUDE.md`, `memory.md`, `DESIGN.md` o la constitución: solo se editan las partes que cambian.
 - Hacer `git push`, borrar archivos o instalar dependencias que no estén en `03-TECNOLOGIAS.md` sin preguntar.
-- Construir funciones de la versión 2.
+- Construir funciones que no estén en `ETAPA-1.md`.
 - Deformar, recolorear o redibujar el logo (usar los archivos de `marca/`).
 - Usar `dangerouslySetInnerHTML` o guardar datos personales en `localStorage`.
 

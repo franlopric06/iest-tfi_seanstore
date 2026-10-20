@@ -1,5 +1,7 @@
 # 01 · Contexto
 
+Este archivo describe la **tienda completa**. Qué se construye en la primera etapa está en `ETAPA-1.md`.
+
 ## Problema
 
 Sean's Store vende solo en el local y por WhatsApp. Los clientes no tienen dónde ver **todo lo que se puede personalizar**, así que preguntan una y otra vez lo mismo: qué productos hay, qué talles, qué colores y cuánto sale. Los diseños llegan mezclados con audios y mensajes, los pagos se coordinan a mano y es fácil perder un archivo, confundir un pedido o no saber cuál ya está pagado. Además, solo se puede vender en horario de atención y el negocio no tiene una vidriera online que genere confianza en quien no lo conoce.
@@ -18,13 +20,6 @@ Una **tienda online** donde el cliente pueda, a cualquier hora:
 8. Ver opiniones reales de otros compradores y trabajos ya hechos.
 
 Y donde el negocio pueda manejar productos, stock, pedidos, consultas, reseñas, promociones y contenido desde un **panel de administración**, con métricas de ventas.
-
-### Se construye en dos versiones
-
-- **Versión 1 (TFI, octubre 2026):** vidriera online con pedido por WhatsApp. Catálogo con fotos y precios, detalle del producto, pedido por WhatsApp con mensaje armado (con o sin diseño) y asistente de preguntas frecuentes. Los productos y las preguntas se cargan directamente en la base de datos.
-- **Versión 2:** subir el diseño, carrito, pago con Mercado Pago, cuentas, emails, seguimiento, reseñas, legales de compra online y panel de administración.
-
-Los puntos 1, 3 (por WhatsApp) y 7 del objetivo entran en la versión 1; el resto, en la versión 2. El detalle está en `02-REQUERIMIENTOS.md`.
 
 ## Público
 
@@ -54,15 +49,6 @@ La mayoría entra desde el **celular**, muchas veces desde un link compartido po
 - **Pedidos por cantidad:** presupuesto especial para equipos, egresados y empresas.
 
 ## Cómo compra un cliente
-
-**En la versión 1** (pedido por WhatsApp):
-
-```text
-Catálogo → Producto (talle, color, cantidad) → "Tengo mi diseño" o "No tengo diseño" → cuenta su idea
-→ "Pedir por WhatsApp" → se guarda la consulta → se abre WhatsApp con el mensaje armado → el negocio lo atiende
-```
-
-**En la versión 2:**
 
 **Con diseño propio** (compra online):
 

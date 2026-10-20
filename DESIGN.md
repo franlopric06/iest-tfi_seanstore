@@ -35,7 +35,7 @@ Este archivo describe **cómo se ve y cómo se mueve** la tienda, empezando por 
 - En celular: logo, carrito y botón de menú (hamburguesa).
 - Al bajar se achica y pasa a `bg-violeta/90 backdrop-blur-md`.
 
-> **Versión 1 (001-catalogo):** el header de la v1 muestra solo el logo y el enlace "Catálogo". Los íconos de buscar, cuenta, favoritos y carrito son de la versión 2: mostrarlos sin función confundiría al cliente. Entran con sus specs.
+> En la primera etapa el header y el footer son más simples: ver `ETAPA-1.md`.
 
 ### 3. Portada "Tu diseño en vivo" (`HeroSublimado`)
 
@@ -108,8 +108,6 @@ Título, enlace "Ver la galería" y 4 fotos reales de la tabla `galeria_trabajos
 ### 11. Footer
 
 Fondo `bg-violeta`, isotipo, "Sublimación y productos personalizados.", Visitanos (dirección y horarios `[a completar]`), Ayuda (Seguí tu pedido y legales), Medios de pago y el **Botón de arrepentimiento** bien visible.
-
-> **Versión 1 (001-catalogo):** el footer de la v1 va sin legales ni botón de arrepentimiento (son de `PaginaLegal` y la v2); muestra isotipo, la descripción del negocio y el contacto por WhatsApp.
 
 ### 12. Botones flotantes
 

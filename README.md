@@ -1,6 +1,6 @@
 # Sean's Store · Tienda online
 
-Tienda online de **Sean's Store**, un negocio de sublimación y productos personalizados de Tinogasta, Catamarca. La versión 1 es una vidriera online: el cliente ve todo lo que se puede personalizar, elige su producto y lo pide por WhatsApp con un mensaje armado, y un asistente le responde las dudas frecuentes.
+Tienda online de **Sean's Store**, un negocio de sublimación y productos personalizados de Tinogasta, Catamarca. La primera etapa es una tienda de demostración: el cliente ve los productos con su precio, elige uno y lo pide por WhatsApp con un mensaje armado, un asistente responde las dudas frecuentes y un panel chico permite editar los datos. La documentación de `docs/` describe la tienda completa y `ETAPA-1.md` dice qué se construye ahora.
 
 Trabajo Final Integrador de **Inteligencia Artificial** · Tecnicatura Superior en Desarrollo de Software · IEST Tinogasta · 2026
 Autor: Francisco Ricardo Lopez · Docente: Prof. Ana Camila Barrionuevo
@@ -29,6 +29,7 @@ React + Vite + Tailwind CSS v4 + Motion · Node.js + Express · PostgreSQL (Neon
 | `AGENTS.md`, `CLAUDE.md`, `memory.md` | Arnés del agente: reglas, y memoria del proyecto |
 | `.opencode/commands/` | Comandos `/spec`, `/clarificar`, `/plan`, `/tareas`, `/implementar`, `/verificar` y `/cambio` |
 | `.agents/skills/` | Skills `verificar-criterios`, `revisar-marca` y `registrar-error-ia` |
+| `ETAPA-1.md` | Qué se construye en la primera etapa (manda sobre `docs/` si algo choca) |
 | `docs/` | Constitución, especificación del negocio (01 a 10), marca, prompts y declaración de uso de IA |
 | `specs/` | Una carpeta por funcionalidad con su ciclo SDD |
 | `DESIGN.md`, `diseno/`, `marca/` | Diseño aprobado, prototipos y logos |

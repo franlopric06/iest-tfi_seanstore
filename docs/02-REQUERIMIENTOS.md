@@ -1,18 +1,8 @@
 # 02 · Requerimientos
 
-Prioridad: **Alta** = entra en la **versión 1** (la del TFI) y tiene que estar implementado y validado · **Media** = segunda etapa · **Baja** = puede venir después.
+Este archivo describe la **tienda completa**. Qué se construye en la primera etapa está en `ETAPA-1.md`.
 
-## Versión 1 (TFI · octubre 2026)
-
-La primera versión publicada es una **vidriera online con pedido por WhatsApp**: el cliente ve el catálogo, elige el producto y lo pide por WhatsApp con un mensaje armado, y un asistente le responde las dudas frecuentes. Los pagos online, el carrito, las cuentas, los emails y el panel quedan para la **versión 2**.
-
-| Funcionalidad | Carpeta | RF |
-| --- | --- | --- |
-| Inicio, catálogo y detalle del producto | `specs/001-catalogo/` | RF01, RF02, RF04 |
-| Pedido por WhatsApp ("Tengo mi diseño" / "No tengo diseño") | `specs/002-pedido-whatsapp/` | RF07, RF24 |
-| Asistente de preguntas frecuentes | `specs/003-asistente/` | RF25 |
-
-**Por qué este recorte:** el negocio hoy vende por WhatsApp, así que la versión 1 mejora lo que ya funciona (mostrar todo lo que se puede personalizar y ordenar las consultas) sin manejar dinero todavía. Los RF que antes eran de prioridad Alta y pasaron a la versión 2 están marcados con **(v2)**.
+Prioridad: **Alta** = sin esto la tienda no funciona · **Media** = importante para lanzar · **Baja** = puede venir después.
 
 ## Requerimientos funcionales
 
@@ -20,13 +10,13 @@ La primera versión publicada es una **vidriera online con pedido por WhatsApp**
 
 | ID | Requerimiento | Prioridad |
 | --- | --- | --- |
-| RF01 | Inicio según `DESIGN.md`: portada, franja de categorías y sellos, "Elegí qué personalizar", productos destacados, "Así de fácil" y "¿No tenés diseño?" (trabajos, reseñas y promociones aparecen cuando haya datos reales) | Alta |
+| RF01 | Inicio con portada, barra de promociones, categorías, productos destacados, trabajos realizados, reseñas destacadas y "¿Cómo comprar?" | Alta |
 | RF02 | Catálogo con filtro por categoría | Alta |
 | RF03 | Buscador por nombre y orden por precio, novedad o más vendidos | Media |
 | RF04 | Detalle del producto con varias fotos, precio, precio anterior tachado si está en oferta, stock, talle, color y cantidad | Alta |
 | RF05 | Guía de talles en los productos que la tengan (remeras, buzos, camperas, canilleras) | Media |
-| RF06 | "Tengo mi diseño": subir una imagen PNG o JPG de hasta 5 MB, obligatoria para comprar online | Media (v2) |
-| RF07 | Pedido por WhatsApp desde el producto: el cliente elige "Tengo mi diseño" o "No tengo diseño", cuenta su idea, se guarda la consulta y se abre WhatsApp con un mensaje armado (el detalle se define en `specs/002-pedido-whatsapp/`) | Alta |
+| RF06 | "Tengo mi diseño": subir una imagen PNG o JPG de hasta 5 MB, obligatoria para comprar online | Alta |
+| RF07 | "No tengo diseño": reemplaza "Agregar al carrito" por "Consultar por WhatsApp", guarda la consulta y abre WhatsApp con un mensaje armado | Alta |
 | RF08 | Galería de trabajos realizados, filtrable por tipo de producto | Media |
 | RF09 | Página "Equipos y egresados" con formulario de presupuesto por cantidad | Media |
 | RF10 | Favoritos: guardar productos para después (requiere cuenta) | Baja |
@@ -35,13 +25,13 @@ La primera versión publicada es una **vidriera online con pedido por WhatsApp**
 
 | ID | Requerimiento | Prioridad |
 | --- | --- | --- |
-| RF11 | Carrito: agregar, quitar y cambiar cantidades, con subtotal | Media (v2) |
-| RF12 | Checkout en 3 pasos (tus datos, entrega, pago), como invitado o con cuenta | Media (v2) |
-| RF13 | Entrega: retiro en el local o envío a domicilio (con dirección) | Media (v2) |
-| RF14 | Pago con Mercado Pago dentro de la página (tarjeta, débito y dinero en cuenta) | Media (v2) |
+| RF11 | Carrito: agregar, quitar y cambiar cantidades, con subtotal | Alta |
+| RF12 | Checkout en 3 pasos (tus datos, entrega, pago), como invitado o con cuenta | Alta |
+| RF13 | Entrega: retiro en el local o envío a domicilio (con dirección) | Alta |
+| RF14 | Pago con Mercado Pago dentro de la página (tarjeta, débito y dinero en cuenta) | Alta |
 | RF15 | Opción "Pagar al retirar en el local" | Media |
-| RF16 | Verificar stock antes de pagar y descontarlo cuando se confirma el pago | Media (v2) |
-| RF17 | Confirmación con código de pedido (ej. `SS-0042`) en pantalla y por email | Media (v2) |
+| RF16 | Verificar stock antes de pagar y descontarlo cuando se confirma el pago | Alta |
+| RF17 | Confirmación con código de pedido (ej. `SS-0042`) en pantalla y por email | Alta |
 | RF18 | Seguimiento del pedido con código + email, con línea de tiempo de estados | Media |
 | RF19 | Email automático en cada cambio de estado del pedido | Media |
 
@@ -50,7 +40,7 @@ La primera versión publicada es una **vidriera online con pedido por WhatsApp**
 | ID | Requerimiento | Prioridad |
 | --- | --- | --- |
 | RF20 | Registro e inicio de sesión con email y contraseña, con botón para mostrar u ocultar la contraseña | Media |
-| RF21 | Recuperar contraseña: "Olvidé mi contraseña" → email con link que vence en 1 hora → nueva contraseña | Media (v2) |
+| RF21 | Recuperar contraseña: "Olvidé mi contraseña" → email con link que vence en 1 hora → nueva contraseña | Alta |
 | RF22 | "Mis pedidos" con el estado de cada uno | Media |
 | RF23 | "Mis datos": editar nombre, teléfono y dirección, y cambiar la contraseña | Baja |
 
@@ -59,7 +49,7 @@ La primera versión publicada es una **vidriera online con pedido por WhatsApp**
 | ID | Requerimiento | Prioridad |
 | --- | --- | --- |
 | RF24 | Botón flotante de WhatsApp en todas las páginas de la tienda | Alta |
-| RF25 | Asistente de preguntas frecuentes: burbuja que responde dudas de la tienda y deriva a WhatsApp si no encuentra respuesta | Alta |
+| RF25 | Asistente de preguntas frecuentes: burbuja que responde dudas de la tienda y deriva a WhatsApp si no encuentra respuesta | Media |
 | RF26 | Página de contacto con horarios, dirección, mapa y WhatsApp | Media |
 
 ### Confianza
@@ -76,16 +66,16 @@ La primera versión publicada es una **vidriera online con pedido por WhatsApp**
 
 | ID | Requerimiento | Prioridad |
 | --- | --- | --- |
-| RF32 | Páginas de términos y condiciones, política de privacidad y cambios y devoluciones | Media (v2) |
-| RF33 | Botón de arrepentimiento en el pie de todas las páginas, con formulario que genera un código de trámite y avisa por email | Media (v2) |
+| RF32 | Páginas de términos y condiciones, política de privacidad y cambios y devoluciones | Alta |
+| RF33 | Botón de arrepentimiento en el pie de todas las páginas, con formulario que genera un código de trámite y avisa por email | Alta |
 
 ### Panel de administración
 
 | ID | Requerimiento | Prioridad |
 | --- | --- | --- |
-| RF34 | Ingreso solo para usuarios con rol administrador | Media (v2) |
-| RF35 | Productos: crear, editar, pausar y borrar, con varias fotos, precio, precio anterior, stock, talles, colores, guía de talles y "destacado" | Media (v2) |
-| RF36 | Pedidos: lista con filtros por estado, detalle con los diseños para descargar y cambio de estado (dispara el email) | Media (v2) |
+| RF34 | Ingreso solo para usuarios con rol administrador | Alta |
+| RF35 | Productos: crear, editar, pausar y borrar, con varias fotos, precio, precio anterior, stock, talles, colores, guía de talles y "destacado" | Alta |
+| RF36 | Pedidos: lista con filtros por estado, detalle con los diseños para descargar y cambio de estado (dispara el email) | Alta |
 | RF37 | Consultas: presupuestos, "no tengo diseño" y arrepentimientos, con marca de "atendida" | Media |
 | RF38 | Contenido: preguntas del asistente, promociones, medios de pago y galería de trabajos | Media |
 | RF39 | Reseñas: aprobar, ocultar y destacar; cargar testimonios | Media |
@@ -160,5 +150,5 @@ La primera versión publicada es una **vidriera online con pedido por WhatsApp**
 - **RNF08 · Mantenimiento:** código ordenado, un componente por archivo, todo en español.
 - **RNF09 · Estados claros:** toda pantalla que carga datos muestra estado de carga, vacío y error (ver `06-DISENO-UI.md`).
 - **RNF10 · Diseño profesional:** diseño propio y actual, con animaciones y microinteracciones según la dirección de diseño y el sistema de movimiento de `06-DISENO-UI.md`, fluidas en celular y desactivables con "reducir movimiento".
-- **RNF11 · Tests:** cada RF de prioridad Alta tiene tests automáticos en verde (`npm test`) y el build termina sin errores.
+- **RNF11 · Tests:** cada RF que se construye tiene tests automáticos en verde (`npm test`) y el build termina sin errores.
 - **RNF12 · Transparencia:** toda imagen, video o gráfico hecho con IA lleva la leyenda «Generado con IA» en el sitio.

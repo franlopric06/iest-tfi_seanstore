@@ -50,7 +50,7 @@ backend:  express, pg, bcrypt, jsonwebtoken, cookie-parser, multer, cloudinary,
 backend dev: vitest, supertest
 ```
 
-**En la versión 1** solo se instalan las que se usan: en el frontend, todas menos `@mercadopago/sdk-react`; en el backend, `express`, `pg`, `helmet`, `express-rate-limit`, `cors` y `dotenv`. Las demás se agregan cuando llegue la versión 2.
+En la primera etapa (`ETAPA-1.md`) solo se instalan las que se usan: en el frontend, todas menos `@mercadopago/sdk-react` y `@vercel/analytics`; en el backend, `express`, `pg`, `helmet`, `express-rate-limit`, `cors`, `dotenv` y, para el panel, `bcrypt`, `jsonwebtoken` y `cookie-parser`.
 
 ```text
 ```
