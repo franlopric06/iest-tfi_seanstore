@@ -55,6 +55,7 @@ const FranjaCategorias = () => {
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
+      className="bg-linear-to-b from-violeta from-50% to-fondo to-50%"
     >
       <nav
         aria-label="Categorías del catálogo"
