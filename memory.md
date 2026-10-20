@@ -8,10 +8,11 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 
 ## Estado actual
 
-- **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación).
-- **Última tarea hecha:** publicación en Vercel lista y probada. Dos proyectos del mismo repo: tienda (Root Directory `frontend/`, https://sean-store.vercel.app) y API (Root Directory `backend/`, https://sean-store-api.vercel.app). `GET /api/salud` responde `{"estado":"ok"}` y la variable `FRONTEND_URL=https://sean-store.vercel.app` está cargada en el panel. El frontend lleva `vercel.json` con el rewrite `/(.*)` → `/index.html` (patrón SPA para React Router) y un `.env.ejemplo` con `VITE_API_URL` (en el frontend de Vercel se configura la variable con la URL de la API cuando el código la empiece a usar). El backend sin cambios: Vercel detecta Express con configuración cero en `src/app.js` (importa express, export default, sin `listen`, que está solo en `servidor.js`); variables en el panel, sin `dotenv`. Verde: `npm test` frontend (1), `npm test` backend (3), `npm run build`. Tarea marcada con `[x]` en `08-TAREAS.md`.
-- **Próxima tarea:** conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega.
-- **Datos reales que faltan del negocio:** lista de productos con precios, talles y colores; dirección; horarios; número de WhatsApp; tiempos de entrega; medidas de las guías de talles.
+- **Etapa:** specs de la versión 1. `001-catalogo/` tiene `spec.md` **aprobada** y `clarificacion.md` con las 10 decisiones cerradas (19/10/2026). Pendientes: `002-pedido-whatsapp/` y `003-asistente/`.
+- **Última tarea hecha:** fase 2 de 001-catalogo (QA + clarificación). Docs alineados a la spec: `09-SEO.md` (JSON-LD de producto sin `offers` en la v1, Open Graph por producto → v2), `05-DATOS.md` (columna `generada_con_ia` en `producto_fotos`, `precio` nullable en v1, nota de tablas de la v1) y `04-ARQUITECTURA.md` (detalle sin stock ni reseñas en la v1). `PROMPTS.md` con el Error N° 6 (texto mezclado en el chat, 4 veces detectadas por el estudiante).
+- **Próxima tarea:** `/plan` de 001-catalogo (y después `/tareas`).
+- **Pendiente del negocio:** preguntar al hermano los 4 productos destacados de "Los más pedidos". Hasta que responda, ningún producto va con `destacado = TRUE` y la sección queda oculta por R3; cuando conteste, se marcan con `/cambio`.
+- **Datos reales ya cerrados:** lista de los 13 productos por categoría, talles (S–XXL indumentaria; S/M/L canilleras; talle único el resto), colores blanco y catálogo de `specs/001-catalogo/spec.md`. Sin precios en pantalla: se cotiza por WhatsApp.
 
 ## Datos del proyecto
 
@@ -41,6 +42,11 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | 19/10/2026 | Vitest con `globals: true` en `vite.config.js` | Sin él, `describe`/`it`/`expect` no existen en los archivos de test (Error N° 2 en `docs/PROMPTS.md`) |
 | 19/10/2026 | El ejemplo de variables de entorno se llama `.env.ejemplo` (no `.env.example`) | El `.gitignore` (con la excepción `!.env.ejemplo`) y el README ya usaban ese nombre; se corrigió `10-SEGURIDAD.md` |
 | 19/10/2026 | Solo el frontend lleva `vercel.json`; la API no necesita ninguno | Vercel detecta Express con configuración cero: busca `src/app.js` con la app exportada como default; el rewrite SPA solo hace falta en el frontend (React Router) |
+| 19/10/2026 | Vidriera de la v1 sin precios ("Consultá el precio") y sin stock: se cotiza por WhatsApp y se produce a pedido | Clarificación 001-catalogo (decisiones 2 y del borrador de precios) |
+| 19/10/2026 | Colores de la v1: blanco en todos los productos (la sublimación solo se hace sobre blanco) | Clarificación 001-catalogo, decisión 1 |
+| 19/10/2026 | Fotos de producto generadas con IA en `frontend/public/img/productos/` (WebP); `producto_fotos.generada_con_ia` y leyenda en tarjeta y detalle | Clarificación 001-catalogo (decisiones 5 y 6; RNF12) |
+| 19/10/2026 | Tablas de la v1: `categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`; carga por SQL escrito por el agente y ejecutado por el estudiante en Neon (la `DATABASE_URL` nunca pasa por el chat) | Clarificación 001-catalogo (decisiones 8 y 3) |
+| 19/10/2026 | JSON-LD de producto sin `offers` y sin Open Graph por producto (middleware de Vercel) hasta que haya precios; solo OG general en `index.html` | Clarificación 001-catalogo (decisiones 7 y 10) |
 
 ## Problemas resueltos
 

@@ -126,6 +126,8 @@ Ayudan a que Google muestre el precio, la disponibilidad y las estrellas en los 
 
 `aggregateRating` se agrega **solo** si el producto tiene reseñas aprobadas, y con los valores reales calculados de la base.
 
+> **Versión 1 (19/10/2026):** mientras el negocio no cargue precios reales (cotiza por WhatsApp), el bloque `offers` del JSON-LD de producto **se omite**, para no publicar un precio falso. Vuelve con su `price` y `availability` reales cuando entren los precios (por `/cambio`). El `"price": "0"` del ejemplo de arriba es solo ilustrativo.
+
 **En el inicio y en contacto:** `LocalBusiness` con nombre, logo, teléfono, dirección y horarios (`[a completar]`).
 
 **En catálogo y detalle:** `BreadcrumbList` (Inicio › Categoría › Producto).

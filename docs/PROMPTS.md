@@ -62,3 +62,14 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** lo detectó el estudiante revisando `app.js` y `.env.ejemplo` antes del commit.
 - **Corrección humana:** el estudiante pidió tres cambios: cambiar `??` por `||` (que saltea también `""`), poner los valores de ejemplo que no son secretos (`PORT=3000` y `FRONTEND_URL=http://localhost:5173`; `DATABASE_URL` queda vacía porque es secreta) y agregar un test que compruebe la cabecera `Access-Control-Allow-Origin`.
 - **Para que no se repita:** en `origin` y demás variables de entorno usar `||` (no `??`) cuando el valor vacío no sirve, y en los ejemplos de `.env` dejar vacío solo lo secreto; probar siempre la cabecera CORS con un test.
+
+### Error N° 6 · Texto del chat con palabras mezcladas y sin sentido
+
+- **Fecha y fase:** 19/10/2026 · Spec de 001-catalogo (fases 1 y 2)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** una entrevista antes de escribir la spec (5 preguntas con opciones) y, después, la revisión de hallazgos con recomendaciones.
+- **Qué hizo mal la IA:** dos veces el texto salió mezclado y sin sentido, tanto en la entrevista (pregunta N° 5, sobre los datos de desarrollo) como en las opciones del hallazgo 1 ("haría fermentar la misma line for all sections..."). No se podía leer la pregunta ni la recomendación.
+- **Cómo se detectó:** lo detectó el estudiante al leer las respuestas; le avisó a la IA las dos veces y la hizo rehacer.
+- **Corrección humana:** el estudiante apartó la pregunta afectada y la volvió a responder en texto simple; en el hallazgo 1 pidió "evitá eso" y la IA reformuló.
+- **Para que no se repita:** en el chat, cada pregunta con opciones va corta y de a una, sin textos largos de relleno; si algo sale ilegible, se avisa y se reescribe antes de seguir.
+- **Ocurrencias adicionales (19/10/2026):** tercera y cuarta vez en la misma conversación (final de la pregunta del hallazgo 6 y criterio de finalización de `spec.md` con "destacadosNames"). El estudiante detectó ambas; se mantiene la regla: frases completas en español, texto corto, releer el archivo escrito antes de avisar y reescritura inmediata cuando sale ilegible.

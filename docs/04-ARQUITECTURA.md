@@ -195,7 +195,7 @@ iest-tfi_seanstore/
 | Método | Ruta | Qué hace |
 | --- | --- | --- |
 | GET | `/api/productos` | Lista productos (`?categoria=`, `?buscar=`, `?orden=precio_asc\|precio_desc\|nuevos\|vendidos`, `?destacados=1`) |
-| GET | `/api/productos/:slug` | Detalle con fotos, stock, guía de talles y reseñas aprobadas |
+| GET | `/api/productos/:slug` | Detalle con fotos, talles y colores. En la versión 1 no incluye stock (el negocio produce a pedido) ni reseñas aprobadas (v2: no existe la tabla `resenas`) |
 | GET | `/api/categorias` | Lista de categorías |
 | GET | `/api/contenido` | Promociones vigentes, medios de pago, preguntas frecuentes, testimonios y trabajos destacados |
 | GET | `/api/trabajos` | Galería de trabajos (`?tipo=`) |
