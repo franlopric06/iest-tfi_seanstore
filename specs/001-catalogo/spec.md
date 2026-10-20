@@ -20,7 +20,8 @@ Decisión 1 de la clarificación: **blanco en todos los productos, porque la sub
 - **Fotos:** se generan con IA. Van en `frontend/public/img/productos/` en WebP liviano; la base guarda la ruta. Los originales quedan en `multimedia/imagenes/` con su ficha en `FICHAS-IA.md`. La tabla `producto_fotos` lleva la columna `generada_con_ia` (BOOLEAN): la leyenda «Generado con IA» se muestra solo cuando está en `TRUE` (R12).
 - **Precios:** el negocio cotiza por cantidad y diseño, así que **la versión 1 no muestra precios**; la columna `precio` de la base puede quedar vacía. Si el negocio pasa precios reales, se muestran con `/cambio`.
 - **Destacados:** los 4 productos de "Los más pedidos" los está eligiendo el negocio (decisión 4 de la clarificación). Hasta que responda, ningún producto va con `destacado = TRUE` y la sección queda oculta (R3); cuando conteste, se marcan con `/cambio`.
-- **Carga:** el agente escribe el SQL (esquema de las tablas de la versión 1 y la carga de las 4 categorías y los 13 productos) en `backend/src/db/`, y el estudiante lo ejecuta en el SQL Editor de Neon. La `DATABASE_URL` nunca pasa por el chat ni la ve el agente (principio 6). El `datos-ejemplo.sql` con precios en 0 no se usa en la versión 1.
+- **Carga:** el agente escribe el SQL (esquema de las tablas de la versión 1 y la carga de las 4 categorías y los 12 productos) en `backend/src/db/`, y el estudiante lo ejecuta en el SQL Editor de Neon. La `DATABASE_URL` nunca pasa por el chat ni la ve el agente (principio 6). El `datos-ejemplo.sql` con precios en 0 no se usa en la versión 1.
+- **Descripciones:** en la carga inicial la columna `descripcion` va en `NULL`; los textos reales (medidas, material, cuidados) los pasa el negocio después y entran con `/cambio`. Mientras una descripción sea `NULL`, el detalle del producto no muestra ese bloque: ni texto de relleno ni espacio vacío.
 - **Tablas de la versión 1** (decisión 8): `categorias`, `productos`, `producto_fotos`, `consultas` y `preguntas_frecuentes`. El resto de las tablas de `05-DATOS.md` (pedidos, usuarios, reseñas…) son de la versión 2.
 
 ## Historias de usuario
@@ -65,6 +66,7 @@ Notas sobre la decisión de alcance:
 - **Slug inexistente o producto pausado:** 404 con página propia (R11).
 - **Producto sin fotos:** recuadro con el nombre (R13); si una foto no carga, por su `alt` se entiende igual.
 - **Productos sin destacado:** "Los más pedidos" se oculta (R3) hasta que el negocio marque los 4 con `/cambio`.
+- **Producto sin descripción:** `descripcion = NULL` en la carga inicial; el detalle no muestra el bloque de descripción, sin relleno (honestidad / RNF07).
 - **Nombres y descripciones largos:** el nombre se trunca con puntos suspensivos en la tarjeta y se completa en el detalle; la descripción usa `max-w-prose`.
 - **Talle único:** se muestra el texto "Talle único" en vez de la lista de talles.
 - **Celular (desde 360 px):** portada en una columna, grilla de 1 columna, franjas inclinadas a −3°, todo tocable (44 px).
@@ -101,3 +103,4 @@ Notas sobre la decisión de alcance:
 | 19/10/2026 | Clarificación: colores (blanco, técnica de sublimación), sin stock (produce a pedido), carga SQL en `backend/src/db/`, destacados pendientes del negocio, fotos IA en `public/img/productos/` + columna `generada_con_ia`, leyenda IA en tarjeta y detalle, JSON-LD sin `offers`, tablas de v1 y sin sección de reseñas, enlace "Volver al catálogo" | Fase 2 del ciclo SDD: las 9 decisiones del estudiante (`clarificacion.md`) |
 | 19/10/2026 | Estado pasa a **aprobada** | Todas las decisiones cerradas y documentadas |
 | 19/10/2026 | Decisión 10 del estudiante: sin Open Graph por producto en la v1 (middleware de Vercel → v2); R15 ajustado y nota en "Fuera de alcance". Docs alineados: `05-DATOS.md` (columna `generada_con_ia`, `precio` nullable en v1, nota de tablas de la v1) y `04-ARQUITECTURA.md` (detalle sin reseñas ni stock en la v1) | Fase 2 cerrada: los docs ahora coinciden con la spec |
+| 19/10/2026 | `/cambio` al implementar T02: la tabla "Catálogo real" lista 12 productos, pero el resto de la spec y el plan decían 13. Se corrige el conteo a **12** (los datos reales los confirmó el estudiante), la `descripcion` va en `NULL` hasta que el negocio pase los textos, y el detalle no muestra el bloque de descripción cuando es `NULL` | Conteo real de los productos de Sean's Store; sin inventar descripciones (RNF07) |

@@ -9,8 +9,8 @@ T01 y T02 sí generan commit (los archivos SQL están en el repo); lo manual es 
 
 - [x] **T01** · Crear el esquema de la versión 1: las 5 tablas (`categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`), sin tablas de la v2 · Requisito: R14 · Archivos: crear `backend/src/db/esquema-v1.sql` · Test: manual — el estudiante lo ejecuta en el SQL Editor de Neon (la `DATABASE_URL` nunca pasa por el chat)
   **Listo cuando:** en Neon existen las 5 tablas de la v1 y ninguna de la v2.
-- [ ] **T02** · Crear la carga inicial: 4 categorías y los 13 productos reales (talles y colores de la spec), `precio NULL`, `destacado FALSE`, `activo TRUE`, sin filas en `producto_fotos` · Requisito: R14 · Archivos: crear `backend/src/db/carga-catalogo.sql` · Test: manual en Neon
-  **Listo cuando:** los conteos en Neon dan 4 categorías, 13 productos, 0 fotos, 0 destacados y 13 activos.
+- [x] **T02** · Crear la carga inicial: 4 categorías y los 12 productos reales (talles y colores de la spec, `descripcion NULL` — cambio del 19/10/2026), `precio NULL`, `destacado FALSE`, `activo TRUE`, sin filas en `producto_fotos` · Requisito: R14 · Archivos: crear `backend/src/db/carga-catalogo.sql` · Test: manual en Neon
+  **Listo cuando:** los conteos en Neon dan 4 categorías, 12 productos, 0 fotos, 0 destacados y 12 activos.
 
 ## API (R14 y R11)
 
@@ -49,7 +49,7 @@ T01 y T02 sí generan commit (los archivos SQL están en el repo); lo manual es 
 ## Catálogo (R6, R9, R15, R7, R8)
 
 - [ ] **T17** · Página Catálogo: grilla 4/2/1 columnas desde 360 px + esqueletos grises mientras carga — primero el test · Requisito: R6, R9 · Archivos: crear `frontend/src/components/comunes/Cargando.jsx`, `frontend/src/pages/tienda/Catalogo.jsx`; modificar `frontend/src/App.jsx`, `frontend/tests/Catalogo.test.jsx` · Test: grilla con productos mock y esqueleto durante la carga
-  **Listo cuando:** `/catalogo` lista los 13 productos y el esqueleto aparece antes de los datos.
+  **Listo cuando:** `/catalogo` lista los 12 productos y el esqueleto aparece antes de los datos.
 - [ ] **T18** · SEO del catálogo: `MetaPagina` con JSON-LD de migas de pan y datos de la página /catálogo · Requisito: R15 · Archivos: modificar `frontend/src/pages/tienda/Catalogo.jsx`, `frontend/tests/Catalogo.test.jsx` · Test: título y `description`, un solo `<h1>` y JSON-LD de migas de pan sin bloque `offers`
   **Listo cuando:** el test de SEO del catálogo pasa (09-SEO.md); `MetaPagina` es el único que escribe título, descripción y JSON-LD.
 - [ ] **T19** · Filtro por categoría: `/catalogo/:slug` con las 4 categorías en chips, la actual marcada, táctil ≥ 44 px y foco magenta · Requisito: R7 · Archivos: crear `frontend/src/components/tienda/FiltroCategorias.jsx`; modificar `frontend/src/pages/tienda/Catalogo.jsx`, `frontend/tests/Catalogo.test.jsx` · Test: casos con y sin `:slug` (el filtro del API ya está probado en `productos.test.js`)

@@ -4,7 +4,7 @@
 
 ## 1. Resumen
 
-Se construye de abajo hacia arriba. Primero el SQL de la versión 1 en `backend/src/db/`: `esquema-v1.sql` (las 5 tablas de la v1) y `carga-catalogo.sql` (4 categorías y 13 productos reales, sin fotos todavía); el estudiante los ejecuta en el SQL Editor de Neon — la `DATABASE_URL` nunca pasa por el chat (principio 6). Segundo, la API: se agregan a la app de la Etapa 0 (`app.js` ya trae helmet, cors y el manejo de errores) las 3 rutas de lectura del catálogo con la convención `*.routes.js`, consultas con parámetros desde `db/conexion.js` y tests con Supertest que simulan `conexion.js` con `vi.mock` (la base real nunca se usa en tests, 07-CONVENCIONES). Tercero, el frontend: 4 pantallas (Inicio, Catálogo, Detalle, 404) que se alimentan de `services/api.js` — única puerta a la API — y muestran siempre carga, vacío o error; el header y el footer van mínimos en la v1 (logo + "Catálogo"; sin legales ni arrepentimiento), ajuste anotado en `DESIGN.md`. Todo con Tailwind desde los tokens de `index.css`, Motion para las animaciones de `DESIGN.md`, sin precios ("Consultá el precio"), sin destacados inventados, con la leyenda «Generado con IA» y el SEO de `09-SEO.md`.
+Se construye de abajo hacia arriba. Primero el SQL de la versión 1 en `backend/src/db/`: `esquema-v1.sql` (las 5 tablas de la v1) y `carga-catalogo.sql` (4 categorías y 12 productos reales, sin fotos todavía); el estudiante los ejecuta en el SQL Editor de Neon — la `DATABASE_URL` nunca pasa por el chat (principio 6). Segundo, la API: se agregan a la app de la Etapa 0 (`app.js` ya trae helmet, cors y el manejo de errores) las 3 rutas de lectura del catálogo con la convención `*.routes.js`, consultas con parámetros desde `db/conexion.js` y tests con Supertest que simulan `conexion.js` con `vi.mock` (la base real nunca se usa en tests, 07-CONVENCIONES). Tercero, el frontend: 4 pantallas (Inicio, Catálogo, Detalle, 404) que se alimentan de `services/api.js` — única puerta a la API — y muestran siempre carga, vacío o error; el header y el footer van mínimos en la v1 (logo + "Catálogo"; sin legales ni arrepentimiento), ajuste anotado en `DESIGN.md`. Todo con Tailwind desde los tokens de `index.css`, Motion para las animaciones de `DESIGN.md`, sin precios ("Consultá el precio"), sin destacados inventados, con la leyenda «Generado con IA» y el SEO de `09-SEO.md`.
 
 ## 2. Por requisito
 
@@ -51,7 +51,7 @@ Reglas comunes:
 **Carga del catálogo (SQL escrito por el agente, ejecutado por el estudiante en Neon):**
 
 - `esquema-v1.sql`: crea solo las tablas de la v1 — `categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes` (decisión 8). No crea tablas de la v2.
-- `carga-catalogo.sql`: 4 categorías + 13 productos reales (talles y colores de la spec), `precio NULL`, `destacado FALSE` en los 13 (pendiente del negocio), `activo TRUE`. **No inserta filas en `producto_fotos`**: los WebP todavía no existen y quedarían referencias rotas.
+- `carga-catalogo.sql`: 4 categorías + 12 productos reales (talles y colores de la spec), `precio NULL`, `descripcion NULL` (los textos reales entran después con `/cambio`), `destacado FALSE` en los 12 (pendiente del negocio), `activo TRUE`. **No inserta filas en `producto_fotos`**: los WebP todavía no existen y quedarían referencias rotas.
 - `carga-fotos.sql` (aparte, tarea posterior): inserta las fotos con su `alt` y `generada_con_ia = TRUE` cuando los WebP estén en `frontend/public/img/productos/`. Mientras tanto cada producto muestra el recuadro con su nombre (R13).
 - El `datos-ejemplo.sql` con precios en 0 no se usa en la v1 (decisión 3 de la clarificación).
 
@@ -92,7 +92,7 @@ Reglas comunes:
 | --- | --- |
 | Los tests de la API tocan la base real de Neon | Los tests de ruta hacen `vi.mock` de `db/conexion.js` con filas de prueba: la base real de Neon nunca se usa en tests (07-CONVENCIONES; Error N° 7 en `PROMPTS.md`) |
 | Falta `DATABASE_URL` al importar `conexion.js` en ambiente de test | El pool se crea con la URL del entorno pero no se conecta hasta ejecutar una consulta; como los tests mockean `conexion.js`, ningún test necesita la URL. La real vive solo en `backend/.env` (principio 6) |
-| El SQL de la carga falla y todo el frontend queda vacío | `tasks.md` lo parte en tareas cortas; el estudiante ejecuta y valida los conteos (4 categorías, 13 productos). El agente nunca ejecuta nada contra Neon, solo escribe los archivos |
+| El SQL de la carga falla y todo el frontend queda vacío | `tasks.md` lo parte en tareas cortas; el estudiante ejecuta y valida los conteos (4 categorías, 12 productos). El agente nunca ejecuta nada contra Neon, solo escribe los archivos |
 | Incluir el header/footer con funciones que no existen (carrito, favoritos, legales) | Header y footer mínimos de la v1 (ajuste anotado en `DESIGN.md`); lo demás entra con sus specs |
 | Inventar destacados (violación de RNF07) | Los 13 productos van con `destacado = FALSE`; la sección queda oculta por R3 hasta que el negocio elija (anotado en `memory.md`) |
 | «Generado con IA» donde no corresponde | La etiqueta se renderiza solo leyendo `generada_con_ia` de la foto; sin textos fijos |
@@ -116,3 +116,4 @@ Cuando el plan esté aprobado, sigue `/tareas` para partirlo en tareas de menos 
 4. Header mínimo (logo + "Catálogo") y footer sin legales ni arrepentimiento: ajuste de la v1 anotado en `DESIGN.md`.
 5. Eliminada la línea sin sentido sobre helmet y cors: ya están en `app.js`; `express-rate-limit` se agrega en 002, cuando hay formulario.
 6. `robots.txt` sí en la v1; el sitemap con script (`generarSitemap.js`) es de la versión 2.
+7. Conteo corregido a 12 productos con el `/cambio` del 19/10/2026 (la tabla de la spec listaba 12, el resto decía 13); `descripcion NULL` en la carga hasta que el negocio pase los textos.
