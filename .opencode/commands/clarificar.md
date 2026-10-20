@@ -1,13 +1,15 @@
 ---
 description: Fase 2 · Revisa la spec como QA y registra las decisiones del estudiante (ej. /clarificar 001-catalogo)
 ---
-Actuá como **QA** y revisá `specs/$1/spec.md` (leelo con la herramienta de lectura, junto con `docs/CONSTITUCION.md`).
+La primera palabra de $ARGUMENTS es la carpeta de la spec (ej. 001-catalogo); en /implementar la segunda es la tarea (ej. T01); en /spec y /cambio, el resto es la descripción.
+
+Actuá como **QA** y revisá `specs/$ARGUMENTS/spec.md` (leelo con la herramienta de lectura, junto con `docs/CONSTITUCION.md`).
 
 1. Buscá: requisitos ambiguos o que no se pueden probar, contradicciones con los `docs/` o con la constitución, casos límite que faltan, datos que no sabemos de dónde salen, y cosas de la versión 2 que se colaron.
-2. Creá `specs/$1/clarificacion.md`:
+2. Creá `specs/$ARGUMENTS/clarificacion.md`:
 
 ```markdown
-# Clarificación $1
+# Clarificación $ARGUMENTS
 
 | N° | Hallazgo | Pregunta | Opciones | Decisión del estudiante |
 | --- | --- | --- | --- | --- |

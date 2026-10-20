@@ -1,12 +1,14 @@
 ---
 description: Fase 4 · Divide el plan en tareas de menos de 30 minutos (ej. /tareas 001-catalogo)
 ---
-Leé `specs/$1/plan.md` (aprobado) y `specs/$1/spec.md`.
+La primera palabra de $ARGUMENTS es la carpeta de la spec (ej. 001-catalogo); en /implementar la segunda es la tarea (ej. T01); en /spec y /cambio, el resto es la descripción.
 
-Creá `specs/$1/tasks.md` con tareas de **menos de 30 minutos**, en orden, empezando por los tests:
+Leé `specs/$ARGUMENTS/plan.md` (aprobado) y `specs/$ARGUMENTS/spec.md`.
+
+Creá `specs/$ARGUMENTS/tasks.md` con tareas de **menos de 30 minutos**, en orden, empezando por los tests:
 
 ```markdown
-# Tareas $1
+# Tareas $ARGUMENTS
 
 - [ ] **T01** · <qué se hace> · Requisito: R1 · Archivos: … · Test: …
   **Listo cuando:** <resultado que se puede comprobar>

@@ -1,9 +1,11 @@
 ---
 description: Fase 3 · Arma el plan técnico sin código, ligado a cada requisito (ej. /plan 001-catalogo)
 ---
-Leé `specs/$1/spec.md` (tiene que estar **aprobada**), `docs/CONSTITUCION.md`, `docs/04-ARQUITECTURA.md`, `docs/05-DATOS.md` y `DESIGN.md`.
+La primera palabra de $ARGUMENTS es la carpeta de la spec (ej. 001-catalogo); en /implementar la segunda es la tarea (ej. T01); en /spec y /cambio, el resto es la descripción.
 
-Creá `specs/$1/plan.md` **sin código**, con:
+Leé `specs/$ARGUMENTS/spec.md` (tiene que estar **aprobada**), `docs/CONSTITUCION.md`, `docs/04-ARQUITECTURA.md`, `docs/05-DATOS.md` y `DESIGN.md`.
+
+Creá `specs/$ARGUMENTS/plan.md` **sin código**, con:
 
 1. **Resumen:** cómo se va a construir, en 4 o 5 líneas.
 2. **Por requisito:** una tabla `Requisito | Qué se hace | Archivos (crear o modificar) | Test que lo prueba`.

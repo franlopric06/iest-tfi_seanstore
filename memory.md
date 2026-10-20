@@ -8,9 +8,9 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 
 ## Estado actual
 
-- **Etapa:** fases 3 de 001-catalogo (`/plan`). `spec.md` **aprobada** con `clarificacion.md` cerrada (19/10/2026). `plan.md` corregido tras la revisión del estudiante (6 correcciones) y esperando su aprobación; después `/tareas`. Pendientes: `002-pedido-whatsapp/` y `003-asistente/`.
-- **Última tarea hecha:** plan de 001-catalogo corregido con: `vi.mock` de `conexion.js` en los tests de API (Error N° 7 en `PROMPTS.md`, detectado por el estudiante), archivos de Etapa 0 como "modificar" (rutas `*.routes.js` en `routes/index.js`), `carga-catalogo.sql` sin filas de `producto_fotos` (fotos después con `carga-fotos.sql`), header mínimo y footer sin legales en la v1 anotado en `DESIGN.md`, `express-rate-limit` en 002, `robots.txt` sí y sitemap en v2. Los tests y el build de Etapa 0 siguen en verde.
-- **Próxima tarea:** aprobación del plan (ok del estudiante) y `/tareas` de 001-catalogo.
+- **Etapa:** fase 4 de 001-catalogo (`/tareas`). `spec.md`, `clarificacion.md` y `plan.md` aprobados (19/10/2026). `tasks.md` creada con 29 tareas y **aprobada** con corrección del estudiante (tests propios en T08–T12; T07 "conectar la base y publicar" sin commit; SEO del inicio/catálogo/detalle en T13/T18/T22; T01 y T02 sí commitean). Commiteada y con push (`agrega tareas de 001-catalogo`). Pendientes: `/implementar` desde T01, después `002-pedido-whatsapp/` y `003-asistente/`.
+- **Última tarea hecha:** `tasks.md` de 001-catalogo aprobada: 29 tareas con una = un commit, todas con test propio; cada una empieza por su test y toca máximo 4 archivos; T01/T02 crean los SQL (se ejecutan a mano en Neon, el commit es del archivo), T07 conecta la base y publica sin tocar el repo (DATABASE_URL y VITE_API_URL en `.env` y Vercel, sin claves en el chat); SEO del detalle en T22 (JSON-LD de producto sin `offers` + migas) y del inicio en T13.
+- **Próxima tarea:** `/implementar` empezando por T01 (`esquema-v1.sql`).
 - **Pendiente del negocio:** preguntar al hermano los 4 productos destacados de "Los más pedidos". Hasta que responda, ningún producto va con `destacado = TRUE` y la sección queda oculta por R3; cuando conteste, se marcan con `/cambio`.
 - **Datos reales ya cerrados:** lista de los 13 productos por categoría, talles (S–XXL indumentaria; S/M/L canilleras; talle único el resto), colores blanco y catálogo de `specs/001-catalogo/spec.md`. Sin precios en pantalla: se cotiza por WhatsApp.
 
@@ -54,6 +54,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | --- | --- | --- |
 | 17/10/2026 | `npm install -g opencode-ai` falló en Windows (EPERM y falta el paquete nativo) | Desinstalar, borrar `opencode-ai` de `%APPDATA%\npm\node_modules` e instalar `opencode-ai opencode-windows-x64` |
 | 17/10/2026 | El agente respondió sobre `MEMORY.md` sin leerlo e inventó datos | Pedirle que use la herramienta de lectura y cite textual; regla agregada en `AGENTS.md` (ver Error N° 1 en `docs/PROMPTS.md`) |
+| 19/10/2026 | En `/spec`, OpenCode puso todos los argumentos en `$1` y quiso crear la carpeta "001-catalogo RF01 RF02 RF04" | Los 7 comandos de `.opencode/commands/` pasaron a usar solo `$ARGUMENTS`, con una línea que explica cómo leerlo (primera palabra = carpeta de la spec; en `/implementar`, la segunda = la tarea; en `/spec` y `/cambio`, el resto = la descripción) |
 
 ## Cosas a tener en cuenta
 

@@ -1,14 +1,16 @@
 ---
 description: Fase 1 · Escribe la spec de una funcionalidad en notación EARS (ej. /spec 001-catalogo RF01 RF02 RF04)
 ---
-Vamos a escribir la spec de la funcionalidad **$1**. Requisitos de origen: $ARGUMENTS
+La primera palabra de $ARGUMENTS es la carpeta de la spec (ej. 001-catalogo); en /implementar la segunda es la tarea (ej. T01); en /spec y /cambio, el resto es la descripción.
+
+Vamos a escribir la spec de la funcionalidad de la carpeta indicada en $ARGUMENTS. Requisitos de origen: el resto de $ARGUMENTS (ej. RF01 RF02 RF04).
 
 1. Leé con la herramienta de lectura: `docs/CONSTITUCION.md`, `memory.md`, `docs/02-REQUERIMIENTOS.md`, `DESIGN.md` y los `docs/` que tengan que ver con estos RF.
 2. **Entrevistame antes de escribir.** Haceme entre 3 y 6 preguntas cortas sobre lo que no esté claro en los documentos (comportamiento, datos, casos raros). Esperá mis respuestas.
-3. Con mis respuestas, creá `specs/$1/spec.md` con esta estructura:
+3. Con mis respuestas, creá `specs/$ARGUMENTS/spec.md` con esta estructura:
 
 ```markdown
-# Spec $1 · <nombre>
+# Spec $ARGUMENTS · <nombre>
 
 **RF de origen:** … · **Estado:** borrador · **Fecha:** …
 
