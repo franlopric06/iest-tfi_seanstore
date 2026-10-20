@@ -1,4 +1,11 @@
 const textos = {
+  inicio: {
+    seo: {
+      titulo: "Sean's Store · Sublimación y productos personalizados",
+      descripcion:
+        'Tazas, termos, remeras, buzos, gorras y canilleras con tu diseño. Te atendemos por WhatsApp.',
+    },
+  },
   header: {
     altLogo: "Sean's Store: sublimación y productos personalizados",
     enlaceCatalogo: 'Catálogo',
@@ -58,6 +65,40 @@ const textos = {
       { id: 'termo', nombre: 'Termos' },
       { id: 'canilleras', nombre: 'Canilleras' },
     ],
+  },
+  facil: {
+    titulo: 'Así de fácil',
+    pasos: [
+      {
+        titulo: 'Elegí tu producto.',
+        texto: 'Taza, remera, buzo, gorra, termo o canilleras, con el talle y el color que quieras.',
+      },
+      {
+        titulo: 'Subí tu diseño.',
+        texto: 'Una foto, tu logo o una frase. Si no tenés diseño, te lo hacemos por WhatsApp.',
+      },
+      {
+        titulo: 'Pagá como quieras.',
+        texto: 'Con Mercado Pago sin salir de la página, o en efectivo cuando lo retirás.',
+      },
+      {
+        titulo: 'Retiralo o te lo enviamos.',
+        texto: 'Te avisamos por email cuando está en producción y cuando está listo.',
+      },
+    ],
+    pasoscorto: [
+      { titulo: 'Elegí tu producto.', texto: 'Tazas, remeras, buzos, gorras, termos y canilleras.' },
+      { titulo: 'Subí tu diseño.', texto: 'Una foto, tu logo o una frase.' },
+      { titulo: 'Pagá como quieras.', texto: 'Mercado Pago o efectivo al retirar.' },
+      { titulo: 'Retiralo o te lo enviamos.', texto: 'Te avisamos cuando esté listo.' },
+    ],
+  },
+  sinDiseno: {
+    titulo: '¿No tenés diseño? Te lo hacemos.',
+    texto:
+      'Contanos tu idea por WhatsApp y armamos el diseño con vos. Te mandamos el boceto, lo ajustamos hasta que te guste y te pasamos el precio.',
+    boton: 'Consultar por WhatsApp',
+    mensaje: "Hola, Sean's Store. No tengo diseño, ¿me ayudan a armarlo?",
   },
 }
 

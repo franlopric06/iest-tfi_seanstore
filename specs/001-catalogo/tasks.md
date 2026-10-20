@@ -25,7 +25,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** el test pasa.
 - [x] **T07** · CintaProductos: los 5 íconos que pasan y se estampan (2,5 s c/u); con movimiento reducido se ve la canillera estampada · Requisito: R1, R16 · Archivos: crear `frontend/src/components/tienda/CintaProductos.jsx`, `frontend/tests/CintaProductos.test.jsx` · Test: se dibuja; con movimiento reducido queda en el estado final
   **Listo cuando:** el test pasa.
-- [ ] **T08** · Página Inicio con todas sus secciones ("Así de fácil" y "¿No tenés diseño?" incluidas), SEO del inicio (`MetaPagina`) y rutas con React Router · Requisito: R1, R15 · Archivos: crear `frontend/src/pages/tienda/Inicio.jsx`, `frontend/src/components/comunes/MetaPagina.jsx`, `frontend/tests/Inicio.test.jsx`; modificar `frontend/src/App.jsx` (y `tests/App.test.jsx` si se rompe) · Test: aparecen todas las secciones, el título y la descripción del inicio, y un solo `<h1>`
+- [x] **T08** · Página Inicio con todas sus secciones ("Así de fácil" y "¿No tenés diseño?" incluidas), SEO del inicio (`MetaPagina`) y rutas con React Router · Requisito: R1, R15 · Archivos: crear `frontend/src/pages/tienda/Inicio.jsx`, `frontend/src/components/comunes/MetaPagina.jsx`, `frontend/tests/Inicio.test.jsx`; modificar `frontend/src/App.jsx` (y `tests/App.test.jsx` si se rompe) · Test: aparecen todas las secciones, el título y la descripción del inicio, y un solo `<h1>`
   **Listo cuando:** `npm test` y `npm run build` en verde. Después del push, la portada se ve en `sean-store.vercel.app`.
 
 ## API

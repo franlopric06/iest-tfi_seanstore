@@ -1,4 +1,5 @@
 import { act, cleanup, render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import CintaProductos from '../src/components/tienda/CintaProductos.jsx'
 import textos from '../src/data/textos.js'
@@ -27,9 +28,11 @@ afterEach(() => {
   estadoMovimiento.reducido = false
 })
 
+const armar = () => render(<MemoryRouter><CintaProductos /></MemoryRouter>)
+
 describe('CintaProductos · sección "Elegí qué personalizar"', () => {
   it('R1 · se dibuja con el título, la frase, los 4 botones de categoría y la cinta con el primer producto', () => {
-    const { container } = render(<CintaProductos />)
+    const { container } = armar()
 
     expect(
       screen.getByRole('heading', { level: 2, name: textos.cinta.titulo })
@@ -52,7 +55,7 @@ describe('CintaProductos · sección "Elegí qué personalizar"', () => {
 
   it('R1 · los productos de la cinta cambian cada 2,5 segundos', async () => {
     vi.useFakeTimers()
-    render(<CintaProductos />)
+    armar()
 
     expect(screen.getByText(textos.cinta.productos[0].nombre)).toBeInTheDocument()
     expect(
@@ -76,7 +79,7 @@ describe('CintaProductos · sección "Elegí qué personalizar"', () => {
   it('R16 · con movimiento reducido se ve la canillera estampada, sin anillos ni gotas, y no se mueve', async () => {
     estadoMovimiento.reducido = true
     vi.useFakeTimers()
-    const { container } = render(<CintaProductos />)
+    const { container } = armar()
 
     expect(
       screen.getByText(textos.cinta.productos[4].nombre)

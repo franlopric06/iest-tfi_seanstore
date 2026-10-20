@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import textos from '../../data/textos.js'
 
 const Header = () => (
@@ -9,12 +10,12 @@ const Header = () => (
         className="h-11 w-auto md:h-16"
       />
       <nav aria-label="Navegación principal">
-        <a
-          href="/catalogo"
+        <Link
+          to="/catalogo"
           className="inline-flex min-h-11 items-center px-1 text-lg font-bold text-white transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta"
         >
           {textos.header.enlaceCatalogo}
-        </a>
+        </Link>
       </nav>
     </div>
   </header>

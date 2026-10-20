@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useReducedMotion } from 'motion/react'
 import textos from '../../data/textos.js'
 import PiezaCinta from './PiezaCinta.jsx'
@@ -49,16 +50,16 @@ const CintaProductos = () => {
 
           <nav aria-label="Ir a las categorías" className="mt-4 grid grid-cols-2 gap-2.5">
             {textos.franja.categorias.map(({ nombre, slug }) => (
-              <a
+              <Link
                 key={slug}
-                href={`/catalogo/${slug}`}
+                to={`/catalogo/${slug}`}
                 className="flex min-h-11 items-center justify-between gap-2 rounded-marca bg-white px-3.5 font-titulos text-sm text-violeta shadow-tarjeta transition-colors hover:bg-gris-claro focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta md:min-h-12"
               >
                 {nombre}
                 <span aria-hidden="true" className="text-magenta">
                   ›
                 </span>
-              </a>
+              </Link>
             ))}
           </nav>
         </div>
