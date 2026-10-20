@@ -9,8 +9,8 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 ## Estado actual
 
 - **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación).
-- **Última tarea hecha:** backend creado en `backend/` (`npm test` en verde: 2 tests). `app.js` (helmet, cors con origen de `FRONTEND_URL`, JSON, manejadores 404 y errores, export default) + `servidor.js` (solo desarrollo local) + `GET /api/salud` con ruta y controller separados + `.env.ejemplo` (Git ignora `.env` y deja pasar `.env.ejemplo`) + `tests/salud.test.js` (Supertest: 200 con `{ estado: "ok" }` y 404 en JSON). `10-SEGURIDAD.md` corregido: dice `.env.ejemplo` como el `.gitignore` y el README.
-- **Próxima tarea:** conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega.
+- **Última tarea hecha:** preparación de la publicación en Vercel: `frontend/vercel.json` (rewrite `/(.*)` → `/index.html`, patrón SPA de Vercel: el filesystem tiene prioridad, así que los assets sigue funcionando y solo las rutas de React Router caen en `index.html`) y `frontend/.env.ejemplo` (`VITE_API_URL=http://localhost:3000`, no es secreta; el `.gitignore` de la raíz deja pasar `.env.ejemplo`). El backend **no necesita cambios**: Vercel detecta Express con configuración cero buscando `src/app.js` cuando importa express y exporta la app como default y no llama a `listen` (eso está solo en `servidor.js`); también sin `dotenv`: en Vercel las variables van en el panel (`FRONTEND_URL` para el cors y `DATABASE_URL` en el proyecto de la API). Verde: `npm test` frontend (1 test), `npm test` backend (3 tests, uno más que el registro anterior), `npm run build` frontend. Falta crear los dos proyectos en Vercel (Root Directory `frontend/` y `backend/`) y probar las dos URL; recién ahí se marca la tarea en `08-TAREAS.md`.
+- **Próxima tarea:** publicar en Vercel (2 proyectos del mismo repo + variables en el panel) y probar las dos URL; además sigue pendiente conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega.
 - **Datos reales que faltan del negocio:** lista de productos con precios, talles y colores; dirección; horarios; número de WhatsApp; tiempos de entrega; medidas de las guías de talles.
 
 ## Datos del proyecto
@@ -40,6 +40,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | 19/10/2026 | Fuentes (Russo One y Nunito) se cargan desde `index.html` con Google Fonts | Permite `preconnect` y carga más rápida que el `@import` en el CSS |
 | 19/10/2026 | Vitest con `globals: true` en `vite.config.js` | Sin él, `describe`/`it`/`expect` no existen en los archivos de test (Error N° 2 en `docs/PROMPTS.md`) |
 | 19/10/2026 | El ejemplo de variables de entorno se llama `.env.ejemplo` (no `.env.example`) | El `.gitignore` (con la excepción `!.env.ejemplo`) y el README ya usaban ese nombre; se corrigió `10-SEGURIDAD.md` |
+| 19/10/2026 | Solo el frontend lleva `vercel.json`; la API no necesita ninguno | Vercel detecta Express con configuración cero: busca `src/app.js` con la app exportada como default; el rewrite SPA solo hace falta en el frontend (React Router) |
 
 ## Problemas resueltos
 
