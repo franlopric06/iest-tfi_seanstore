@@ -22,6 +22,12 @@ const HeroSublimado = () => {
     ? `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(textos.hero.botones.mensajePresupuesto)}`
     : '/catalogo'
 
+  const corteComa = textos.hero.titulo.indexOf(', ')
+  const lineasTitulo =
+    corteComa === -1
+      ? [textos.hero.titulo]
+      : [textos.hero.titulo.slice(0, corteComa + 1), textos.hero.titulo.slice(corteComa + 2)]
+
   return (
     <section className="relative overflow-hidden bg-violeta text-white">
       <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0">
@@ -52,12 +58,17 @@ const HeroSublimado = () => {
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-8 pt-10 md:flex-row md:items-center md:gap-10 md:pb-12 md:pt-14">
         <div className="flex-1">
           <motion.h1
+            aria-label={textos.hero.titulo}
             initial={quieto ? false : { y: 16, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="-skew-x-6 font-titulos text-5xl leading-none md:text-7xl lg:text-8xl"
+            className="-skew-x-6 font-titulos text-[2rem] leading-none md:text-5xl lg:text-6xl"
           >
-            {textos.hero.titulo}
+            {lineasTitulo.map((linea) => (
+              <span key={linea} className="block">
+                {linea}
+              </span>
+            ))}
           </motion.h1>
 
           <motion.p
