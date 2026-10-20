@@ -37,7 +37,7 @@ VITE_MP_PUBLIC_KEY=APP_USR-xxxx
 VITE_WHATSAPP=549XXXXXXXXXX
 ```
 
-- `.env` va en `.gitignore`. Se sube un `.env.example` con los nombres y valores vacíos.
+- `.env` va en `.gitignore`. Se sube un `.env.ejemplo` con los nombres y con valores de ejemplo (solo los no secretos; las claves quedan vacías).
 - En el frontend **solo** van variables con prefijo `VITE_`, y nunca claves secretas: todo lo que tiene `VITE_` lo puede ver cualquiera. La `PUBLIC_KEY` de Mercado Pago es pública por diseño; el `ACCESS_TOKEN` jamás.
 
 ## Usuarios y sesiones
@@ -117,7 +117,7 @@ Crear un pedido, confirmar un pago (descontar stock y sumar vendidos) y cancelar
 
 ## Lista de control
 
-- [ ] `.env` fuera de GitHub y `.env.example` subido
+- [ ] `.env` fuera de GitHub y `.env.ejemplo` subido
 - [ ] Rutas de admin probadas sin sesión y con sesión de cliente (deben responder 401 y 403)
 - [ ] Un cliente no puede ver pedidos de otro cambiando el código en la URL
 - [ ] Pago probado con tarjeta aprobada, rechazada y pendiente

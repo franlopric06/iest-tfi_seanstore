@@ -9,8 +9,8 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 ## Estado actual
 
 - **Etapa:** Etapa 0 de `docs/08-TAREAS.md` (arnés y preparación).
-- **Última tarea hecha:** Vitest + Testing Library configurados en `frontend/` (`vite.config.js` con jsdom y globals, `tests/setup.js` con jest-dom), script `npm test`, y primer test en verde (`tests/App.test.jsx`: título "Sean's Store").
-- **Próxima tarea:** crear el backend: Express con helmet y cors, `app.js` + `servidor.js` y la ruta `GET /api/salud` con su test (Vitest + Supertest).
+- **Última tarea hecha:** backend creado en `backend/` (`npm test` en verde: 2 tests). `app.js` (helmet, cors con origen de `FRONTEND_URL`, JSON, manejadores 404 y errores, export default) + `servidor.js` (solo desarrollo local) + `GET /api/salud` con ruta y controller separados + `.env.ejemplo` (Git ignora `.env` y deja pasar `.env.ejemplo`) + `tests/salud.test.js` (Supertest: 200 con `{ estado: "ok" }` y 404 en JSON). `10-SEGURIDAD.md` corregido: dice `.env.ejemplo` como el `.gitignore` y el README.
+- **Próxima tarea:** conseguir los datos reales del negocio: productos, precios, talles, colores, dirección, horarios, número de WhatsApp y tiempos de entrega.
 - **Datos reales que faltan del negocio:** lista de productos con precios, talles y colores; dirección; horarios; número de WhatsApp; tiempos de entrega; medidas de las guías de talles.
 
 ## Datos del proyecto
@@ -39,6 +39,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | 19/10/2026 | React 19 y oxlint en el template de Vite 8 | Es lo que trae `npm create vite@latest` hoy; se actualizó `03-TECNOLOGIAS.md` |
 | 19/10/2026 | Fuentes (Russo One y Nunito) se cargan desde `index.html` con Google Fonts | Permite `preconnect` y carga más rápida que el `@import` en el CSS |
 | 19/10/2026 | Vitest con `globals: true` en `vite.config.js` | Sin él, `describe`/`it`/`expect` no existen en los archivos de test (Error N° 2 en `docs/PROMPTS.md`) |
+| 19/10/2026 | El ejemplo de variables de entorno se llama `.env.ejemplo` (no `.env.example`) | El `.gitignore` (con la excepción `!.env.ejemplo`) y el README ya usaban ese nombre; se corrigió `10-SEGURIDAD.md` |
 
 ## Problemas resueltos
 

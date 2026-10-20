@@ -41,3 +41,24 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** lo detectó el estudiante comparando el mensaje con `07-CONVENCIONES.md`.
 - **Corrección humana:** el estudiante pidió el mensaje sin código: «configura Vitest y Testing Library con un primer test en verde».
 - **Para que no se repita:** en `/implementar` el código de tarea sale de `tasks.md`; nunca se inventa, y los commits de documentación o arnés no llevan código.
+
+### Error N° 4 · Export dijo default, import con llaves
+
+- **Fecha y fase:** 19/10/2026 · Etapa 0 (backend: Express + ruta de salud)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** «Crear el backend con `app.js` + `servidor.js` y la ruta `GET /api/salud` separada en `routes/salud.routes.js` y `controllers/salud.controller.js`, con su test en Vitest + Supertest».
+- **Qué hizo mal la IA:** exportó el controlador como default (`export default estadoSalud`) pero lo importó con llaves (`import { estadoSalud } from …`), así que la variable quedó `undefined` y el router recibió "argument handler must be a function"; `npm test` falló con 0 tests corridos.
+- **Cómo se detectó:** la IA misma corrió `npm test`, leyó el error del stack (puntaba a `salud.routes.js:6`) y lo corrigió quitándole las llaves al import; también pasa cuando un archivo exporta con nombre pero se importa distinto.
+- **Corrección:** se cambió el import a `import estadoSalud from "../controllers/salud.controller.js"` y los 3 tests pasaron en verde.
+- **Corrección humana:** el estudiante revisó la corrección y entendió la diferencia entre exportar default (se importa sin llaves) y exportar con nombre (se importa con llaves y el nombre exacto).
+- **Para que no se repita:** al crear un módulo, decidir primero si va a ser export default o nombrado, y hacer el import con la misma forma; siempre correr `npm test` antes de cerrar la tarea.
+
+### Error N° 5 · `??` con `FRONTEND_URL` vacía bloqueaba la API por CORS
+
+- **Fecha y fase:** 19/10/2026 · Etapa 0 (backend: cors en `app.js` y `.env.ejemplo`)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** cors con `origin` desde `FRONTEND_URL`, y un `.env.ejemplo` con los nombres de las variables.
+- **Qué hizo mal la IA:** usó el operador `??` (nullish) en `process.env.FRONTEND_URL ?? "http://localhost:5173"`. Como `FRONTEND_URL` queda con valor vacío al copiar `.env.ejemplo`, `??` no la saltea (solo saltea `null` y `undefined`, no `""`) y el origen autorizado quedaba `""`: ningún sitio podía hablar con la API. Además, `.env.ejemplo` tenía todo vacío, incluso valores que no son secretos.
+- **Cómo se detectó:** lo detectó el estudiante revisando `app.js` y `.env.ejemplo` antes del commit.
+- **Corrección humana:** el estudiante pidió tres cambios: cambiar `??` por `||` (que saltea también `""`), poner los valores de ejemplo que no son secretos (`PORT=3000` y `FRONTEND_URL=http://localhost:5173`; `DATABASE_URL` queda vacía porque es secreta) y agregar un test que compruebe la cabecera `Access-Control-Allow-Origin`.
+- **Para que no se repita:** en `origin` y demás variables de entorno usar `||` (no `??`) cuando el valor vacío no sirve, y en los ejemplos de `.env` dejar vacío solo lo secreto; probar siempre la cabecera CORS con un test.
