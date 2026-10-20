@@ -9,9 +9,9 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 ## Estado actual
 
 - **Etapa:** primera etapa (`ETAPA-1.md`), funcionalidad 001-catalogo, fase 5 (`/implementar`). Spec, clarificación, plan y tareas aprobados.
-- **Hecho:** T01 (esquema en Neon) y T02 (4 categorías y 12 productos en Neon).
+- **Hecho:** T01 (esquema en Neon), T02 (4 categorías y 12 productos en Neon) y T03 (`backend/src/db/datos-demo.sql` escrito; el estudiante lo ejecuta en Neon: 12 con precio/stock/descripción y 4 destacados).
 - **Reorganización (20/10/2026):** `docs/` describe la tienda completa y `ETAPA-1.md` dice qué se construye ahora: catálogo, pedido por WhatsApp, asistente y un panel chico, con datos de demostración (precio, stock, descripción y destacados definidos por el equipo). Spec, plan y tareas de 001 ajustados; tareas reordenadas para construir primero el inicio.
-- **Próxima tarea:** T03 — `backend/src/db/datos-demo.sql` con los datos de demostración de `ETAPA-1.md` (lo ejecuta el estudiante en Neon).
+- **Próxima tarea:** T04 — Header (logo + "Catálogo") y Footer (isotipo, descripción, contacto y aviso de demostración) + `data/textos.js`, con test `Layout.test.jsx`.
 
 ## Datos del proyecto
 

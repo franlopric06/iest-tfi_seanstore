@@ -12,7 +12,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** en Neon existen las 5 tablas.
 - [x] **T02** · Carga inicial: 4 categorías y 12 productos con talles y colores · Requisito: R14 · Archivos: `backend/src/db/carga-catalogo.sql` · Test: manual en Neon
   **Listo cuando:** los conteos dan 4 categorías y 12 productos.
-- [ ] **T03** · Datos de demostración: `UPDATE` de los 12 productos con el precio, el stock, la descripción y el destacado de la tabla de `ETAPA-1.md` · Requisito: R5, R10, R18, R2 · Archivos: crear `backend/src/db/datos-demo.sql` · Test: manual en Neon
+- [x] **T03** · Datos de demostración: `UPDATE` de los 12 productos con el precio, el stock, la descripción y el destacado de la tabla de `ETAPA-1.md` · Requisito: R5, R10, R18, R2 · Archivos: crear `backend/src/db/datos-demo.sql` · Test: manual en Neon
   **Listo cuando:** en Neon, los 12 productos tienen precio, stock y descripción, y hay 4 destacados (taza de cerámica, termo, remera y canilleras).
 
 ## Inicio (lo que se ve primero)
