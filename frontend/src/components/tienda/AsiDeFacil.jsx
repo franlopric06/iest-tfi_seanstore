@@ -29,12 +29,12 @@ const AsiDeFacil = () => {
             </h2>
           </div>
 
-          <ol className="mt-8 grid gap-x-8 gap-y-6 sm:grid-cols-2 md:grid-cols-4 md:mt-10">
+          <ol className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 md:gap-x-8 md:mt-10">
             {textos.facil.pasos.map((paso, indice) => (
               <li key={paso.titulo}>
                 <span
                   aria-hidden="true"
-                  className="font-titulos text-5xl leading-none text-amarillo"
+                  className="font-titulos text-4xl leading-none text-amarillo md:text-5xl"
                 >
                   {indice + 1}
                 </span>
