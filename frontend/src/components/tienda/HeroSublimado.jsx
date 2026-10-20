@@ -49,7 +49,7 @@ const HeroSublimado = () => {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-12 pt-12 md:flex-row md:items-center md:gap-10 md:pb-20 md:pt-16">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-8 pt-10 md:flex-row md:items-center md:gap-10 md:pb-12 md:pt-14">
         <div className="flex-1">
           <motion.h1
             initial={quieto ? false : { y: 16, opacity: 0 }}

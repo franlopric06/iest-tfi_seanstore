@@ -3,12 +3,12 @@ import textos from '../../data/textos.js'
 
 const RemeraHero = ({ diseno, quieto }) => (
   <div className="flex flex-1 items-center justify-center">
-    <div className="flex aspect-square w-72 items-center justify-center rounded-full bg-white/10 md:w-96">
+    <div className="flex aspect-square w-56 items-center justify-center rounded-full bg-white/10 md:w-80">
       <motion.div
         initial={false}
         animate={quieto ? { y: 0, rotate: 0 } : { y: [-5, 5, -5], rotate: [-2, 2, -2] }}
         transition={quieto ? { duration: 0 } : { duration: 6, ease: 'easeInOut', repeat: Infinity }}
-        className="h-56 md:h-80"
+        className="h-44 md:h-64"
       >
         <svg
           role="img"
