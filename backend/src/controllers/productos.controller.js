@@ -15,7 +15,17 @@ const BASE = `
   LEFT JOIN producto_fotos f ON f.producto_id = p.id AND f.orden = 1
 `;
 
-const listarProductos = async (req, res) => {
+const TODAS_LAS_FOTOS = `
+  (SELECT COALESCE(
+    json_agg(
+      json_build_object('url', g.url, 'alt', g.alt, 'generada_con_ia', g.generada_con_ia, 'orden', g.orden)
+      ORDER BY g.orden
+    ), '[]'::json)
+   FROM producto_fotos g
+   WHERE g.producto_id = p.id) AS fotos
+`;
+
+export const listarProductos = async (req, res) => {
   const { categoria, destacados } = req.query;
   const condiciones = ["p.activo = TRUE"];
   const parametros = [];
@@ -40,4 +50,19 @@ const listarProductos = async (req, res) => {
   res.json(rows);
 };
 
-export default listarProductos;
+export const obtenerProducto = async (req, res) => {
+  const { slug } = req.params;
+
+  const sql = `
+    SELECT ${CAMPOS}, p.descripcion, ${TODAS_LAS_FOTOS} ${BASE}
+    WHERE p.activo = TRUE AND p.slug = $1
+  `;
+
+  const { rows } = await consulta(sql, [slug]);
+
+  if (rows.length === 0) {
+    return res.status(404).json({ error: "No encontramos este producto." });
+  }
+
+  res.json(rows[0]);
+};

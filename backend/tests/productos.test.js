@@ -38,6 +38,16 @@ const destacados = [
   { ...productos[1], codigo: "CANILLERA-PRO", slug: "canilleras-profesionales", nombre: "Canilleras profesionales", destacado: true },
 ];
 
+const detalle = {
+  ...productos[1],
+  descripcion: "Termo de acero inoxidable de 1 litro con tu diseño estampado.",
+  foto: { url: "/img/productos/termo.webp", alt: "Termo estampado", generada_con_ia: true },
+  fotos: [
+    { url: "/img/productos/termo.webp", alt: "Termo estampado", generada_con_ia: true, orden: 1 },
+    { url: "/img/productos/termo-atras.webp", alt: "Termo por detrás", generada_con_ia: false, orden: 2 },
+  ],
+};
+
 describe("GET /api/productos", () => {
   beforeEach(() => {
     consultaSimulada.mockReset().mockResolvedValue({ rows: productos });
@@ -94,5 +104,63 @@ describe("GET /api/productos", () => {
       alt: "Termo estampado",
       generada_con_ia: true,
     });
+  });
+});
+
+describe("GET /api/productos/:slug", () => {
+  beforeEach(() => {
+    consultaSimulada.mockReset().mockResolvedValue({ rows: [detalle] });
+  });
+
+  it("R14 · responde 200 con el detalle: descripcion, precio, stock y fotos ordenadas", async () => {
+    const respuesta = await request(app).get("/api/productos/termo-acero-1l");
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.headers["content-type"]).toContain("application/json");
+    expect(respuesta.body.descripcion).toBe("Termo de acero inoxidable de 1 litro con tu diseño estampado.");
+    expect(respuesta.body.precio).toBe("18000.00");
+    expect(respuesta.body.stock).toBe(5);
+    expect(respuesta.body.fotos).toEqual([
+      { url: "/img/productos/termo.webp", alt: "Termo estampado", generada_con_ia: true, orden: 1 },
+      { url: "/img/productos/termo-atras.webp", alt: "Termo por detrás", generada_con_ia: false, orden: 2 },
+    ]);
+    expect(respuesta.body.foto).toEqual({
+      url: "/img/productos/termo.webp",
+      alt: "Termo estampado",
+      generada_con_ia: true,
+    });
+  });
+
+  it("R14 · consulta con el slug como parámetro $1 y solo productos activos", async () => {
+    await request(app).get("/api/productos/termo-acero-1l");
+
+    expect(consultaSimulada).toHaveBeenCalledTimes(1);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/WHERE p\.activo = TRUE AND p\.slug = \$1/),
+      ["termo-acero-1l"],
+    );
+  });
+
+  it("R11 · responde 404 en JSON si el slug no existe", async () => {
+    consultaSimulada.mockResolvedValue({ rows: [] });
+
+    const respuesta = await request(app).get("/api/productos/no-existe");
+
+    expect(respuesta.status).toBe(404);
+    expect(respuesta.headers["content-type"]).toContain("application/json");
+    expect(respuesta.body).toHaveProperty("error");
+  });
+
+  it("R11 · responde 404 en JSON si el producto está inactivo (la consulta pide solo activos)", async () => {
+    consultaSimulada.mockResolvedValue({ rows: [] });
+
+    const respuesta = await request(app).get("/api/productos/remera-pausada");
+
+    expect(respuesta.status).toBe(404);
+    expect(respuesta.body).toHaveProperty("error");
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringContaining("p.activo = TRUE"),
+      ["remera-pausada"],
+    );
   });
 });
