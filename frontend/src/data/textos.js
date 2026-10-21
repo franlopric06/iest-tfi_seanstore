@@ -55,7 +55,7 @@ const textos = {
   },
   cinta: {
     titulo: 'Elegí qué personalizar',
-    frase: 'Todo sale en blanco y lo estampamos con tu diseño, con tintas que no se borran con el lavado.',
+    frase: 'Elegí el producto y el color, y lo estampamos con tu diseño, con tintas que no se borran con el lavado.',
     etiqueta:
       'Tazas, remeras, gorras, termos y canilleras que pasan por la plancha y salen estampadas con un diseño de tinta',
     productos: [
