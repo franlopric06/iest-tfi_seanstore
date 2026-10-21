@@ -3,7 +3,7 @@ import { consulta } from "../db/conexion.js";
 const CAMPOS = `
   p.codigo, p.slug, p.nombre,
   json_build_object('slug', c.slug, 'nombre', c.nombre) AS categoria,
-  p.talles, p.colores, p.precio, p.stock,
+  p.talles, p.colores, p.descripcion, p.precio, p.stock,
   CASE WHEN f.url IS NULL THEN NULL
        ELSE json_build_object('url', f.url, 'alt', f.alt, 'generada_con_ia', f.generada_con_ia)
   END AS foto
@@ -54,7 +54,7 @@ export const obtenerProducto = async (req, res) => {
   const { slug } = req.params;
 
   const sql = `
-    SELECT ${CAMPOS}, p.descripcion, ${TODAS_LAS_FOTOS} ${BASE}
+    SELECT ${CAMPOS}, ${TODAS_LAS_FOTOS} ${BASE}
     WHERE p.activo = TRUE AND p.slug = $1
   `;
 

@@ -105,6 +105,16 @@ describe("GET /api/productos", () => {
       generada_con_ia: true,
     });
   });
+
+  it("R14 · el listado selecciona descripcion de los productos", async () => {
+    await request(app).get("/api/productos");
+
+    expect(consultaSimulada).toHaveBeenCalledTimes(1);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringContaining("p.descripcion"),
+      [],
+    );
+  });
 });
 
 describe("GET /api/productos/:slug", () => {
