@@ -102,13 +102,13 @@ const HeroSublimado = () => {
         <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:gap-4">
           <a
             href="/catalogo"
-            className="inline-flex min-h-11 items-center justify-center rounded-marca bg-magenta px-6 font-titulos text-white transition-colors hover:bg-magenta/90 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:justify-start"
+            className="inline-flex min-h-10 items-center justify-center rounded-marca bg-magenta px-6 py-2 text-center font-titulos text-sm leading-tight text-white transition-colors hover:bg-magenta/90 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:min-h-11 md:justify-start md:text-base"
           >
             {textos.hero.botones.verCatalogo}
           </a>
           <a
             href={enlacePresupuesto}
-            className="inline-flex min-h-11 items-center justify-center rounded-marca border-2 border-white px-6 font-titulos text-white transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:justify-start"
+            className="inline-flex min-h-10 items-center justify-center rounded-marca border-2 border-white px-6 py-2 text-center font-titulos text-sm leading-tight text-white transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:min-h-11 md:justify-start md:text-base"
           >
             {textos.hero.botones.pedirPresupuesto}
           </a>
