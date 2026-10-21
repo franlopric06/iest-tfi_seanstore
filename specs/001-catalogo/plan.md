@@ -54,7 +54,7 @@ Reglas comunes:
 
 - `esquema-v1.sql`: crea solo las tablas de la v1 — `categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes` (decisión 8). No crea tablas de la v2.
 - `carga-catalogo.sql`: 4 categorías + 12 productos reales (talles y colores de la spec), `precio NULL`, `descripcion NULL` (los textos reales entran después con `/cambio`), `destacado FALSE` en los 12 (pendiente del negocio), `activo TRUE`. **No inserta filas en `producto_fotos`**: los WebP todavía no existen y quedarían referencias rotas.
-- `datos-demo.sql`: `UPDATE` de los 12 productos con el precio, el stock, la descripción y el destacado de la tabla de `ETAPA-1.md` (4 destacados). Se puede volver a correr sin problema.
+- `datos-demo.sql`: `UPDATE` de los 12 productos con el precio, el stock, la descripción y el destacado de la tabla de `ETAPA-1.md` (4 destacados), más la lista de colores por producto del `/cambio` del 20/10/2026. Se puede volver a correr sin problema.
 - `carga-fotos.sql` (aparte, tarea posterior): inserta las fotos con su `alt` y `generada_con_ia = TRUE` cuando los WebP estén en `frontend/public/img/productos/`. Mientras tanto cada producto muestra el recuadro con su nombre (R13).
 - El `datos-ejemplo.sql` de `05-DATOS.md` no se usa.
 
@@ -122,3 +122,5 @@ Cuando el plan esté aprobado, sigue `/tareas` para partirlo en tareas de menos 
 7. Conteo corregido a 12 productos con el `/cambio` del 19/10/2026 (la tabla de la spec listaba 12, el resto decía 13); `descripcion NULL` en la carga hasta que el negocio pase los textos.
 
 **Cambio del 20/10/2026** (reorganización con `ETAPA-1.md`): vuelven el precio, la descripción y la etiqueta "Sin stock" con datos de demostración (`datos-demo.sql`), se agrega el aviso de sitio de demostración (R19) y las tareas se reordenan para construir primero lo que se ve (inicio) y después lo que usa la API.
+
+**`/cambio` del 20/10/2026 — "los productos no son solo blancos":** `datos-demo.sql` también actualiza la columna `colores` (lista por producto confirmada por el estudiante); la frase de la cinta pasa a "Elegí el producto y el color, y lo estampamos con tu diseño, con tintas que no se borran con el lavado." en `textos.js` y `DESIGN.md`; `ETAPA-1.md` deja de decir "todos los productos son blancos". Sin requisitos EARS nuevos: R10 ya muestra los colores disponibles que devuelve la API.

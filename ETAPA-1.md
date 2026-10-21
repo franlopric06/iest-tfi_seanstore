@@ -53,11 +53,11 @@ Se hacen **en este orden**. La 004 se empieza cuando las otras tres estén termi
 
 ## Datos de demostración
 
-Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Todos los productos son blancos, porque la sublimación se hace sobre blanco.
+Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Los productos no son solo blancos: el negocio sublima en muchos colores; la lista de cada producto está en la columna `colores` de `backend/src/db/datos-demo.sql` y en la tabla de `specs/001-catalogo/spec.md`.
 
 | Producto | Categoría | Precio | Stock | Destacado | Descripción |
 | --- | --- | --- | --- | --- | --- |
-| Taza de cerámica | Tazas y termos | $ 12.000 | 40 | Sí | Taza blanca de cerámica de 325 ml, estampada con tu foto, tu logo o una frase. Apta microondas. |
+| Taza de cerámica | Tazas y termos | $ 12.000 | 40 | Sí | Taza de cerámica de 325 ml, estampada con tu foto, tu logo o una frase. Apta microondas. |
 | Taza de polímero | Tazas y termos | $ 9.500 | 30 | No | Taza de polímero irrompible, ideal para chicos y para regalar. Se estampa con el diseño que quieras. |
 | Termo | Tazas y termos | $ 28.000 | 15 | Sí | Termo de acero inoxidable de 500 ml que mantiene el frío y el calor, con tu diseño. |
 | Botella | Tazas y termos | $ 18.000 | 20 | No | Botella de aluminio de 600 ml con tapa a rosca, para el gimnasio, la facu o el trabajo. |

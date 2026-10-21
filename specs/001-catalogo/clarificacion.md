@@ -15,6 +15,27 @@ Revisión QA del 19/10/2026 sobre `spec.md` (borrador), contra `docs/CONSTITUCIO
 | 9 | Con el CTA de WhatsApp delegado a 002, el detalle de 001 queda sin ningún botón de acción | ¿El detalle de 001 lleva algún botón en el lugar del futuro CTA? | A) Nada, el CTA llega con 002 B) Botón genérico de WhatsApp (pisa lo de 002) | **A: el botón de WhatsApp llega con 002. Para que el detalle no quede sin salida mientras tanto, en 001 se agrega un enlace "Volver al catálogo" (navegación normal, no es una acción de pedido).** |
 | 10 | (Hallazgo del estudiante) R15 pedía el Open Graph por producto, que necesita el middleware de Vercel; para la v1 es alcance extra | ¿Qué Open Graph entra en la versión 1? | A) Solo las etiquetas Open Graph generales del sitio en `index.html`, y el Open Graph por producto con el middleware pasa a la versión 2 B) Incluir el middleware en la v1 | **A elección del estudiante: en la versión 1 van solo las etiquetas Open Graph generales del sitio en `index.html`; el Open Graph por producto con el middleware de Vercel pasa a la versión 2.** |
 
+## Corrección del hallazgo 1 (20/10/2026, `/cambio`)
+
+La decisión del 19/10/2026 decía que todos los productos iban en blanco porque "la sublimación solo se hace sobre blanco". El estudiante confirmó que el negocio sublima en muchos colores: la lista exacta por producto es la que sigue y reemplaza esa decisión.
+
+| Producto | Colores |
+| --- | --- |
+| Taza de cerámica | Blanco, Negro, Beige, Verde claro |
+| Taza de polímero | Blanco, Negro, Beige, Verde claro |
+| Termo | Blanco, Negro, Rosa, Verde claro |
+| Botella | Blanco, Negro, Azul |
+| Remera | Blanco, Negro, Gris, Azul, Rojo |
+| Buzo | Blanco, Negro, Gris, Azul |
+| Campera | Blanco, Negro, Gris, Azul |
+| Canilleras | Blanco, Negro |
+| Gorra | Blanco, Negro, Azul |
+| Llavero | Blanco |
+| Mousepad | Blanco |
+| Almohadón | Blanco, Gris |
+
+Si el negocio suma colores nuevos, entran con `/cambio`.
+
 ## Ajustes menores ya resueltos (no requieren decisión)
 
 - **R8:** "con la acción correspondiente" es ambiguo; se fija: enlace "Ver todo el catálogo" (así está en 06-DISENO-UI).

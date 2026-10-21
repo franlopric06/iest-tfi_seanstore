@@ -66,7 +66,7 @@ Un solo bloque inclinado (`-skew-y-2` en PC, `-skew-y-3` en celular) con el cont
 
 Dos columnas en PC; en celular, primero el texto y los botones, después la animación.
 
-- **Izquierda:** título con subrayado amarillo, la frase "Todo sale en blanco y lo estampamos con tu diseño, con tintas que no se borran con el lavado." y 4 botones de categoría **chicos** (blancos con borde, texto violeta y flecha ›).
+- **Izquierda:** título con subrayado amarillo, la frase "Elegí el producto y el color, y lo estampamos con tu diseño, con tintas que no se borran con el lavado." y 4 botones de categoría **chicos** (blancos con borde, texto violeta y flecha ›).
 - **Derecha, la cinta de producción:** un paralelogramo `bg-violeta` inclinado (`-skew-x-12`, con el contenido enderezado por dentro y **recortado**: nada sale del violeta).
   - Por la cinta pasan, de a uno, **tazas, remeras, gorras, termos y canilleras** (ícono blanco grande con su nombre). Entran desde arriba a la derecha, llegan al centro, se "estampan" y salen abajo a la izquierda, en diagonal.
   - En el centro, al estamparse: dos **anillos amarillos de calor** que se agrandan y desaparecen, y **5 gotas de tinta** (magenta y amarilla) que saltan hacia arriba. El diseño aparece sobre el producto de izquierda a derecha.

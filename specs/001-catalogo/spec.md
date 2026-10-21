@@ -10,13 +10,13 @@ Primera pantalla de la tienda: la vidriera. Un cliente entra, ve la portada "Tu 
 
 | Categoría (slug) | Productos | Talles | Colores |
 | --- | --- | --- | --- |
-| Tazas y termos (`tazas-termos`) | Taza de cerámica, Taza de polímero, Termo, Botella | Talle único | Blanco |
-| Indumentaria (`indumentaria`) | Remera, Buzo, Campera | S a XXL | Blanco |
-| Deportes (`deportes`) | Canilleras | S, M, L | Blanco |
-| Accesorios (`accesorios`) | Gorra, Llavero, Mousepad, Almohadón | Talle único | Blanco |
+| Tazas y termos (`tazas-termos`) | Taza de cerámica, Taza de polímero, Termo, Botella | Talle único | Cerámica y polímero: Blanco, Negro, Beige, Verde claro · Termo: Blanco, Negro, Rosa, Verde claro · Botella: Blanco, Negro, Azul |
+| Indumentaria (`indumentaria`) | Remera, Buzo, Campera | S a XXL | Remera: Blanco, Negro, Gris, Azul, Rojo · Buzo y campera: Blanco, Negro, Gris, Azul |
+| Deportes (`deportes`) | Canilleras | S, M, L | Blanco, Negro |
+| Accesorios (`accesorios`) | Gorra, Llavero, Mousepad, Almohadón | Talle único | Gorra: Blanco, Negro, Azul · Llavero y mousepad: Blanco · Almohadón: Blanco, Gris |
 
-- **Colores:** blanco en todos los productos, porque la sublimación se hace sobre blanco (decisión 1 de la clarificación).
-- **Precios, stock, descripciones y destacados:** son los **datos de demostración** de la tabla de `ETAPA-1.md` (4 destacados: taza de cerámica, termo, remera y canilleras). Se cargan con `backend/src/db/datos-demo.sql`, que ejecuta el estudiante en Neon. En la funcionalidad 004 se editan desde el panel.
+- **Colores:** el negocio sublima en muchos colores y cada producto lleva su lista (la de la tabla de arriba y la de `datos-demo.sql`). Corrige la decisión 1 del 19/10/2026 ("solo blanco"): es el hallazgo 1 de la clarificación, corregido con `/cambio` el 20/10/2026.
+- **Precios, stock, descripciones, destacados y colores:** son los **datos de demostración** de la tabla de `ETAPA-1.md` (4 destacados: taza de cerámica, termo, remera y canilleras). Se cargan con `backend/src/db/datos-demo.sql` (que también actualiza la columna `colores`), que ejecuta el estudiante en Neon. En la funcionalidad 004 se editan desde el panel.
 - **Aviso:** el pie de la tienda dice "Sitio de demostración: precios y datos de ejemplo."
 - **Fotos:** se generan con IA. Van en `frontend/public/img/productos/` en WebP liviano; la base guarda la ruta. Los originales quedan en `multimedia/imagenes/` con su ficha en `FICHAS-IA.md`. La tabla `producto_fotos` lleva la columna `generada_con_ia` (BOOLEAN): la leyenda «Generado con IA» se muestra solo cuando está en `TRUE` (R12).
 - **Carga:** el agente escribe el SQL en `backend/src/db/` y el estudiante lo ejecuta en el SQL Editor de Neon. La `DATABASE_URL` nunca pasa por el chat ni la ve el agente (principio 6).
@@ -105,3 +105,4 @@ Notas sobre la decisión de alcance:
 | 19/10/2026 | Decisión 10 del estudiante: sin Open Graph por producto en la v1 (middleware de Vercel → v2); R15 ajustado y nota en "Fuera de alcance". Docs alineados: `05-DATOS.md` (columna `generada_con_ia`, `precio` nullable en v1, nota de tablas de la v1) y `04-ARQUITECTURA.md` (detalle sin reseñas ni stock en la v1) | Fase 2 cerrada: los docs ahora coinciden con la spec |
 | 19/10/2026 | `/cambio` al implementar T02: la tabla "Catálogo real" lista 12 productos, pero el resto de la spec y el plan decían 13. Se corrige el conteo a **12** (los datos reales los confirmó el estudiante), la `descripcion` va en `NULL` hasta que el negocio pase los textos, y el detalle no muestra el bloque de descripción cuando es `NULL` | Conteo real de los productos de Sean's Store; sin inventar descripciones (RNF07) |
 | 20/10/2026 | `/cambio` de enfoque: el proyecto se reorganiza con `ETAPA-1.md` (la documentación describe la tienda completa y `ETAPA-1.md` dice qué se construye). Es una tienda de demostración con datos de ejemplo definidos por el equipo: vuelven el precio en tarjeta y detalle (R5, R10), la descripción, la etiqueta "Sin stock" (R18) y 4 destacados; se agrega el aviso de sitio de demostración (R19). Las decisiones 2 y 4 de la clarificación (sin stock, destacados pendientes) quedan reemplazadas | El estudiante aclaró que es un proyecto educativo que usa el negocio como modelo: los datos no dependen del negocio real y se editan desde el panel (funcionalidad 004) |
+| 20/10/2026 | `/cambio` "los productos no son solo blancos": la carga de la demostración lleva la columna `colores` por producto (Blanco, Negro, Beige, Verde claro, Rosa, Azul, Gris y Rojo, según el producto) y la frase de la cinta pasa a "Elegí el producto y el color, y lo estampamos con tu diseño, con tintas que no se borran con el lavado." Sin cambios de requisitos: R10 ya muestra los colores disponibles que devuelve la API | El estudiante confirmó las listas de colores del negocio; corrige la decisión 1 del 19/10/2026 (hallazgo 1 de la clarificación) |

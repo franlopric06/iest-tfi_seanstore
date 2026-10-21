@@ -1,6 +1,6 @@
 # Tareas 001-catalogo
 
-**Spec:** aprobada · **Plan:** aprobado · **Estado:** aprobado · **Reordenado:** 20/10/2026 (reorganización con `ETAPA-1.md`)
+**Spec:** aprobada · **Plan:** aprobado · **Estado:** aprobado · **Reordenado:** 20/10/2026 (reorganización con `ETAPA-1.md`) · **/cambio:** 20/10/2026 (los productos no son solo blancos: colores por producto)
 
 Reglas: una tarea = un commit (`001-Txx`, 07-CONVENCIONES); ninguna tarea se commitea sin su test. Cada tarea arranca escribiendo su test (rojo) y termina con el código que lo pone en verde. Antes de proponer cada commit: `npm test` y `npm run build` en `frontend/` y `backend/` (principio 5). Los tests de la API nunca tocan Neon: `vi.mock` de `db/conexion.js` (Error N° 7 en `PROMPTS.md`).
 
@@ -75,6 +75,15 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** ninguna pantalla queda en blanco.
 - [ ] **T29** · `carga-fotos.sql` cuando estén las fotos generadas con IA en `frontend/public/img/productos/` · Requisito: R12, R13 · Archivos: crear `backend/src/db/carga-fotos.sql` y sumar los WebP · Test: manual en Neon y en la página
   **Listo cuando:** las fotos se ven en tarjetas y detalle, con su leyenda.
+
+## Cambio del 20/10/2026 · los productos no son solo blancos
+
+- [x] **T30** · Documentar el cambio: colores por producto en la tabla de carga de la spec y nota "blanco en todos" reemplazada, corrección del hallazgo 1 en la clarificación, dato en el plan, `ETAPA-1.md` (párrafo "Todos los productos son blancos" y descripción de la taza sin "blanca") y frase de la cinta en `DESIGN.md` · Requisito: ninguno nuevo (son los datos de demostración de R10/R14) · Archivos: modificar `specs/001-catalogo/spec.md`, `specs/001-catalogo/clarificacion.md`, `specs/001-catalogo/plan.md`, `ETAPA-1.md`, `DESIGN.md` · Test: ninguno (documentación)
+  **Listo cuando:** los cinco archivos coinciden con la lista de colores y la frase nueva.
+- [x] **T31** · Frase de la cinta en `textos.js`: "Elegí el producto y el color, y lo estampamos con tu diseño, con tintas que no se borran con el lavado." · Requisito: R1 · Archivos: modificar `frontend/src/data/textos.js` · Test: `CintaProductos.test.jsx` (R1 ya verifica la frase desde `textos.cinta.frase`) en verde con el texto nuevo
+  **Listo cuando:** `npm test` y `npm run build` en verde.
+- [x] **T32** · `datos-demo.sql`: `UPDATE` de `colores` por producto (lista confirmada por el estudiante), descripción de la taza de cerámica sin "blanca" y encabezado corregido · Requisito: R10, R14 · Archivos: modificar `backend/src/db/datos-demo.sql` · Test: manual en Neon (lo ejecuta el estudiante)
+  **Listo cuando:** en Neon la columna `colores` muestra la lista nueva en los 12 productos.
 
 ## Cierre
 
