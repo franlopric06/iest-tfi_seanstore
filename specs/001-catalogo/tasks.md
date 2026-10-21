@@ -30,7 +30,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
 
 ## API
 
-- [ ] **T09** · Conexión a la base: pool de `pg` con consultas con parámetros, sin conectarse hasta la primera consulta · Requisito: R14 · Archivos: crear `backend/src/db/conexion.js`; modificar `backend/package.json` (agregar `pg`) · Test: los tests existentes siguen en verde y ninguno toca Neon
+- [x] **T09** · Conexión a la base: pool de `pg` con consultas con parámetros, sin conectarse hasta la primera consulta · Requisito: R14 · Archivos: crear `backend/src/db/conexion.js`; modificar `backend/package.json` (agregar `pg`) · Test: los tests existentes siguen en verde y ninguno toca Neon
   **Listo cuando:** `conexion.js` es el único acceso a la base (principio 3).
 - [ ] **T10** · `GET /api/categorias` — primero el test · Requisito: R14 · Archivos: crear `backend/tests/categorias.test.js`, `backend/src/controllers/categorias.controller.js`, `backend/src/routes/categorias.routes.js`; modificar `backend/src/routes/index.js` · Test: Supertest con `vi.mock`: 200 con las categorías ordenadas por `orden`
   **Listo cuando:** `npm test` en verde, sin Neon.
