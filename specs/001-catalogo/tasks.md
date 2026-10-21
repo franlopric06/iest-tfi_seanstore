@@ -43,7 +43,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
 
 ## Pantallas con datos
 
-- [ ] **T14** · Puerta única a la API (`services/api.js`) y hook `useObtenerDatos` (carga, dato, error y reintento) · Requisito: R14, R17 · Archivos: crear `frontend/src/services/api.js`, `frontend/src/hooks/useObtenerDatos.js`, `frontend/tests/useObtenerDatos.test.jsx` · Test: el hook con la API simulada pasa por carga, dato, error y reintento
+- [x] **T14** · Puerta única a la API (`services/api.js`) y hook `useObtenerDatos` (carga, dato, error y reintento) · Requisito: R14, R17 · Archivos: crear `frontend/src/services/api.js`, `frontend/src/hooks/useObtenerDatos.js`, `frontend/tests/useObtenerDatos.test.jsx` · Test: el hook con la API simulada pasa por carga, dato, error y reintento
   **Listo cuando:** ningún archivo fuera de `api.js` hace `fetch`.
 - [ ] **T15** · TarjetaProducto: foto, "Personalizable", nombre, precio formateado (`$ 12.000`), "Sin stock" si el stock es 0, y enlace a `/producto/:slug` · Requisito: R5, R18 · Archivos: crear `frontend/src/components/tienda/TarjetaProducto.jsx`, `frontend/src/utils/formatearPrecio.js`, `frontend/tests/TarjetaProducto.test.jsx` · Test: textos, precio formateado, etiqueta con stock 0 y sin etiqueta con stock > 0, enlace
   **Listo cuando:** el test pasa.
