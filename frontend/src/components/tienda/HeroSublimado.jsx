@@ -55,7 +55,7 @@ const HeroSublimado = () => {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 pb-8 pt-10 md:flex-row md:items-center md:gap-10 md:pb-12 md:pt-14">
+      <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-8 pt-10 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:pb-12 md:pt-14">
         <div className="flex-1">
           <motion.h1
             aria-label={textos.hero.titulo}
@@ -95,24 +95,24 @@ const HeroSublimado = () => {
               </li>
             ))}
           </ul>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="/catalogo"
-              className="inline-flex min-h-11 items-center rounded-marca bg-magenta px-6 font-titulos text-white transition-colors hover:bg-magenta/90 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta"
-            >
-              {textos.hero.botones.verCatalogo}
-            </a>
-            <a
-              href={enlacePresupuesto}
-              className="inline-flex min-h-11 items-center rounded-marca border-2 border-white px-6 font-titulos text-white transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta"
-            >
-              {textos.hero.botones.pedirPresupuesto}
-            </a>
-          </div>
         </div>
 
         <RemeraHero diseno={diseno} quieto={quieto} />
+
+        <div className="grid grid-cols-2 gap-4 md:flex md:flex-wrap md:gap-4">
+          <a
+            href="/catalogo"
+            className="inline-flex min-h-11 items-center justify-center rounded-marca bg-magenta px-6 font-titulos text-white transition-colors hover:bg-magenta/90 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:justify-start"
+          >
+            {textos.hero.botones.verCatalogo}
+          </a>
+          <a
+            href={enlacePresupuesto}
+            className="inline-flex min-h-11 items-center justify-center rounded-marca border-2 border-white px-6 font-titulos text-white transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:justify-start"
+          >
+            {textos.hero.botones.pedirPresupuesto}
+          </a>
+        </div>
       </div>
     </section>
   )
