@@ -80,12 +80,12 @@ const HeroSublimado = () => {
             {textos.hero.bajada}
           </motion.p>
 
-          <ul className="mt-8 flex flex-wrap gap-3">
+          <ul className="mt-8 grid w-full grid-cols-4 gap-2 md:flex md:flex-wrap md:justify-start md:gap-3">
             {textos.hero.chips.map((chip, indice) => (
               <li
                 key={chip}
                 aria-current={indice === diseno ? 'true' : undefined}
-                className={`rounded-full border px-4 py-1.5 text-base font-bold ${
+                className={`rounded-full border px-1 py-1.5 text-center text-sm font-bold md:px-4 md:text-base ${
                   indice === diseno
                     ? 'border-magenta bg-magenta text-white'
                     : 'border-white/40 text-white/90'
