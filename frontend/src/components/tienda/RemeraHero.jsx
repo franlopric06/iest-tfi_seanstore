@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import textos from '../../data/textos.js'
 
 const RemeraHero = ({ diseno, quieto }) => (
-  <div className="flex flex-1 items-center justify-center md:-translate-x-10">
+  <div className="flex flex-1 items-center justify-center md:-translate-x-10 md:pt-10">
     <div className="flex aspect-square w-72 items-center justify-center rounded-full bg-white/10 md:w-96">
       <motion.div
         initial={false}
