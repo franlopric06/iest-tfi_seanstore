@@ -55,7 +55,7 @@ const HeroSublimado = () => {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-8 pt-10 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:pb-12 md:pt-14">
+      <div className="mx-auto grid max-w-7xl gap-7 px-5 pb-4 pt-6 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:pb-4 md:pt-6">
         <div className="flex-1">
           <motion.h1
             aria-label={textos.hero.titulo}
