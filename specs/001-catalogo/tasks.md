@@ -38,7 +38,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** los casos pasan sin Neon.
 - [x] **T12** · `GET /api/productos/:slug` con 404 — primero el test · Requisito: R14, R11 · Archivos: modificar `productos.controller.js`, `productos.routes.js`, `tests/productos.test.js` · Test: 200 con `descripcion`, `precio`, `stock` y `fotos` ordenadas; 404 JSON si no existe o está inactivo
   **Listo cuando:** las 3 rutas responden y `npm test` está en verde.
-- [ ] **T13** · Conectar la base y publicar (la hace el estudiante con el agente guiando; ninguna clave pasa por el chat): `DATABASE_URL` (la connection string *pooled* de Neon) en `backend/.env` y en Vercel (proyecto de la API); `VITE_API_URL` en `frontend/.env` y en Vercel (proyecto de la tienda); redeploy de los dos · Requisito: R14 · Archivos: ninguno del repo · Test: manual
+- [x] **T13** · Conectar la base y publicar (la hace el estudiante con el agente guiando; ninguna clave pasa por el chat): `DATABASE_URL` (la connection string *pooled* de Neon) en `backend/.env` y en Vercel (proyecto de la API); `VITE_API_URL` en `frontend/.env` y en Vercel (proyecto de la tienda); redeploy de los dos · Requisito: R14 · Archivos: ninguno del repo · Test: manual
   **Listo cuando:** `https://sean-store-api.vercel.app/api/categorias` devuelve las 4 categorías.
 
 ## Pantallas con datos
