@@ -1,0 +1,98 @@
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import request from "supertest";
+import app from "../src/app.js";
+
+const { consultaSimulada } = vi.hoisted(() => ({ consultaSimulada: vi.fn() }));
+
+vi.mock("../src/db/conexion.js", () => ({ consulta: consultaSimulada }));
+
+const productos = [
+  {
+    codigo: "TAZA-CER-11OZ",
+    slug: "taza-ceramica-11oz",
+    nombre: "Taza de cerámica 11 oz",
+    categoria: { slug: "tazas-termos", nombre: "Tazas y termos" },
+    talles: ["11 oz"],
+    colores: ["Blanco", "Negro", "Rojo"],
+    precio: "3500.00",
+    stock: 12,
+    foto: null,
+  },
+  {
+    codigo: "TERMO-ACERO-1L",
+    slug: "termo-acero-1l",
+    nombre: "Termo de acero 1 L",
+    categoria: { slug: "tazas-termos", nombre: "Tazas y termos" },
+    talles: ["1 litro"],
+    colores: ["Blanco", "Negro"],
+    precio: "18000.00",
+    stock: 5,
+    foto: { url: "/img/productos/termo.webp", alt: "Termo estampado", generada_con_ia: true },
+  },
+];
+
+const destacados = [
+  { ...productos[0], destacado: true },
+  { ...productos[1], destacado: true },
+  { ...productos[0], codigo: "REMERA-ALG-XL", slug: "remera-algodon-xl", nombre: "Remera de algodón", destacado: true },
+  { ...productos[1], codigo: "CANILLERA-PRO", slug: "canilleras-profesionales", nombre: "Canilleras profesionales", destacado: true },
+];
+
+describe("GET /api/productos", () => {
+  beforeEach(() => {
+    consultaSimulada.mockReset().mockResolvedValue({ rows: productos });
+  });
+
+  it("R14 · responde 200 con los productos en JSON, con precio y stock", async () => {
+    const respuesta = await request(app).get("/api/productos");
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.headers["content-type"]).toContain("application/json");
+    expect(respuesta.body).toEqual(productos);
+    expect(respuesta.body[0].precio).toBeDefined();
+    expect(respuesta.body[0].stock).toBeDefined();
+  });
+
+  it("R14 · filtra por ?categoria= con parámetro $1 y sin tocar la base real", async () => {
+    await request(app).get("/api/productos?categoria=tazas-termos");
+
+    expect(consultaSimulada).toHaveBeenCalledTimes(1);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringContaining("WHERE p.activo = TRUE AND c.slug = $1"),
+      ["tazas-termos"],
+    );
+  });
+
+  it("R14 · sin filtro, consulta solo los activos (WHERE p.activo = TRUE) sin parámetros", async () => {
+    await request(app).get("/api/productos");
+
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/WHERE p\.activo = TRUE[\s\S]*ORDER BY c\.orden, p\.nombre/),
+      [],
+    );
+  });
+
+  it("R14 · con ?destacados=1 trae hasta 4 destacados y LIMIT 4", async () => {
+    consultaSimulada.mockResolvedValue({ rows: destacados });
+
+    const respuesta = await request(app).get("/api/productos?destacados=1");
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.body).toHaveLength(4);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/p\.destacado = TRUE[\s\S]*LIMIT 4/),
+      [],
+    );
+  });
+
+  it("R14 · trae la foto principal (orden = 1) o null cuando no hay fotos", async () => {
+    const respuesta = await request(app).get("/api/productos");
+
+    expect(respuesta.body[0].foto).toBeNull();
+    expect(respuesta.body[1].foto).toEqual({
+      url: "/img/productos/termo.webp",
+      alt: "Termo estampado",
+      generada_con_ia: true,
+    });
+  });
+});
