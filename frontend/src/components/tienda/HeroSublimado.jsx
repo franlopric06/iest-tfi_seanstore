@@ -37,7 +37,7 @@ const HeroSublimado = () => {
             <motion.span
               key={`${alto}-${indice}`}
               style={{ originY: 0 }}
-              className={`w-6 rounded-b-full bg-magenta ${alto}`}
+              className={`w-3 rounded-b-full bg-magenta ${alto} md:w-6`}
               animate={quieto ? { scaleY: 1 } : { scaleY: [0.55, 1.15] }}
               transition={
                 quieto
@@ -55,7 +55,7 @@ const HeroSublimado = () => {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-7xl gap-7 px-5 pb-4 pt-6 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:pb-4 md:pt-6">
+      <div className="mx-auto grid max-w-7xl gap-7 px-5 pb-4 pt-12 md:grid-cols-[1fr_auto] md:items-center md:gap-10 md:pb-4 md:pt-6">
         <div className="flex-1">
           <motion.h1
             aria-label={textos.hero.titulo}
