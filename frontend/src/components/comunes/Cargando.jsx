@@ -1,6 +1,6 @@
 const Cargando = ({ etiqueta, cantidad = 8 }) => (
   <div role="status" aria-busy="true" aria-label={etiqueta}>
-    <ul aria-hidden="true" className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <ul aria-hidden="true" className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
       {Array.from({ length: cantidad }, (_, numero) => (
         <li
           key={numero}

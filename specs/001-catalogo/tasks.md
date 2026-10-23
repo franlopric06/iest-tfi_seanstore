@@ -1,6 +1,6 @@
 # Tareas 001-catalogo
 
-**Spec:** aprobada · **Plan:** aprobado · **Estado:** aprobado · **Reordenado:** 20/10/2026 (reorganización con `ETAPA-1.md`) · **/cambio:** 20/10/2026 (los productos no son solo blancos: colores por producto)
+**Spec:** aprobada · **Plan:** aprobado · **Estado:** aprobado · **Reordenado:** 20/10/2026 (reorganización con `ETAPA-1.md`) · **/cambio:** 20/10/2026 (los productos no son solo blancos: colores por producto) · **/cambio:** 23/10/2026 (catálogo en 2 columnas en celular)
 
 Reglas: una tarea = un commit (`001-Txx`, 07-CONVENCIONES); ninguna tarea se commitea sin su test. Cada tarea arranca escribiendo su test (rojo) y termina con el código que lo pone en verde. Antes de proponer cada commit: `npm test` y `npm run build` en `frontend/` y `backend/` (principio 5). Los tests de la API nunca tocan Neon: `vi.mock` de `db/conexion.js` (Error N° 7 en `PROMPTS.md`).
 
@@ -91,6 +91,13 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** los tres archivos coinciden con las listas nuevas (con el color nuevo Transparente en el llavero).
 - [x] **T34** · `datos-demo.sql`: `UPDATE` de `colores` de Llavero (Blanco, Negro, Transparente), Mousepad (Blanco, Negro) y Almohadón (Blanco, Gris, Verde claro) · Requisito: R10, R14 · Archivos: modificar `backend/src/db/datos-demo.sql` · Test: manual en Neon (lo ejecuta el estudiante)
   **Listo cuando:** en Neon la columna `colores` muestra las listas nuevas en los 3 productos.
+
+## Cambio del 23/10/2026 · catálogo en 2 columnas en celular
+
+- [x] **T35** · Grilla del catálogo y de los esqueletos en 2 columnas en celular, 3 en tablet (`md`) y 4 en PC (`lg`) · Requisito: R6, R9 · Archivos: modificar `frontend/src/pages/tienda/Catalogo.jsx`, `frontend/src/components/comunes/Cargando.jsx`, `frontend/tests/Catalogo.test.jsx` · Test: clases `grid-cols-2 md:grid-cols-3 lg:grid-cols-4` en la grilla y en el esqueleto
+  **Listo cuando:** el test pasa y `/catalogo` se ve en 2 columnas en el celular.
+- [x] **T36** · Tarjeta angosta en celular: bloque de datos `p-3`, precio `text-lg` y etiqueta "Personalizable" `px-2 py-0.5` (en compu queda como ahora con `md:`) · Requisito: R5 · Archivos: modificar `frontend/src/components/tienda/TarjetaProducto.jsx`, `frontend/tests/TarjetaProducto.test.jsx` · Test: clases de celular presentes y las de compu en los `md:`
+  **Listo cuando:** el test pasa y una tarjeta entra bien en 360 px sin cortarse.
 
 ## Cierre
 

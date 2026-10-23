@@ -54,6 +54,8 @@ describe('Catálogo · grilla de productos', () => {
 
     const carga = screen.getByRole('status', { name: textos.catalogo.cargando })
     expect(carga).toHaveAttribute('aria-busy', 'true')
+    const esqueletos = screen.getByRole('list', { hidden: true })
+    expect(esqueletos).toHaveClass('grid', 'grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4')
     expect(
       screen.getAllByRole('listitem', { hidden: true }),
     ).toHaveLength(8)
@@ -80,12 +82,12 @@ describe('Catálogo · grilla de productos', () => {
     expect(screen.queryByRole('status', { name: textos.catalogo.cargando })).not.toBeInTheDocument()
   })
 
-  it('R6 · la grilla pasa de 1 columna (celular desde 360 px) a 2 (tablet) y 4 (PC)', async () => {
+  it('R6 · la grilla pasa de 2 columnas (celular desde 360 px) a 3 (tablet) y 4 (PC)', async () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
     await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
     const grilla = screen.getByRole('list')
-    expect(grilla).toHaveClass('grid', 'grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-4')
+    expect(grilla).toHaveClass('grid', 'grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4')
   })
 })
