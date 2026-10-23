@@ -10,6 +10,10 @@ const textos = {
     altLogo: "Sean's Store: sublimación y productos personalizados",
     enlaceCatalogo: 'Catálogo',
   },
+  catalogo: {
+    titulo: 'Catálogo',
+    cargando: 'Cargando productos',
+  },
   footer: {
     altIsotipo: "Isotipo de Sean's Store",
     descripcion: 'Sublimación y productos personalizados.',
