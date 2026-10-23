@@ -1,4 +1,5 @@
--- Datos de demostración del catálogo (tarea 001-T03; colores por producto con /cambio 20/10/2026)
+-- Datos de demostración del catálogo (tarea 001-T03; colores por producto con /cambio 20/10/2026
+-- y colores nuevos de llavero, mousepad y almohadón con /cambio 23/10/2026)
 -- UPDATE de los 12 productos con el precio, el stock, la descripción, el destacado
 -- y la columna colores de la tabla de ETAPA-1.md. Ejecutar en el SQL Editor de Neon
 -- DESPUÉS de carga-catalogo.sql.
@@ -55,17 +56,17 @@ UPDATE productos SET precio = 13000, stock = 30,  destacado = FALSE,
   WHERE codigo = 'GOR-001';
 
 UPDATE productos SET precio = 3500,  stock = 100, destacado = FALSE,
-  colores = '{Blanco}',
+  colores = '{Blanco,Negro,Transparente}',
   descripcion = 'Llavero con tu foto o tu logo, ideal como souvenir o regalo empresarial.'
   WHERE codigo = 'LAV-001';
 
 UPDATE productos SET precio = 7500,  stock = 40,  destacado = FALSE,
-  colores = '{Blanco}',
+  colores = '{Blanco,Negro}',
   descripcion = 'Mousepad de 22 × 18 cm con base antideslizante y tu diseño.'
   WHERE codigo = 'MOU-001';
 
 UPDATE productos SET precio = 15000, stock = 20,  destacado = FALSE,
-  colores = '{Blanco,Gris}',
+  colores = '{Blanco,Gris,"Verde claro"}',
   descripcion = 'Almohadón de 40 × 40 cm con funda estampada y relleno incluido.'
   WHERE codigo = 'ALM-001';
 

@@ -89,7 +89,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
 
 - [x] **T33** · Documentar el cambio: fila Accesorios de la tabla de carga e historial en la spec, nota del cambio en `plan.md` y columna Colores nueva en la tabla de datos de demostración de `ETAPA-1.md` (Llavero: Blanco, Negro, Transparente · Mousepad: Blanco, Negro · Almohadón: Blanco, Gris, Verde claro) · Requisito: ninguno nuevo (son los datos de demostración de R10/R14) · Archivos: modificar `specs/001-catalogo/spec.md`, `specs/001-catalogo/plan.md`, `ETAPA-1.md` · Test: ninguno (documentación)
   **Listo cuando:** los tres archivos coinciden con las listas nuevas (con el color nuevo Transparente en el llavero).
-- [ ] **T34** · `datos-demo.sql`: `UPDATE` de `colores` de Llavero (Blanco, Negro, Transparente), Mousepad (Blanco, Negro) y Almohadón (Blanco, Gris, Verde claro) · Requisito: R10, R14 · Archivos: modificar `backend/src/db/datos-demo.sql` · Test: manual en Neon (lo ejecuta el estudiante)
+- [x] **T34** · `datos-demo.sql`: `UPDATE` de `colores` de Llavero (Blanco, Negro, Transparente), Mousepad (Blanco, Negro) y Almohadón (Blanco, Gris, Verde claro) · Requisito: R10, R14 · Archivos: modificar `backend/src/db/datos-demo.sql` · Test: manual en Neon (lo ejecuta el estudiante)
   **Listo cuando:** en Neon la columna `colores` muestra las listas nuevas en los 3 productos.
 
 ## Cierre
