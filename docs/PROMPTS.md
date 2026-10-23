@@ -83,3 +83,13 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** lo detectó el estudiante al revisar el plan antes de aprobarlo.
 - **Corrección humana:** el estudiante pidió corregir la tabla de riesgos y los tests de R14: los tests simulan `db/conexion.js` con `vi.mock` de Vitest y devuelven datos de prueba, sin tocar Neón nunca.
 - **Para que no se repita:** antes de definir los tests de una spec se lee `07-CONVENCIONES.md`; en el backend, todo test de ruta hace `vi.mock` de `db/conexion.js` con datos de prueba.
+
+### Error N° 8 · Mensaje de commit deformado y con un carácter invisible
+
+- **Fecha y fase:** 21/10/2026 · Implementación de 001-catalogo, tarea T15 (commit)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** hacer el commit con el mensaje propuesto, `001-T15 TarjetaProducto con precio formateado y etiqueta "Sin stock"`, y hacer el push.
+- **Qué hizo mal la IA:** PowerShell deformó las comillas del mensaje: quedó `etiqueta " Sin stock\`, con un `\` al final y sin la comilla de cierre. Y al corregirlo con un archivo temporal, `Set-Content -Encoding UTF8` escribió un BOM invisible al inicio, así que el mensaje aparecía como `﻿001-T15…`.
+- **Cómo se detectó:** la IA misma lo vio al revisar el mensaje con `git log -1 --format='%s'` después de cada commit, antes de hacer el push.
+- **Corrección:** dos `git commit --amend -F` con el mensaje escrito en un archivo ASCII; el push se hizo después de confirmar que el mensaje quedaba bien: **se corrigió con `--amend` antes del push, así que no se reescribió historia publicada**.
+- **Para que no se repita:** en Windows, cuando el mensaje del commit tiene comillas, escribirlo en un archivo ASCII y usar `git commit -F archivo` (nunca comillas anidadas en PowerShell), y revisar `git log -1 --format='%s'` antes de pushear.
