@@ -9,7 +9,7 @@ const Catalogo = () => {
 
   return (
     <section className="mx-auto max-w-6xl px-5 pb-16">
-      <h1 className="pb-6 font-titulos text-3xl md:text-4xl">{textos.catalogo.titulo}</h1>
+      <h1 className="pt-8 pb-6 font-titulos text-2xl md:pt-12 md:text-3xl">{textos.catalogo.titulo}</h1>
       {cargando ? (
         <Cargando etiqueta={textos.catalogo.cargando} />
       ) : (
