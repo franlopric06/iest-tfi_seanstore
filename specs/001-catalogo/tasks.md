@@ -51,7 +51,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** el test pasa y en la página publicada se ven los 4 destacados.
 - [x] **T17** · Página Catálogo: grilla de 4/2/1 columnas desde 360 px y esqueletos mientras carga · Requisito: R6, R9 · Archivos: crear `frontend/src/components/comunes/Cargando.jsx`, `frontend/src/pages/tienda/Catalogo.jsx`, `frontend/tests/Catalogo.test.jsx`; modificar `App.jsx` (más `frontend/src/data/textos.js`: `textos.catalogo`) · Test: grilla con productos simulados y esqueleto durante la carga
   **Listo cuando:** `/catalogo` lista los 12 productos.
-- [ ] **T18** · SEO del catálogo: título, descripción, un solo `<h1>` y JSON-LD de migas de pan · Requisito: R15 · Archivos: modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: título, `description`, un `<h1>` y JSON-LD de migas
+- [x] **T18** · SEO del catálogo: título, descripción, un solo `<h1>` y JSON-LD de migas de pan · Requisito: R15 · Archivos: modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` (más `frontend/src/data/textos.js`: `textos.catalogo.seo` y `textos.catalogo.migas`) · Test: título, `description`, un `<h1>` y JSON-LD de migas
   **Listo cuando:** el test pasa.
 - [ ] **T19** · Filtro por categoría en `/catalogo/:slug`, con la categoría actual marcada · Requisito: R7 · Archivos: crear `frontend/src/components/tienda/FiltroCategorias.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: con y sin `:slug`
   **Listo cuando:** `/catalogo/indumentaria` muestra solo esa categoría con su chip marcado.

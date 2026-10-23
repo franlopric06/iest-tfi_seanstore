@@ -13,6 +13,12 @@ const textos = {
   catalogo: {
     titulo: 'Catálogo',
     cargando: 'Cargando productos',
+    seo: {
+      titulo: "Catálogo · Sean's Store",
+      descripcion:
+        'Elegí tu producto y te lo estampamos con tu diseño. Te atendemos por WhatsApp.',
+    },
+    migas: [{ nombre: 'Inicio', ruta: '/' }],
   },
   footer: {
     altIsotipo: "Isotipo de Sean's Store",

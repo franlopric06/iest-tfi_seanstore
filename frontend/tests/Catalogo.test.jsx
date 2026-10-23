@@ -91,3 +91,47 @@ describe('Catálogo · grilla de productos', () => {
     expect(grilla).toHaveClass('grid', 'grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4')
   })
 })
+
+describe('Catálogo · SEO (R15)', () => {
+  it('R15 · pone el título y la descripción del catálogo', async () => {
+    api.obtenerProductos.mockResolvedValue(productos)
+    armar()
+
+    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    expect(document.title).toBe(textos.catalogo.seo.titulo)
+    expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
+      'content',
+      textos.catalogo.seo.descripcion,
+    )
+  })
+
+  it('R15 · la página tiene un solo <h1>', async () => {
+    api.obtenerProductos.mockResolvedValue(productos)
+    armar()
+
+    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    const h1 = document.querySelectorAll('h1')
+    expect(h1).toHaveLength(1)
+  })
+
+  it('R15 · deja el JSON-LD de migas de pan (Inicio › Catálogo)', async () => {
+    api.obtenerProductos.mockResolvedValue(productos)
+    armar()
+
+    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    const script = document.getElementById('json-ld')
+    expect(script).not.toBeNull()
+    const datos = JSON.parse(script.textContent)
+    expect(datos['@context']).toBe('https://schema.org')
+    expect(datos['@type']).toBe('BreadcrumbList')
+    expect(datos.itemListElement).toEqual([
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://sean-store.vercel.app/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: textos.catalogo.titulo,
+        item: 'https://sean-store.vercel.app/catalogo',
+      },
+    ])
+  })
+})
