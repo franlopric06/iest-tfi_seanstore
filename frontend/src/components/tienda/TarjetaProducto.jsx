@@ -34,12 +34,12 @@ const TarjetaProducto = ({ producto }) => {
             {!quieto && <PasadaTinta />}
           </div>
         )}
-        <div className="flex flex-col gap-2.5 p-4">
-          <span className="bg-amarillo px-3 py-1 rounded-full self-start text-violeta text-xs font-extrabold">
+        <div className="flex flex-col gap-2.5 p-3 md:p-4">
+          <span className="bg-amarillo px-2 py-0.5 md:px-3 md:py-1 rounded-full self-start text-violeta text-xs font-extrabold">
             Personalizable
           </span>
           <h3 className="truncate">{producto.nombre}</h3>
-          <p className="text-magenta text-xl font-bold md:text-2xl">
+          <p className="text-magenta text-lg font-bold md:text-2xl">
             {formatearPrecio(producto.precio)}
           </p>
           {producto.stock === 0 && (

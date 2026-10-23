@@ -41,6 +41,19 @@ describe('TarjetaProducto · tarjeta de producto', () => {
     expect(screen.getByText('$ 12.000')).toBeInTheDocument()
   })
 
+  it('R5 · en celular la tarjeta es angosta: dato con p-3, precio text-lg y etiqueta menor, y en compu queda como ahora', () => {
+    armar()
+
+    expect(screen.getByText('Personalizable')).toHaveClass(
+      'px-2',
+      'py-0.5',
+      'md:px-3',
+      'md:py-1',
+    )
+    expect(screen.getByText('$ 12.000')).toHaveClass('text-lg', 'md:text-2xl')
+    expect(screen.getByText('$ 12.000').closest('div')).toHaveClass('p-3', 'md:p-4')
+  })
+
   it('R18 · con stock 0 muestra la etiqueta "Sin stock"', () => {
     armar({ ...producto, stock: 0 })
 
