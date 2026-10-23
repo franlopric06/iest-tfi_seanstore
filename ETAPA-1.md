@@ -53,22 +53,22 @@ Se hacen **en este orden**. La 004 se empieza cuando las otras tres estén termi
 
 ## Datos de demostración
 
-Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Los productos no son solo blancos: el negocio sublima en muchos colores; la lista de cada producto está en la columna `colores` de `backend/src/db/datos-demo.sql` y en la tabla de `specs/001-catalogo/spec.md`.
+Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Los productos no son solo blancos: el negocio sublima en muchos colores; la lista de cada producto está en la columna `colores` de `backend/src/db/datos-demo.sql`, en la tabla de `specs/001-catalogo/spec.md` y en la columna Colores de la tabla de abajo (actualizada el 23/10/2026 con las fotos: llavero con Transparente, mousepad y almohadón con sus listas nuevas).
 
-| Producto | Categoría | Precio | Stock | Destacado | Descripción |
-| --- | --- | --- | --- | --- | --- |
-| Taza de cerámica | Tazas y termos | $ 12.000 | 40 | Sí | Taza de cerámica de 325 ml, estampada con tu foto, tu logo o una frase. Apta microondas. |
-| Taza de polímero | Tazas y termos | $ 9.500 | 30 | No | Taza de polímero irrompible, ideal para chicos y para regalar. Se estampa con el diseño que quieras. |
-| Termo | Tazas y termos | $ 28.000 | 15 | Sí | Termo de acero inoxidable de 500 ml que mantiene el frío y el calor, con tu diseño. |
-| Botella | Tazas y termos | $ 18.000 | 20 | No | Botella de aluminio de 600 ml con tapa a rosca, para el gimnasio, la facu o el trabajo. |
-| Remera | Indumentaria | $ 16.000 | 50 | Sí | Remera de poliéster de manga corta, liviana y fresca. El estampado no se va con el lavado. |
-| Buzo | Indumentaria | $ 38.000 | 20 | No | Buzo con capucha y bolsillo canguro, ideal para egresados, equipos y empresas. |
-| Campera | Indumentaria | $ 52.000 | 12 | No | Campera con cierre, abrigada, personalizada con nombre, número o logo. |
-| Canilleras | Deportes | $ 14.000 | 25 | Sí | Canilleras livianas estampadas con tu nombre, tu número o el escudo de tu equipo. |
-| Gorra | Accesorios | $ 13.000 | 30 | No | Gorra trucker con frente estampado y regulación atrás. |
-| Llavero | Accesorios | $ 3.500 | 100 | No | Llavero con tu foto o tu logo, ideal como souvenir o regalo empresarial. |
-| Mousepad | Accesorios | $ 7.500 | 40 | No | Mousepad de 22 × 18 cm con base antideslizante y tu diseño. |
-| Almohadón | Accesorios | $ 15.000 | 20 | No | Almohadón de 40 × 40 cm con funda estampada y relleno incluido. |
+| Producto | Categoría | Precio | Stock | Colores | Destacado | Descripción |
+| --- | --- | --- | --- | --- | --- | --- |
+| Taza de cerámica | Tazas y termos | $ 12.000 | 40 | Blanco, Negro, Beige, Verde claro | Sí | Taza de cerámica de 325 ml, estampada con tu foto, tu logo o una frase. Apta microondas. |
+| Taza de polímero | Tazas y termos | $ 9.500 | 30 | Blanco, Negro, Beige, Verde claro | No | Taza de polímero irrompible, ideal para chicos y para regalar. Se estampa con el diseño que quieras. |
+| Termo | Tazas y termos | $ 28.000 | 15 | Blanco, Negro, Rosa, Verde claro | Sí | Termo de acero inoxidable de 500 ml que mantiene el frío y el calor, con tu diseño. |
+| Botella | Tazas y termos | $ 18.000 | 20 | Blanco, Negro, Azul | No | Botella de aluminio de 600 ml con tapa a rosca, para el gimnasio, la facu o el trabajo. |
+| Remera | Indumentaria | $ 16.000 | 50 | Blanco, Negro, Gris, Azul, Rojo | Sí | Remera de poliéster de manga corta, liviana y fresca. El estampado no se va con el lavado. |
+| Buzo | Indumentaria | $ 38.000 | 20 | Blanco, Negro, Gris, Azul | No | Buzo con capucha y bolsillo canguro, ideal para egresados, equipos y empresas. |
+| Campera | Indumentaria | $ 52.000 | 12 | Blanco, Negro, Gris, Azul | No | Campera con cierre, abrigada, personalizada con nombre, número o logo. |
+| Canilleras | Deportes | $ 14.000 | 25 | Blanco, Negro | Sí | Canilleras livianas estampadas con tu nombre, tu número o el escudo de tu equipo. |
+| Gorra | Accesorios | $ 13.000 | 30 | Blanco, Negro, Azul | No | Gorra trucker con frente estampado y regulación atrás. |
+| Llavero | Accesorios | $ 3.500 | 100 | Blanco, Negro, Transparente | No | Llavero con tu foto o tu logo, ideal como souvenir o regalo empresarial. |
+| Mousepad | Accesorios | $ 7.500 | 40 | Blanco, Negro | No | Mousepad de 22 × 18 cm con base antideslizante y tu diseño. |
+| Almohadón | Accesorios | $ 15.000 | 20 | Blanco, Gris, Verde claro | No | Almohadón de 40 × 40 cm con funda estampada y relleno incluido. |
 
 - Talles: remera, buzo y campera de S a XXL; canilleras S, M y L; el resto, talle único.
 - En el pie de la tienda va el aviso **"Sitio de demostración: precios y datos de ejemplo."**
