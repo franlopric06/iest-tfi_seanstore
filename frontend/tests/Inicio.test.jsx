@@ -1,4 +1,4 @@
-﻿import { cleanup, render, screen } from '@testing-library/react'
+﻿import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import Inicio from '../src/pages/tienda/Inicio.jsx'
@@ -14,12 +14,78 @@ vi.mock('motion/react', async (importOriginal) => {
   }
 })
 
+const api = vi.hoisted(() => ({ obtenerProductos: vi.fn() }))
+
+vi.mock('../src/services/api.js', () => api)
+
+const destacados = [
+  {
+    codigo: 'P01',
+    slug: 'taza-ceramica',
+    nombre: 'Taza de cerámica',
+    categoria: { slug: 'tazas-termos', nombre: 'Tazas y termos' },
+    talles: [],
+    colores: ['Blanco', 'Negro'],
+    precio: '12000.00',
+    stock: 10,
+    foto: null,
+  },
+  {
+    codigo: 'P03',
+    slug: 'termo',
+    nombre: 'Termo',
+    categoria: { slug: 'tazas-termos', nombre: 'Tazas y termos' },
+    talles: [],
+    colores: ['Blanco', 'Negro'],
+    precio: '35950.00',
+    stock: 5,
+    foto: null,
+  },
+  {
+    codigo: 'P05',
+    slug: 'remera',
+    nombre: 'Remera',
+    categoria: { slug: 'indumentaria', nombre: 'Indumentaria' },
+    talles: ['S', 'M', 'L', 'XL', 'XXL'],
+    colores: ['Blanco', 'Negro'],
+    precio: '18000.00',
+    stock: 8,
+    foto: null,
+  },
+  {
+    codigo: 'P09',
+    slug: 'canilleras',
+    nombre: 'Canilleras',
+    categoria: { slug: 'deportes', nombre: 'Deportes' },
+    talles: ['S', 'M', 'L'],
+    colores: ['Blanco', 'Negro'],
+    precio: '24000.00',
+    stock: 0,
+    foto: null,
+  },
+]
+
 beforeAll(() => {
   window.IntersectionObserver = class {
     observe() {}
     unobserve() {}
     disconnect() {}
   }
+  window.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  window.matchMedia = (consulta) => ({
+    matches: false,
+    media: consulta,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  })
 })
 
 afterEach(() => {
@@ -74,6 +140,35 @@ describe('Inicio Â· portada de la tienda', () => {
       textos.inicio.seo.descripcion
     )
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+  })
+
+  it('R2 · pide los destacados y muestra "Los más pedidos" con las 4 tarjetas y "Ver todo el catálogo"', async () => {
+    api.obtenerProductos.mockResolvedValue(destacados)
+    armar()
+
+    expect(api.obtenerProductos).toHaveBeenCalledWith({ destacados: true })
+    const titulo = await screen.findByRole('heading', {
+      level: 2,
+      name: textos.masPedidos.titulo,
+    })
+    const seccion = titulo.closest('section')
+    const enlaceCatalogo = within(seccion).getByRole('link', { name: textos.masPedidos.enlace })
+    expect(enlaceCatalogo).toHaveAttribute('href', '/catalogo')
+    destacados.forEach(({ nombre, slug }) => {
+      const tarjeta = within(seccion).getByRole('link', { name: new RegExp(nombre, 'i') })
+      expect(tarjeta).toHaveAttribute('href', `/producto/${slug}`)
+    })
+  })
+
+  it('R3 · sin destacados la sección "Los más pedidos" no aparece', async () => {
+    api.obtenerProductos.mockResolvedValue([])
+    armar()
+
+    await waitFor(() => expect(api.obtenerProductos).toHaveBeenCalled())
+    expect(
+      screen.queryByRole('heading', { level: 2, name: textos.masPedidos.titulo })
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText(textos.masPedidos.enlace)).not.toBeInTheDocument()
   })
 })
 

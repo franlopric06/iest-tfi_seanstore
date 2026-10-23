@@ -66,6 +66,10 @@ const textos = {
       { id: 'canilleras', nombre: 'Canilleras' },
     ],
   },
+  masPedidos: {
+    titulo: 'Los más pedidos',
+    enlace: 'Ver todo el catálogo',
+  },
   facil: {
     titulo: 'Así de fácil',
     pasos: [
