@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import Cargando from '../../components/comunes/Cargando.jsx'
+import EstadoVacio from '../../components/comunes/EstadoVacio.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import FiltroCategorias from '../../components/tienda/FiltroCategorias.jsx'
 import TarjetaProducto from '../../components/tienda/TarjetaProducto.jsx'
@@ -52,15 +53,23 @@ const Catalogo = () => {
       {cargando ? (
         <Cargando etiqueta={textos.catalogo.cargando} />
       ) : (
-        Array.isArray(productos) && (
-          <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {productos.map((producto) => (
-              <li key={producto.slug}>
-                <TarjetaProducto producto={producto} />
-              </li>
-            ))}
-          </ul>
-        )
+        <>
+          {Array.isArray(productos) && productos.length === 0 && (
+            <EstadoVacio
+              frase={textos.catalogo.vacio.frase}
+              enlace={textos.catalogo.vacio.enlace}
+            />
+          )}
+          {Array.isArray(productos) && productos.length > 0 && (
+            <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+              {productos.map((producto) => (
+                <li key={producto.slug}>
+                  <TarjetaProducto producto={producto} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
     </section>
   )

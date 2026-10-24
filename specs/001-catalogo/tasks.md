@@ -55,7 +55,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** el test pasa.
 - [x] **T19** · Filtro por categoría en `/catalogo/:slug`, con la categoría actual marcada · Requisito: R7 · Archivos: crear `frontend/src/components/tienda/FiltroCategorias.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: con y sin `:slug`
   **Listo cuando:** `/catalogo/indumentaria` muestra solo esa categoría con su chip marcado.
-- [ ] **T20** · Estado vacío del catálogo · Requisito: R8 · Archivos: crear `frontend/src/components/comunes/EstadoVacio.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: "No encontramos productos con esta categoría" + "Ver todo el catálogo"
+- [x] **T20** · Estado vacío del catálogo · Requisito: R8 · Archivos: crear `frontend/src/components/comunes/EstadoVacio.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` (más `frontend/src/data/textos.js`: `textos.catalogo.vacio`) · Test: "No encontramos productos con esta categoría" + "Ver todo el catálogo"
   **Listo cuando:** el caso vacío pasa.
 - [ ] **T21** · Página Detalle: galería, nombre, precio, descripción (oculta si es NULL), talles ("Talle único" si viene vacío), colores, "Sin stock" si corresponde, "Volver al catálogo" y esqueleto · Requisito: R10, R9, R18 · Archivos: crear `frontend/src/components/tienda/GaleriaFotos.jsx`, `frontend/src/pages/tienda/DetalleProducto.jsx`, `frontend/tests/DetalleProducto.test.jsx`; modificar `App.jsx` · Test: datos del detalle, "Talle único", "Sin stock" y esqueleto
   **Listo cuando:** `/producto/:slug` muestra todo.

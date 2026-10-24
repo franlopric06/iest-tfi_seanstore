@@ -186,6 +186,19 @@ describe('Catálogo · filtro por categoría (R7)', () => {
   })
 })
 
+describe('Catálogo · estado vacío (R8)', () => {
+  it('R8 · con una categoría sin productos muestra la frase y el enlace al catálogo completo', async () => {
+    api.obtenerProductos.mockResolvedValue([])
+    armar('/catalogo/deportes')
+
+    await esperarTitulo()
+    expect(screen.getByText(textos.catalogo.vacio.frase)).toBeInTheDocument()
+    const enlace = screen.getByRole('link', { name: textos.catalogo.vacio.enlace })
+    expect(enlace).toHaveAttribute('href', '/catalogo')
+    expect(screen.queryByRole('list')).not.toBeInTheDocument()
+  })
+})
+
 describe('Catálogo · SEO (R15)', () => {
   it('R15 · pone el título y la descripción del catálogo', async () => {
     api.obtenerProductos.mockResolvedValue(productos)

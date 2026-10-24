@@ -14,6 +14,10 @@ const textos = {
     titulo: 'Catálogo',
     cargando: 'Cargando productos',
     filtro: 'Filtrar por categoría',
+    vacio: {
+      frase: 'No encontramos productos con esta categoría',
+      enlace: 'Ver todo el catálogo',
+    },
     seo: {
       titulo: "Catálogo · Sean's Store",
       descripcion:
