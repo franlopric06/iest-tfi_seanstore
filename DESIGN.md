@@ -128,6 +128,7 @@ Abajo a la derecha: la burbuja violeta del **asistente** y, debajo, el círculo 
 | Subrayado amarillo | 120 × 8 px | 90 × 6 px |
 | Inclinación de franjas | −2° | −3° |
 | Radio de tarjetas y botones | `rounded-marca` | `rounded-marca` |
+| Chips y etiquetas (hero, "Personalizable", "Sin stock", filtro) | `rounded-marca` | `rounded-marca` |
 
 ## Prototipos aprobados
 

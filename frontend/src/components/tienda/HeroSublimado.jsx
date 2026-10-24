@@ -85,7 +85,7 @@ const HeroSublimado = () => {
               <li
                 key={chip}
                 aria-current={indice === diseno ? 'true' : undefined}
-                className={`rounded-full border px-1 py-1.5 text-center text-sm font-bold md:px-4 md:text-base ${
+                className={`rounded-marca border px-1 py-1.5 text-center text-sm font-bold md:px-4 md:text-base ${
                   indice === diseno
                     ? 'border-magenta bg-magenta text-white'
                     : 'border-white/40 text-white/90'
