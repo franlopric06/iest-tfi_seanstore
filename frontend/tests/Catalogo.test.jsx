@@ -1,5 +1,5 @@
-import { cleanup, render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { cleanup, render, screen, within } from '@testing-library/react'
+import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import Catalogo from '../src/pages/tienda/Catalogo.jsx'
 import textos from '../src/data/textos.js'
@@ -40,12 +40,23 @@ afterEach(() => {
   api.obtenerProductos.mockReset()
 })
 
-const armar = () =>
+const armar = (ruta = '/catalogo') =>
   render(
-    <MemoryRouter>
-      <Catalogo />
+    <MemoryRouter initialEntries={[ruta]}>
+      <Routes>
+        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/catalogo/:slug" element={<Catalogo />} />
+      </Routes>
     </MemoryRouter>,
   )
+
+const enlacesProducto = () =>
+  screen
+    .getAllByRole('link')
+    .filter((enlace) => enlace.getAttribute('href')?.startsWith('/producto/'))
+
+const esperarTitulo = async () =>
+  screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
 
 describe('Catálogo · grilla de productos', () => {
   it('R9 · mientras carga muestra los esqueletos con la forma de la tarjeta, sin tarjetas', () => {
@@ -56,9 +67,7 @@ describe('Catálogo · grilla de productos', () => {
     expect(carga).toHaveAttribute('aria-busy', 'true')
     const esqueletos = screen.getByRole('list', { hidden: true })
     expect(esqueletos).toHaveClass('grid', 'grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4')
-    expect(
-      screen.getAllByRole('listitem', { hidden: true }),
-    ).toHaveLength(8)
+    expect(screen.getAllByRole('listitem', { hidden: true })).toHaveLength(8)
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
   })
 
@@ -66,18 +75,20 @@ describe('Catálogo · grilla de productos', () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
-    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    await esperarTitulo()
     expect(api.obtenerProductos).toHaveBeenCalledTimes(1)
     expect(api.obtenerProductos).toHaveBeenCalledWith()
 
+    const grilla = within(screen.getByRole('list'))
     productos.forEach(({ nombre }) => {
-      expect(screen.getByRole('link', { name: new RegExp(nombre, 'i') })).toBeInTheDocument()
+      expect(grilla.getByRole('link', { name: new RegExp(nombre, 'i') })).toBeInTheDocument()
     })
 
-    const enlaces = screen.getAllByRole('link').filter((enlace) => enlace.getAttribute('href'))
-    expect(enlaces).toHaveLength(12)
+    expect(enlacesProducto()).toHaveLength(12)
     productos.forEach(({ slug }) => {
-      expect(enlaces.find((enlace) => enlace.getAttribute('href') === `/producto/${slug}`)).toBeInTheDocument()
+      expect(
+        enlacesProducto().find((enlace) => enlace.getAttribute('href') === `/producto/${slug}`),
+      ).toBeInTheDocument()
     })
     expect(screen.queryByRole('status', { name: textos.catalogo.cargando })).not.toBeInTheDocument()
   })
@@ -86,9 +97,92 @@ describe('Catálogo · grilla de productos', () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
-    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    await esperarTitulo()
     const grilla = screen.getByRole('list')
     expect(grilla).toHaveClass('grid', 'grid-cols-2', 'md:grid-cols-3', 'lg:grid-cols-4')
+  })
+})
+
+describe('Catálogo · filtro por categoría (R7)', () => {
+  it('R7 · /catalogo/indumentaria pide esa categoría, muestra solo sus productos y marca su chip', async () => {
+    api.obtenerProductos.mockResolvedValue(
+      productos.filter((producto) => producto.categoria === 'indumentaria'),
+    )
+    armar('/catalogo/indumentaria')
+
+    await esperarTitulo()
+    expect(api.obtenerProductos).toHaveBeenCalledWith({ categoria: 'indumentaria' })
+
+    expect(enlacesProducto()).toHaveLength(3)
+    expect(enlacesProducto().map((enlace) => enlace.getAttribute('href'))).toEqual([
+      '/producto/remera',
+      '/producto/buzo',
+      '/producto/campera',
+    ])
+    expect(
+      screen.queryByRole('link', { name: /Taza de cerámica/i }),
+    ).not.toBeInTheDocument()
+
+    const chip = screen.getByRole('link', { name: 'Indumentaria' })
+    expect(chip).toHaveAttribute('aria-current', 'page')
+    expect(chip).toHaveClass('bg-magenta')
+    textos.franja.categorias
+      .filter((categoria) => categoria.slug !== 'indumentaria')
+      .forEach(({ nombre }) => {
+        expect(screen.getByRole('link', { name: nombre })).not.toHaveAttribute('aria-current')
+      })
+  })
+
+  it('R7 · sin slug pide todos los productos y ningún chip queda marcado', async () => {
+    api.obtenerProductos.mockResolvedValue(productos)
+    armar()
+
+    await esperarTitulo()
+    expect(api.obtenerProductos).toHaveBeenCalledWith()
+    textos.franja.categorias.forEach(({ nombre }) => {
+      expect(screen.getByRole('link', { name: nombre })).not.toHaveAttribute('aria-current')
+    })
+  })
+
+  it("R7 · la página de categoría lleva su propio título y descripción SEO", async () => {
+    api.obtenerProductos.mockResolvedValue(
+      productos.filter((producto) => producto.categoria === 'indumentaria'),
+    )
+    armar('/catalogo/indumentaria')
+
+    await esperarTitulo()
+    expect(document.title).toBe(textos.catalogo.seoCategorias.indumentaria.titulo)
+    expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
+      'content',
+      textos.catalogo.seoCategorias.indumentaria.descripcion,
+    )
+  })
+
+  it('R15 · las migas del catálogo filtrado llegan hasta la categoría', async () => {
+    api.obtenerProductos.mockResolvedValue(
+      productos.filter((producto) => producto.categoria === 'indumentaria'),
+    )
+    armar('/catalogo/indumentaria')
+
+    await esperarTitulo()
+    const script = document.getElementById('json-ld')
+    const datos = JSON.parse(script.textContent)
+    expect(datos['@type']).toBe('BreadcrumbList')
+    expect(datos.itemListElement).toEqual([
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: 'https://sean-store.vercel.app/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: textos.catalogo.titulo,
+        item: 'https://sean-store.vercel.app/catalogo',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Indumentaria',
+        item: 'https://sean-store.vercel.app/catalogo/indumentaria',
+      },
+    ])
   })
 })
 
@@ -97,7 +191,7 @@ describe('Catálogo · SEO (R15)', () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
-    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    await esperarTitulo()
     expect(document.title).toBe(textos.catalogo.seo.titulo)
     expect(document.head.querySelector('meta[name="description"]')).toHaveAttribute(
       'content',
@@ -109,7 +203,7 @@ describe('Catálogo · SEO (R15)', () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
-    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    await esperarTitulo()
     const h1 = document.querySelectorAll('h1')
     expect(h1).toHaveLength(1)
   })
@@ -118,7 +212,7 @@ describe('Catálogo · SEO (R15)', () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
-    await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo })
+    await esperarTitulo()
     const script = document.getElementById('json-ld')
     expect(script).not.toBeNull()
     const datos = JSON.parse(script.textContent)

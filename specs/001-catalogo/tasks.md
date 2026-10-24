@@ -53,7 +53,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** `/catalogo` lista los 12 productos.
 - [x] **T18** · SEO del catálogo: título, descripción, un solo `<h1>` y JSON-LD de migas de pan · Requisito: R15 · Archivos: modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` (más `frontend/src/data/textos.js`: `textos.catalogo.seo` y `textos.catalogo.migas`) · Test: título, `description`, un `<h1>` y JSON-LD de migas
   **Listo cuando:** el test pasa.
-- [ ] **T19** · Filtro por categoría en `/catalogo/:slug`, con la categoría actual marcada · Requisito: R7 · Archivos: crear `frontend/src/components/tienda/FiltroCategorias.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: con y sin `:slug`
+- [x] **T19** · Filtro por categoría en `/catalogo/:slug`, con la categoría actual marcada · Requisito: R7 · Archivos: crear `frontend/src/components/tienda/FiltroCategorias.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: con y sin `:slug`
   **Listo cuando:** `/catalogo/indumentaria` muestra solo esa categoría con su chip marcado.
 - [ ] **T20** · Estado vacío del catálogo · Requisito: R8 · Archivos: crear `frontend/src/components/comunes/EstadoVacio.jsx`; modificar `Catalogo.jsx`, `tests/Catalogo.test.jsx` · Test: "No encontramos productos con esta categoría" + "Ver todo el catálogo"
   **Listo cuando:** el caso vacío pasa.

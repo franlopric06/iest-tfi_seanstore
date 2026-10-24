@@ -13,10 +13,29 @@ const textos = {
   catalogo: {
     titulo: 'Catálogo',
     cargando: 'Cargando productos',
+    filtro: 'Filtrar por categoría',
     seo: {
       titulo: "Catálogo · Sean's Store",
       descripcion:
         'Elegí tu producto y te lo estampamos con tu diseño. Te atendemos por WhatsApp.',
+    },
+    seoCategorias: {
+      'tazas-termos': {
+        titulo: "Tazas y termos personalizados · Sean's Store",
+        descripcion: 'Tazas y termos sublimados con tu diseño. Retiro en el local o envío.',
+      },
+      indumentaria: {
+        titulo: "Indumentaria personalizada · Sean's Store",
+        descripcion: 'Indumentaria sublimada con tu diseño. Retiro en el local o envío.',
+      },
+      deportes: {
+        titulo: "Canilleras personalizadas · Sean's Store",
+        descripcion: 'Canilleras sublimadas con tu diseño. Retiro en el local o envío.',
+      },
+      accesorios: {
+        titulo: "Accesorios personalizados · Sean's Store",
+        descripcion: 'Accesorios sublimados con tu diseño. Retiro en el local o envío.',
+      },
     },
     migas: [{ nombre: 'Inicio', ruta: '/' }],
   },

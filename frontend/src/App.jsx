@@ -12,6 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />} />
           <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/catalogo/:slug" element={<Catalogo />} />
         </Routes>
       </main>
       <Footer />
