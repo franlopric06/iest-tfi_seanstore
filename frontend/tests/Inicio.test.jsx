@@ -1,4 +1,4 @@
-﻿import { cleanup, render, screen, waitFor, within } from '@testing-library/react'
+﻿import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import Inicio from '../src/pages/tienda/Inicio.jsx'
@@ -158,6 +158,24 @@ describe('Inicio Â· portada de la tienda', () => {
       const tarjeta = within(seccion).getByRole('link', { name: new RegExp(nombre, 'i') })
       expect(tarjeta).toHaveAttribute('href', `/producto/${slug}`)
     })
+  })
+
+  it('R17 · si la API falla, muestra el error y "Reintentar" vuelve a pedir los destacados', async () => {
+    api.obtenerProductos.mockRejectedValueOnce(new Error('API caída'))
+    api.obtenerProductos.mockResolvedValue(destacados)
+    armar()
+
+    const alerta = await screen.findByRole('alert')
+    expect(within(alerta).getByText(textos.errores.frase)).toBeInTheDocument()
+    const boton = within(alerta).getByRole('button', { name: textos.errores.boton })
+    expect(api.obtenerProductos).toHaveBeenCalledTimes(1)
+
+    fireEvent.click(boton)
+
+    expect(
+      await screen.findByRole('heading', { level: 2, name: textos.masPedidos.titulo })
+    ).toBeInTheDocument()
+    expect(api.obtenerProductos).toHaveBeenCalledTimes(2)
   })
 
   it('R3 · sin destacados la sección "Los más pedidos" no aparece', async () => {

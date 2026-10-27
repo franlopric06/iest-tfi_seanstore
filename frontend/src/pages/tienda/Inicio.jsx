@@ -1,4 +1,5 @@
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
+import MensajeError from '../../components/comunes/MensajeError.jsx'
 import AsiDeFacil from '../../components/tienda/AsiDeFacil.jsx'
 import CintaProductos from '../../components/tienda/CintaProductos.jsx'
 import FranjaCategorias from '../../components/tienda/FranjaCategorias.jsx'
@@ -10,7 +11,9 @@ import { obtenerProductos } from '../../services/api.js'
 import textos from '../../data/textos.js'
 
 const Inicio = () => {
-  const { datos: destacados } = useObtenerDatos(() => obtenerProductos({ destacados: true }))
+  const { datos: destacados, error, reintentar } = useObtenerDatos(() =>
+    obtenerProductos({ destacados: true })
+  )
 
   return (
     <>
@@ -18,8 +21,11 @@ const Inicio = () => {
       <HeroSublimado />
       <FranjaCategorias />
       <CintaProductos />
-      {Array.isArray(destacados) && destacados.length > 0 && (
-        <LosMasPedidos destacados={destacados} />
+      {error ? (
+        <MensajeError alReintentar={reintentar} />
+      ) : (
+        Array.isArray(destacados) &&
+        destacados.length > 0 && <LosMasPedidos destacados={destacados} />
       )}
       <AsiDeFacil />
       <NoTenesDiseno />

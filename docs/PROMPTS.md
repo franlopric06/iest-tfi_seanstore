@@ -113,3 +113,13 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** el estudiante lo notó al revisar el SQL antes de ejecutarlo en Neon.
 - **Corrección humana:** el estudiante pidió reemplazar "la Iglesia del Rosario y el reloj de Tinogasta" por "la iglesia del reloj de Tinogasta" (descripción visual sin nombre propio inventado) en todos los alts afectados (taza, termo, campera y llavero). También pidió reemplazar "la Iglesia de Adobe de Tinogasta" por "una iglesia de adobe de la Ruta del Adobe" para el mismo motivo.
 - **Para que no se repita:** cuando el nombre de archivo no incluye el nombre oficial de un lugar, el alt describe lo que se ve visualmente ("una iglesia de adobe", "una torre con reloj") sin inventar nombres propios. Si hay duda sobre el nombre real, preguntar antes de escribir.
+
+### Error N° 11 · Explicó un error de sintaxis y un build fallido que nunca pasaron
+
+- **Fecha y fase:** 26/10/2026 · Implementación de 001-catalogo, tarea T27
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** implementar T27 (estado de error con "Reintentar" en el Inicio) y explicar en lenguaje simple cada archivo cambiado para que el estudiante lo pueda defender.
+- **Qué hizo mal la IA:** en la explicación de `Inicio.jsx` inventó un detalle que no ocurrió: dijo que la lógica quedó como un solo condicional que producía un error de sintaxis y un build fallido. El build nunca falló durante la tarea (`npm run build` anduvo en verde en todos los intentos) y tampoco hubo ese error de sintaxis. Es una explicación con hechos ficticios: el estudiante tendría que defender algo que no pasó.
+- **Cómo se detectó:** lo detectó el estudiante al leer la explicación: el build había anduvo bien, así que pidió registrar el error.
+- **Corrección humana:** el estudiante lo marcó en la misma conversación; la explicación queda con solo lo que pasó de verdad (refactor del condicional y test nuevo en rojo primero).
+- **Para que no se repita:** las explicaciones describen únicamente lo que pasó en la tarea, sin inventar fallos, pasos ni errores: si el build no falló, no se dice que falló; cada detalle del relato se puede verificar con la salida de los comandos que corrieron.

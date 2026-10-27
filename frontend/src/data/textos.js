@@ -10,6 +10,10 @@ const textos = {
     altLogo: "Sean's Store: sublimación y productos personalizados",
     enlaceCatalogo: 'Catálogo',
   },
+  errores: {
+    frase: 'Algo salió mal, probá de nuevo',
+    boton: 'Reintentar',
+  },
   catalogo: {
     titulo: 'Catálogo',
     cargando: 'Cargando productos',
