@@ -140,6 +140,19 @@ describe('Detalle · sin stock (R18)', () => {
   })
 })
 
+describe('Detalle · sin fotos (R13)', () => {
+  it('R13 · sin fotos muestra un recuadro con el nombre del producto', async () => {
+    const sinFotos = clonar()
+    sinFotos.fotos = []
+    api.obtenerProducto.mockResolvedValue(sinFotos)
+    armar()
+
+    await esperarTitulo()
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    expect(screen.getByTestId('sin-foto-detalle')).toHaveTextContent(producto.nombre)
+  })
+})
+
 describe('Detalle · galería de fotos (R10)', () => {
   it('R10 · la foto de orden = 1 es la principal y las demás son miniaturas', async () => {
     api.obtenerProducto.mockResolvedValue(clonar())

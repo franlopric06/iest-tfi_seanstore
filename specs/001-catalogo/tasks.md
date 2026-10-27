@@ -65,7 +65,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** un slug inexistente lleva a la página 404.
 - [x] **T24** · Etiqueta «Generado con IA» sobre la foto si `generada_con_ia = TRUE`, en tarjeta y detalle · Requisito: R12 · Archivos: modificar `TarjetaProducto.jsx`, `GaleriaFotos.jsx`, sus tests · Test: `TRUE` la muestra; `FALSE` no
   **Listo cuando:** los dos casos pasan.
-- [ ] **T25** · Recuadro con el nombre del producto cuando no tiene fotos · Requisito: R13 · Archivos: modificar `TarjetaProducto.jsx`, `DetalleProducto.jsx`, sus tests · Test: sin fotos → recuadro con el nombre
+- [x] **T25** · Recuadro con el nombre del producto cuando no tiene fotos · Requisito: R13 · Archivos: modificar `TarjetaProducto.jsx`, `DetalleProducto.jsx`, sus tests · Test: sin fotos → recuadro con el nombre
   **Listo cuando:** con la base sin fotos, todas las tarjetas se ven completas.
 - [ ] **T26** · `robots.txt` y Open Graph general del sitio en `index.html` · Requisito: R15 · Archivos: crear `frontend/public/robots.txt`; modificar `frontend/index.html` · Test: revisión del `dist/` después de `npm run build`
   **Listo cuando:** el build trae `robots.txt` y las etiquetas Open Graph.

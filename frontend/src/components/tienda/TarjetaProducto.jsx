@@ -24,7 +24,7 @@ const TarjetaProducto = ({ producto }) => {
         to={`/producto/${producto.slug}`}
         className="block rounded-marca outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2"
       >
-        {producto.foto && (
+        {producto.foto ? (
           <div className="relative overflow-hidden rounded-t-marca">
             <img
               src={producto.foto.url}
@@ -38,6 +38,15 @@ const TarjetaProducto = ({ producto }) => {
                 {textos.generadoConIA}
               </span>
             )}
+          </div>
+        ) : (
+          <div
+            data-testid="sin-foto-tarjeta"
+            className="aspect-square w-full rounded-t-marca bg-gris-claro flex items-center justify-center p-4"
+          >
+            <span className="font-titulos text-sm text-grafito text-center leading-tight">
+              {producto.nombre}
+            </span>
           </div>
         )}
         <div className="flex flex-col gap-2.5 p-3 md:p-4">

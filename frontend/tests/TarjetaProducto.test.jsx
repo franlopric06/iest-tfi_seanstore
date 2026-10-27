@@ -67,6 +67,15 @@ describe('TarjetaProducto · tarjeta de producto', () => {
   })
 })
 
+describe('TarjetaProducto · sin fotos (R13)', () => {
+  it('R13 · sin foto muestra un recuadro con el nombre del producto', () => {
+    armar({ ...producto, foto: null })
+
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+    expect(screen.getByTestId('sin-foto-tarjeta')).toHaveTextContent(producto.nombre)
+  })
+})
+
 describe('TarjetaProducto · leyenda generado con IA (R12)', () => {
   it('R12 · con generada_con_ia true muestra la leyenda sobre la foto', () => {
     armar({ ...producto, foto: { ...producto.foto, generada_con_ia: true } })

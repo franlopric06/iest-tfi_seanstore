@@ -46,7 +46,19 @@ const DetalleProducto = () => {
   return (
     <section className="mx-auto max-w-5xl px-5 pb-16 pt-8">
       <div className="grid gap-8 md:grid-cols-2">
-        <GaleriaFotos key={producto.slug} fotos={producto.fotos} />
+        <div className="flex flex-col gap-3">
+          <GaleriaFotos key={producto.slug} fotos={producto.fotos} />
+          {(!producto.fotos || producto.fotos.length === 0) && (
+            <div
+              data-testid="sin-foto-detalle"
+              className="aspect-square w-full rounded-marca bg-gris-claro flex items-center justify-center p-6"
+            >
+              <span className="font-titulos text-base text-grafito text-center leading-snug">
+                {producto.nombre}
+              </span>
+            </div>
+          )}
+        </div>
 
         <div className="flex flex-col gap-4">
           <h1 className="font-titulos text-2xl md:text-3xl">{producto.nombre}</h1>
