@@ -14,7 +14,7 @@ const ponerMeta = (selector, atributo, valor) => {
 const MetaPagina = ({
   titulo,
   descripcion,
-  imagen = '/img/compartir.jpg',
+  imagen = 'https://sean-store.vercel.app/img/logo-seanstore-horizontal.png',
   indexar = true,
   jsonLd,
 }) => {

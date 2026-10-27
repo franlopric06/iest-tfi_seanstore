@@ -67,7 +67,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** los dos casos pasan.
 - [x] **T25** · Recuadro con el nombre del producto cuando no tiene fotos · Requisito: R13 · Archivos: modificar `TarjetaProducto.jsx`, `DetalleProducto.jsx`, sus tests · Test: sin fotos → recuadro con el nombre
   **Listo cuando:** con la base sin fotos, todas las tarjetas se ven completas.
-- [ ] **T26** · `robots.txt` y Open Graph general del sitio en `index.html` · Requisito: R15 · Archivos: crear `frontend/public/robots.txt`; modificar `frontend/index.html` · Test: revisión del `dist/` después de `npm run build`
+- [x] **T26** · `robots.txt` y Open Graph general del sitio en `index.html` · Requisito: R15 · Archivos: crear `frontend/public/robots.txt`; modificar `frontend/index.html`, `frontend/src/components/comunes/MetaPagina.jsx` · Test: revisión del `dist/` después de `npm run build`
   **Listo cuando:** el build trae `robots.txt` y las etiquetas Open Graph.
 - [ ] **T27** · Error con "Reintentar" en el Inicio · Requisito: R17 · Archivos: crear `frontend/src/components/comunes/MensajeError.jsx`; modificar `Inicio.jsx`, `tests/Inicio.test.jsx` · Test: API rechazada → mensaje y reintento
   **Listo cuando:** el caso de error pasa.
