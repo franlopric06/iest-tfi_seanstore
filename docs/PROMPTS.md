@@ -103,3 +103,13 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** el estudiante lo notó al revisar el orden de los pasos y pidió registrarlo.
 - **Corrección humana:** ninguna: los tests cubren los casos correctos y pasan. El error es de proceso, no de resultado.
 - **Para que no se repita:** en cada tarea, escribir los casos de test nuevos primero, correrlos y confirmar que fallan (rojo), y solo entonces escribir el código que los pone en verde. No hay excepción aunque los cambios parezcan obvios.
+
+### Error N° 10 · Inventó el nombre "Iglesia del Rosario" para un lugar real
+
+- **Fecha y fase:** 26/10/2026 · Implementación de 001-catalogo, tarea T29 (carga-fotos.sql)
+- **Herramienta:** Kiro
+- **Qué se pidió:** generar los textos `alt` de cada foto a partir del nombre del archivo WebP, en español, describiendo lo que se ve.
+- **Qué hizo mal la IA:** para los archivos con `-iglesia-reloj` en el nombre escribió el alt "con la Iglesia del Rosario y el reloj de Tinogasta", inventando el nombre "del Rosario" para esa iglesia. El nombre real no se podía inferir del nombre del archivo y la IA lo completó con un dato falso.
+- **Cómo se detectó:** el estudiante lo notó al revisar el SQL antes de ejecutarlo en Neon.
+- **Corrección humana:** el estudiante pidió reemplazar "la Iglesia del Rosario y el reloj de Tinogasta" por "la iglesia del reloj de Tinogasta" (descripción visual sin nombre propio inventado) en todos los alts afectados (taza, termo, campera y llavero). También pidió reemplazar "la Iglesia de Adobe de Tinogasta" por "una iglesia de adobe de la Ruta del Adobe" para el mismo motivo.
+- **Para que no se repita:** cuando el nombre de archivo no incluye el nombre oficial de un lugar, el alt describe lo que se ve visualmente ("una iglesia de adobe", "una torre con reloj") sin inventar nombres propios. Si hay duda sobre el nombre real, preguntar antes de escribir.
