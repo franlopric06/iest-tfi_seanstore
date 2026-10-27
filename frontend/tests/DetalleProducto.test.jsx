@@ -1,0 +1,233 @@
+import { cleanup, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { MemoryRouter, Route, Routes, Link } from 'react-router-dom'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import DetalleProducto from '../src/pages/tienda/DetalleProducto.jsx'
+import textos from '../src/data/textos.js'
+
+const api = vi.hoisted(() => ({ obtenerProducto: vi.fn() }))
+
+vi.mock('../src/services/api.js', () => api)
+
+const altUno = 'Remera blanca con un diseño de gato astronauta estampado en el pecho'
+const altDos = 'Remera negra con el número 10 estampado en la espalda'
+
+const producto = {
+  codigo: 'REM-001',
+  slug: 'remera',
+  nombre: 'Remera',
+  categoria: { slug: 'indumentaria', nombre: 'Indumentaria' },
+  talles: ['S', 'M', 'L', 'XL'],
+  colores: ['Blanco', 'Negro'],
+  descripcion: 'Remera de algodón primera calidad, ideal para un estampado full print.',
+  precio: '18000.00',
+  stock: 10,
+  foto: {
+    url: '/img/productos/remera-frontal.webp',
+    alt: altUno,
+    generada_con_ia: true,
+  },
+  fotos: [
+    { url: '/img/productos/remera-frontal.webp', alt: altUno, generada_con_ia: true, orden: 1 },
+    { url: '/img/productos/remera-atras.webp', alt: altDos, generada_con_ia: true, orden: 2 },
+  ],
+}
+
+const clonar = () => JSON.parse(JSON.stringify(producto))
+
+const armar = (ruta = '/producto/remera', conLinkOtro = false) =>
+  render(
+    <MemoryRouter initialEntries={[ruta]}>
+      {conLinkOtro && <Link to="/producto/taza-ceramica">otro producto</Link>}
+      <Routes>
+        <Route path="/producto/:slug" element={<DetalleProducto />} />
+      </Routes>
+    </MemoryRouter>,
+  )
+
+const esperarTitulo = async () =>
+  screen.findByRole('heading', { level: 1, name: producto.nombre })
+
+afterEach(() => {
+  cleanup()
+  api.obtenerProducto.mockReset()
+})
+
+describe('Detalle · datos del producto (R10)', () => {
+  it('R10 · pide el producto del slug y muestra el nombre y el precio formateado', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    expect(api.obtenerProducto).toHaveBeenCalledWith('remera')
+
+    const precio = screen.getByText('$ 18.000')
+    expect(precio).toHaveTextContent('18.000')
+  })
+
+  it('R10 · lista los talles disponibles, los colores y la descripción', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    expect(screen.getByText(producto.descripcion)).toBeInTheDocument()
+
+    const talles = screen.getByRole('list', { name: textos.detalle.talles })
+    const enTalles = screen.getAllByRole('listitem').filter((item) => talles.contains(item))
+    expect(enTalles).toHaveLength(producto.talles.length)
+    producto.talles.forEach((talle) => {
+      expect(enTalles.find((item) => item.textContent === talle)).toBeInTheDocument()
+    })
+
+    producto.colores.forEach((color) => {
+      expect(screen.getByRole('listitem', { name: color })).toBeInTheDocument()
+    })
+  })
+
+  it('R10 · si la descripción es null, el bloque no aparece y no se rellena', async () => {
+    const sinDescripcion = clonar()
+    sinDescripcion.descripcion = null
+    api.obtenerProducto.mockResolvedValue(sinDescripcion)
+    armar()
+
+    await esperarTitulo()
+    expect(screen.queryByText(producto.descripcion)).not.toBeInTheDocument()
+  })
+})
+
+describe('Detalle · estados del skeleton', () => {
+  it('R9 · mientras carga muestra el esqueleto con la forma del detalle, sin datos', () => {
+    api.obtenerProducto.mockReturnValue(new Promise(() => {}))
+    armar()
+
+    const carga = screen.getByRole('status', { name: textos.detalle.cargando })
+    expect(carga).toHaveAttribute('aria-busy', 'true')
+    expect(carga.querySelectorAll('[data-testid="esqueleto-detalle"]').length).toBeGreaterThan(0)
+    expect(screen.queryByRole('heading', { level: 1 })).not.toBeInTheDocument()
+    expect(screen.queryByRole('img')).not.toBeInTheDocument()
+  })
+
+  it('R10 · con talles vacíos muestra "Talle único"', async () => {
+    const sinTalles = clonar()
+    sinTalles.talles = []
+    api.obtenerProducto.mockResolvedValue(sinTalles)
+    armar()
+
+    await esperarTitulo()
+    expect(screen.getByText(textos.detalle.talleUnico)).toBeInTheDocument()
+  })
+})
+
+describe('Detalle · sin stock (R18)', () => {
+  it('R18 · con stock 0 muestra la etiqueta "Sin stock" con el tema de la tarjeta', async () => {
+    const agotado = clonar()
+    agotado.stock = 0
+    api.obtenerProducto.mockResolvedValue(agotado)
+    armar()
+
+    await esperarTitulo()
+    const chip = screen.getByText(textos.detalle.sinStock)
+    expect(chip).toHaveClass('bg-error')
+    expect(chip).toHaveClass('rounded-marca')
+  })
+
+  it('R18 · con stock disponible no muestra la etiqueta', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    expect(screen.queryByText(textos.detalle.sinStock)).not.toBeInTheDocument()
+  })
+})
+
+describe('Detalle · galería de fotos (R10)', () => {
+  it('R10 · la foto de orden = 1 es la principal y las demás son miniaturas', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    const principal = screen.getByRole('img', { name: altUno })
+    expect(principal).toHaveAttribute('src', '/img/productos/remera-frontal.webp')
+
+    // Las miniaturas son botones; la segunda foto aparece como botón no presionado
+    const botonDos = screen.getByRole('button', { name: altDos })
+    expect(botonDos).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  it('R10 · al tocar una miniatura pasas a verla como foto principal', async () => {
+    const usuario = userEvent.setup()
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    await usuario.click(screen.getByRole('button', { name: altDos }))
+
+    const principal = screen.getByRole('img', { name: altDos })
+    expect(principal).toHaveAttribute('src', '/img/productos/remera-atras.webp')
+  })
+
+  it('R10 · al cambiar de producto la galería vuelve a la primera foto', async () => {
+    const usuario = userEvent.setup()
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar('/producto/remera', true)
+
+    await esperarTitulo()
+
+    // Seleccionar la segunda foto en la remera
+    await usuario.click(screen.getByRole('button', { name: altDos }))
+    expect(screen.getByRole('img', { name: altDos })).toHaveAttribute(
+      'src',
+      '/img/productos/remera-atras.webp',
+    )
+
+    // Navegar a otro producto con una sola foto
+    const altTaza = 'Taza de cerámica blanca con diseño personalizado'
+    api.obtenerProducto.mockResolvedValue({
+      ...clonar(),
+      slug: 'taza-ceramica',
+      nombre: 'Taza de cerámica',
+      precio: '12000.00',
+      fotos: [{ url: '/img/productos/taza-ceramica.webp', alt: altTaza, generada_con_ia: true, orden: 1 }],
+    })
+    await usuario.click(screen.getByRole('link', { name: 'otro producto' }))
+
+    // La galería muestra la única foto disponible (índice 0), sin romper la página
+    expect(await screen.findByRole('img', { name: altTaza })).toHaveAttribute(
+      'src',
+      '/img/productos/taza-ceramica.webp',
+    )
+    expect(screen.queryByRole('img', { name: altDos })).not.toBeInTheDocument()
+  })
+})
+
+describe('Detalle · volver al catálogo y cambio de producto', () => {
+  it('R10 · el enlace "Volver al catálogo" lleva a /catalogo, con estilo del tema', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    const enlace = screen.getByRole('link', { name: textos.detalle.volver })
+    expect(enlace).toHaveAttribute('href', '/catalogo')
+    expect(enlace).toHaveClass('rounded-marca')
+  })
+
+  it('R10 · al pasar de un producto a otro vuelve a pedir los datos (dependencia slug)', async () => {
+    const usuario = userEvent.setup()
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar('/producto/remera', true)
+
+    await esperarTitulo()
+    expect(api.obtenerProducto).toHaveBeenCalledTimes(1)
+
+    api.obtenerProducto.mockResolvedValue({
+      ...clonar(),
+      slug: 'taza-ceramica',
+      nombre: 'Taza de cerámica',
+      precio: '959.00',
+    })
+    await usuario.click(screen.getByRole('link', { name: 'otro producto' }))
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Taza de cerámica' })).toBeInTheDocument()
+    expect(api.obtenerProducto).toHaveBeenNthCalledWith(2, 'taza-ceramica')
+  })
+})

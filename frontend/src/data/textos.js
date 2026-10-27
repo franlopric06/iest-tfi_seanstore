@@ -130,6 +130,14 @@ const textos = {
       { titulo: 'Retiralo o te lo enviamos.', texto: 'Te avisamos cuando esté listo.' },
     ],
   },
+  detalle: {
+    cargando: 'Cargando detalle del producto',
+    talles: 'Talles disponibles',
+    talleUnico: 'Talle único',
+    colores: 'Colores disponibles',
+    sinStock: 'Sin stock',
+    volver: 'Volver al catálogo',
+  },
   sinDiseno: {
     titulo: '¿No tenés diseño? Te lo hacemos.',
     texto:
