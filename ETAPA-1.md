@@ -10,20 +10,19 @@ La carpeta `docs/` describe **la tienda completa**, como tiene que quedar cuando
 
 ## Qué es la primera etapa
 
-Una **tienda de demostración que funciona**: se ven los productos con precio, se elige uno y se pide por WhatsApp con un mensaje armado; un asistente responde las dudas frecuentes; y un panel chico permite editar los datos.
+Una **tienda de demostración que funciona**: se ven los productos con precio, se elige uno y se pide por WhatsApp con un mensaje armado; y un asistente responde las dudas frecuentes.
 
-Es un proyecto educativo que usa Sean's Store como modelo. **Los precios, el stock y las descripciones son datos de ejemplo** cargados por el equipo. Si algún día la tienda se usa de verdad, se vacía la base y el negocio carga sus datos desde el panel.
+Es un proyecto educativo que usa Sean's Store como modelo. **Los precios, el stock y las descripciones son datos de ejemplo** cargados por el equipo. Si algún día la tienda se usa de verdad, se vacía la base y el negocio carga sus datos desde el panel (próxima etapa).
 
-## Las 4 funcionalidades
+## Las 3 funcionalidades de esta entrega
 
 | Orden | Carpeta | Funcionalidad | RF de `docs/02-REQUERIMIENTOS.md` |
 | --- | --- | --- | --- |
 | 1 | `specs/001-catalogo/` | Inicio, catálogo con filtro y detalle del producto con precio | RF01, RF02, RF04 |
 | 2 | `specs/002-pedido-whatsapp/` | Pedido por WhatsApp desde el detalle (con o sin diseño) y botón flotante | RF07 (adaptado), RF24 |
 | 3 | `specs/003-asistente/` | Asistente de preguntas frecuentes | RF25 |
-| 4 | `specs/004-panel/` | Panel chico de administración | RF34, RF35, RF37 y RF38 (reducidos) |
 
-Se hacen **en este orden**. La 004 se empieza cuando las otras tres estén terminadas.
+Se hacen **en este orden**.
 
 ### 1 · Catálogo
 
@@ -43,13 +42,18 @@ Se hacen **en este orden**. La 004 se empieza cuando las otras tres estén termi
 
 - Burbuja con las preguntas frecuentes de `docs/06-DISENO-UI.md`, que busca por palabras clave y deriva a WhatsApp si no encuentra respuesta.
 
+## Próximos pasos (fuera de esta entrega)
+
 ### 4 · Panel de administración (chico)
+
+Quedó fuera del TFI por falta de tiempo (entrega 28/10/2026) y límites de uso de los agentes de IA gratuitos. Es el siguiente paso natural una vez terminada la tienda pública.
 
 - **Ingreso** con email y contraseña, solo para el administrador (contraseña con bcrypt, sesión en cookie `httpOnly`).
 - **Productos:** listar, crear y editar nombre, categoría, precio, stock, descripción, talles, colores, destacado y activo.
 - **Consultas:** ver las consultas de WhatsApp y marcarlas como atendidas.
 - **Preguntas del asistente:** crear y editar.
 - Sin subida de fotos, pedidos, reseñas ni métricas (eso es de la tienda completa).
+- RF: RF34, RF35, RF37 y RF38 (reducidos). Carpeta: `specs/004-panel/`.
 
 ## Datos de demostración
 
@@ -82,7 +86,8 @@ Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Los produ
 
 ## Base de datos de la primera etapa
 
-- Tablas: `categorias`, `productos`, `producto_fotos`, `consultas` y `preguntas_frecuentes` (ya creadas), y `usuarios` (para el ingreso al panel, en la 004).
+- Tablas: `categorias`, `productos`, `producto_fotos`, `consultas` y `preguntas_frecuentes` (ya creadas).
+- La tabla `usuarios` (para el panel) queda para la próxima etapa.
 - Las demás tablas de `docs/05-DATOS.md` son de la tienda completa.
 
 ## Header y footer de la primera etapa
@@ -90,6 +95,6 @@ Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Los produ
 - **Header:** logo y "Catálogo". El panel no se enlaza desde la tienda (se entra por `/admin`).
 - **Footer:** isotipo, descripción del negocio, contacto por WhatsApp y el aviso de sitio de demostración. Sin legales ni botón de arrepentimiento, porque no hay compra online.
 
-## Lo que no entra en la primera etapa
+## Lo que no entra en esta entrega
 
-Carrito, checkout, Mercado Pago, cuentas de clientes, recuperar contraseña, favoritos, emails, seguimiento de pedidos, reseñas y testimonios (el modelo está en `docs/`, y nunca se inventan), legales de compra online, botón de arrepentimiento, promociones, galería de trabajos, buscador, guía de talles, subida de diseños e imágenes (Cloudinary), Open Graph por producto y sitemap.
+Carrito, checkout, Mercado Pago, cuentas de clientes, recuperar contraseña, favoritos, emails, seguimiento de pedidos, reseñas y testimonios (el modelo está en `docs/`, y nunca se inventan), legales de compra online, botón de arrepentimiento, promociones, galería de trabajos, buscador, guía de talles, subida de diseños e imágenes (Cloudinary), Open Graph por producto, sitemap, **y el panel de administración** (queda como próximo paso, ver arriba).
