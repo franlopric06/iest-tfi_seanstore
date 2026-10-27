@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import Cargando from '../../components/comunes/Cargando.jsx'
 import EstadoVacio from '../../components/comunes/EstadoVacio.jsx'
+import MensajeError from '../../components/comunes/MensajeError.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import FiltroCategorias from '../../components/tienda/FiltroCategorias.jsx'
 import TarjetaProducto from '../../components/tienda/TarjetaProducto.jsx'
@@ -14,7 +15,7 @@ const Catalogo = () => {
   const { slug } = useParams()
 
   const pedir = slug ? () => obtenerProductos({ categoria: slug }) : () => obtenerProductos()
-  const { cargando, datos: productos } = useObtenerDatos(pedir, [slug])
+  const { cargando, datos: productos, error, reintentar } = useObtenerDatos(pedir, [slug])
 
   const categoria = textos.franja.categorias.find((c) => c.slug === slug)
   const seo = (categoria && textos.catalogo.seoCategorias[slug]) || textos.catalogo.seo
@@ -52,6 +53,8 @@ const Catalogo = () => {
       <FiltroCategorias marcada={slug} />
       {cargando ? (
         <Cargando etiqueta={textos.catalogo.cargando} />
+      ) : error ? (
+        <MensajeError alReintentar={reintentar} />
       ) : (
         <>
           {Array.isArray(productos) && productos.length === 0 && (

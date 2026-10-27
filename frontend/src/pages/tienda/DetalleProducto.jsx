@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import GaleriaFotos from '../../components/tienda/GaleriaFotos.jsx'
+import MensajeError from '../../components/comunes/MensajeError.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import NoEncontrada from './NoEncontrada.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
@@ -35,7 +36,7 @@ const EsqueletoDetalle = () => (
 const DetalleProducto = () => {
   const { slug } = useParams()
 
-  const { cargando, datos: producto, error } = useObtenerDatos(
+  const { cargando, datos: producto, error, reintentar } = useObtenerDatos(
     () => obtenerProducto(slug),
     [slug],
   )
@@ -43,6 +44,8 @@ const DetalleProducto = () => {
   if (cargando) return <EsqueletoDetalle />
 
   if (error?.status === 404) return <NoEncontrada />
+
+  if (error) return <MensajeError alReintentar={reintentar} />
 
   if (!producto) return null
 

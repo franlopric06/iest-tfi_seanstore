@@ -71,10 +71,9 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** el build trae `robots.txt` y las etiquetas Open Graph.
 - [x] **T27** · Error con "Reintentar" en el Inicio · Requisito: R17 · Archivos: crear `frontend/src/components/comunes/MensajeError.jsx`; modificar `Inicio.jsx`, `tests/Inicio.test.jsx` · Test: API rechazada → mensaje y reintento
   **Listo cuando:** el caso de error pasa.
-- [ ] **T28** · Error con "Reintentar" en Catálogo y Detalle · Requisito: R17 · Archivos: modificar `Catalogo.jsx`, `DetalleProducto.jsx`, sus tests · Test: API rechazada en las dos páginas
+- [x] **T28** · Error con "Reintentar" en Catálogo y Detalle · Requisito: R17 · Archivos: modificar `Catalogo.jsx`, `DetalleProducto.jsx`, sus tests · Test: API rechazada en las dos páginas
   **Listo cuando:** ninguna pantalla queda en blanco.
 - [x] **T29** · `carga-fotos.sql` cuando estén las fotos generadas con IA en `frontend/public/img/productos/` · Requisito: R12, R13 · Archivos: crear `backend/src/db/carga-fotos.sql` y sumar los WebP · Test: manual en Neon y en la página
-  **Listo cuando:** las fotos se ven en tarjetas y detalle, con su leyenda.
   **Listo cuando:** las fotos se ven en tarjetas y detalle, con su leyenda.
 
 ## Cambio del 20/10/2026 · los productos no son solo blancos

@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, Link } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -294,6 +294,27 @@ describe('Detalle · leyenda generado con IA (R12)', () => {
 
     await esperarTitulo()
     expect(screen.queryByText('«Generado con IA»')).not.toBeInTheDocument()
+  })
+})
+
+describe('Detalle · estado de error (R17)', () => {
+  it('R17 · si la API falla, muestra el error y "Reintentar" vuelve a pedir el producto', async () => {
+    api.obtenerProducto.mockRejectedValueOnce(new Error('API caída'))
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    const alerta = await screen.findByRole('alert')
+    expect(within(alerta).getByText(textos.errores.frase)).toBeInTheDocument()
+    const boton = within(alerta).getByRole('button', { name: textos.errores.boton })
+    expect(api.obtenerProducto).toHaveBeenCalledTimes(1)
+
+    fireEvent.click(boton)
+
+    expect(
+      await screen.findByRole('heading', { level: 1, name: producto.nombre })
+    ).toBeInTheDocument()
+    expect(api.obtenerProducto).toHaveBeenCalledTimes(2)
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 })
 

@@ -1,4 +1,4 @@
-import { cleanup, render, screen, within } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import Catalogo from '../src/pages/tienda/Catalogo.jsx'
@@ -183,6 +183,25 @@ describe('Catálogo · filtro por categoría (R7)', () => {
         item: 'https://sean-store.vercel.app/catalogo/indumentaria',
       },
     ])
+  })
+})
+
+describe('Catálogo · estado de error (R17)', () => {
+  it('R17 · si la API falla, muestra el error y "Reintentar" vuelve a pedir los productos', async () => {
+    api.obtenerProductos.mockRejectedValueOnce(new Error('API caída'))
+    api.obtenerProductos.mockResolvedValue(productos)
+    armar()
+
+    const alerta = await screen.findByRole('alert')
+    expect(within(alerta).getByText(textos.errores.frase)).toBeInTheDocument()
+    const boton = within(alerta).getByRole('button', { name: textos.errores.boton })
+    expect(api.obtenerProductos).toHaveBeenCalledTimes(1)
+
+    fireEvent.click(boton)
+
+    expect(await screen.findByRole('link', { name: /Taza de cerámica/i })).toBeInTheDocument()
+    expect(enlacesProducto()).toHaveLength(12)
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 })
 
