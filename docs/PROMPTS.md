@@ -93,3 +93,13 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** la IA misma lo vio al revisar el mensaje con `git log -1 --format='%s'` después de cada commit, antes de hacer el push.
 - **Corrección:** dos `git commit --amend -F` con el mensaje escrito en un archivo ASCII; el push se hizo después de confirmar que el mensaje quedaba bien: **se corrigió con `--amend` antes del push, así que no se reescribió historia publicada**.
 - **Para que no se repita:** en Windows, cuando el mensaje del commit tiene comillas, escribirlo en un archivo ASCII y usar `git commit -F archivo` (nunca comillas anidadas en PowerShell), y revisar `git log -1 --format='%s'` antes de pushear.
+
+### Error N° 9 · Escribió el código antes que los tests
+
+- **Fecha y fase:** 26/10/2026 · Implementación de 001-catalogo, tarea T24 (leyenda «Generado con IA»)
+- **Herramienta:** Kiro
+- **Qué se pidió:** implementar T24 siguiendo `/implementar`, que en el paso 3 pide escribir primero el test y verlo fallar, y recién después el código.
+- **Qué hizo mal la IA:** modificó `TarjetaProducto.jsx` y `GaleriaFotos.jsx` con la leyenda antes de agregar los tests nuevos. Los corrió cuando el código ya estaba en verde, así que nunca se vio el fallo esperado.
+- **Cómo se detectó:** el estudiante lo notó al revisar el orden de los pasos y pidió registrarlo.
+- **Corrección humana:** ninguna: los tests cubren los casos correctos y pasan. El error es de proceso, no de resultado.
+- **Para que no se repita:** en cada tarea, escribir los casos de test nuevos primero, correrlos y confirmar que fallan (rojo), y solo entonces escribir el código que los pone en verde. No hay excepción aunque los cambios parezcan obvios.
