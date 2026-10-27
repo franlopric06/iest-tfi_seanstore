@@ -139,6 +139,15 @@ const textos = {
     sinStock: 'Sin stock',
     volver: 'Volver al catálogo',
   },
+  noEncontrada: {
+    titulo: 'No encontramos esta página',
+    enlace: 'Ver todo el catálogo',
+    seo: {
+      titulo: "No encontramos esta página · Sean's Store",
+      descripcion:
+        "La página que buscás ya no existe. Mirá todo el catálogo de Sean's Store.",
+    },
+  },
   sinDiseno: {
     titulo: '¿No tenés diseño? Te lo hacemos.',
     texto:

@@ -4,6 +4,7 @@ import Footer from './components/layout/Footer.jsx'
 import Inicio from './pages/tienda/Inicio.jsx'
 import Catalogo from './pages/tienda/Catalogo.jsx'
 import DetalleProducto from './pages/tienda/DetalleProducto.jsx'
+import NoEncontrada from './pages/tienda/NoEncontrada.jsx'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/catalogo/:slug" element={<Catalogo />} />
           <Route path="/producto/:slug" element={<DetalleProducto />} />
+          <Route path="*" element={<NoEncontrada />} />
         </Routes>
       </main>
       <Footer />

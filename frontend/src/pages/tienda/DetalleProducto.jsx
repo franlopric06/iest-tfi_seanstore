@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import GaleriaFotos from '../../components/tienda/GaleriaFotos.jsx'
+import NoEncontrada from './NoEncontrada.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { obtenerProducto } from '../../services/api.js'
 import formatearPrecio from '../../utils/formatearPrecio.js'
@@ -32,12 +33,14 @@ const EsqueletoDetalle = () => (
 const DetalleProducto = () => {
   const { slug } = useParams()
 
-  const { cargando, datos: producto } = useObtenerDatos(
+  const { cargando, datos: producto, error } = useObtenerDatos(
     () => obtenerProducto(slug),
     [slug],
   )
 
   if (cargando) return <EsqueletoDetalle />
+
+  if (error?.status === 404) return <NoEncontrada />
 
   if (!producto) return null
 

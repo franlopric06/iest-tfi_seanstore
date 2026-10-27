@@ -61,7 +61,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** `/producto/:slug` muestra todo.
 - [ ] **T22** · SEO del detalle: título y descripción del producto, JSON-LD de producto sin `offers` y de migas de pan · Requisito: R15 · Archivos: modificar `DetalleProducto.jsx`, `tests/DetalleProducto.test.jsx` · Test: título, `description`, JSON-LD sin `offers` y un solo `<h1>`
   **Listo cuando:** el test pasa.
-- [ ] **T23** · Página "No encontramos esta página" (ruta `*` y 404 del detalle) · Requisito: R11 · Archivos: crear `frontend/src/pages/tienda/NoEncontrada.jsx`, `frontend/tests/NoEncontrada.test.jsx`; modificar `App.jsx`, `DetalleProducto.jsx` · Test: texto y botón al catálogo
+- [x] **T23** · Página "No encontramos esta página" (ruta `*` y 404 del detalle) · Requisito: R11 · Archivos: crear `frontend/src/pages/tienda/NoEncontrada.jsx`, `frontend/tests/NoEncontrada.test.jsx`; modificar `App.jsx`, `DetalleProducto.jsx` · Test: texto y botón al catálogo
   **Listo cuando:** un slug inexistente lleva a la página 404.
 - [x] **T24** · Etiqueta «Generado con IA» sobre la foto si `generada_con_ia = TRUE`, en tarjeta y detalle · Requisito: R12 · Archivos: modificar `TarjetaProducto.jsx`, `GaleriaFotos.jsx`, sus tests · Test: `TRUE` la muestra; `FALSE` no
   **Listo cuando:** los dos casos pasan.
