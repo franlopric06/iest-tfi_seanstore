@@ -1,9 +1,11 @@
 import { Link, useParams } from 'react-router-dom'
 import GaleriaFotos from '../../components/tienda/GaleriaFotos.jsx'
+import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import NoEncontrada from './NoEncontrada.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { obtenerProducto } from '../../services/api.js'
 import formatearPrecio from '../../utils/formatearPrecio.js'
+import seoDetalle from '../../utils/seoDetalle.js'
 import textos from '../../data/textos.js'
 
 const EsqueletoDetalle = () => (
@@ -45,9 +47,12 @@ const DetalleProducto = () => {
   if (!producto) return null
 
   const tieneTalles = Array.isArray(producto.talles) && producto.talles.length > 0
+  const seo = seoDetalle(producto)
 
   return (
-    <section className="mx-auto max-w-5xl px-5 pb-16 pt-8">
+    <>
+      <MetaPagina titulo={seo.titulo} descripcion={seo.descripcion} jsonLd={seo.jsonLd} />
+      <section className="mx-auto max-w-5xl px-5 pb-16 pt-8">
       <div className="grid gap-8 md:grid-cols-2">
         <div className="flex flex-col gap-3">
           <GaleriaFotos key={producto.slug} fotos={producto.fotos} />
@@ -125,7 +130,8 @@ const DetalleProducto = () => {
           </Link>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   )
 }
 

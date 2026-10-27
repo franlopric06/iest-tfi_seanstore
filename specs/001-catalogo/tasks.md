@@ -59,7 +59,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** el caso vacío pasa.
 - [x] **T21** · Página Detalle: galería, nombre, precio, descripción (oculta si es NULL), talles ("Talle único" si viene vacío), colores, "Sin stock" si corresponde, "Volver al catálogo" y esqueleto · Requisito: R10, R9, R18 · Archivos: crear `frontend/src/components/tienda/GaleriaFotos.jsx`, `frontend/src/pages/tienda/DetalleProducto.jsx`, `frontend/tests/DetalleProducto.test.jsx`; modificar `App.jsx` · Test: datos del detalle, "Talle único", "Sin stock" y esqueleto
   **Listo cuando:** `/producto/:slug` muestra todo.
-- [ ] **T22** · SEO del detalle: título y descripción del producto, JSON-LD de producto sin `offers` y de migas de pan · Requisito: R15 · Archivos: modificar `DetalleProducto.jsx`, `tests/DetalleProducto.test.jsx` · Test: título, `description`, JSON-LD sin `offers` y un solo `<h1>`
+- [x] **T22** · SEO del detalle: título y descripción del producto, JSON-LD de producto sin `offers` y de migas de pan · Requisito: R15 · Archivos: modificar `DetalleProducto.jsx`, `tests/DetalleProducto.test.jsx` (más crear `frontend/src/utils/seoDetalle.js` y sumar `textos.detalle.seo` a `frontend/src/data/textos.js`) · Test: título, `description`, JSON-LD sin `offers` y un solo `<h1>`
   **Listo cuando:** el test pasa.
 - [x] **T23** · Página "No encontramos esta página" (ruta `*` y 404 del detalle) · Requisito: R11 · Archivos: crear `frontend/src/pages/tienda/NoEncontrada.jsx`, `frontend/tests/NoEncontrada.test.jsx`; modificar `App.jsx`, `DetalleProducto.jsx` · Test: texto y botón al catálogo
   **Listo cuando:** un slug inexistente lleva a la página 404.

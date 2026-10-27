@@ -138,6 +138,10 @@ const textos = {
     colores: 'Colores disponibles',
     sinStock: 'Sin stock',
     volver: 'Volver al catálogo',
+    seo: {
+      marca: "Sean's Store",
+      descripcion: 'con tu diseño estampado. Retiro en el local o envío.',
+    },
   },
   noEncontrada: {
     titulo: 'No encontramos esta página',

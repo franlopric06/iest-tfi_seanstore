@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, Link } from 'react-router-dom'
 import { afterEach, describe, expect, it, vi } from 'vitest'
@@ -35,6 +35,8 @@ const producto = {
 
 const clonar = () => JSON.parse(JSON.stringify(producto))
 
+const URL_SITIO = 'https://sean-store.vercel.app'
+
 const armar = (ruta = '/producto/remera', conLinkOtro = false) =>
   render(
     <MemoryRouter initialEntries={[ruta]}>
@@ -51,6 +53,68 @@ const esperarTitulo = async () =>
 afterEach(() => {
   cleanup()
   api.obtenerProducto.mockReset()
+  document.getElementById('json-ld')?.remove()
+  document.title = ''
+})
+
+describe('Detalle · SEO (R15)', () => {
+  it('R15 · pone el título y la descripción del producto', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    await waitFor(() => expect(document.title).toBe("Remera · Sean's Store"))
+    const descripcion = document.head.querySelector('meta[name="description"]')
+    expect(descripcion?.getAttribute('content')).toBe(
+      'Remera con tu diseño estampado. Retiro en el local o envío.',
+    )
+  })
+
+  it('R15 · el JSON-LD trae el producto sin offers y las migas de pan', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    await waitFor(() => expect(document.getElementById('json-ld')).not.toBeNull())
+    const datos = JSON.parse(document.getElementById('json-ld').textContent)
+    expect(datos).toHaveLength(2)
+
+    const productoLd = datos.find((item) => item['@type'] === 'Product')
+    expect(productoLd.name).toBe(producto.nombre)
+    expect(productoLd.sku).toBe(producto.codigo)
+    expect(productoLd.brand).toEqual({ '@type': 'Brand', name: "Sean's Store" })
+    expect(productoLd.image).toEqual([
+      `${URL_SITIO}/img/productos/remera-frontal.webp`,
+      `${URL_SITIO}/img/productos/remera-atras.webp`,
+    ])
+    expect(productoLd.description).toBe(producto.descripcion)
+    expect('offers' in productoLd).toBe(false)
+
+    const migasLd = datos.find((item) => item['@type'] === 'BreadcrumbList')
+    expect(migasLd.itemListElement).toEqual([
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${URL_SITIO}/` },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Indumentaria',
+        item: `${URL_SITIO}/catalogo/indumentaria`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'Remera',
+        item: `${URL_SITIO}/producto/remera`,
+      },
+    ])
+  })
+
+  it('R15 · hay un solo <h1>', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+  })
 })
 
 describe('Detalle · datos del producto (R10)', () => {
