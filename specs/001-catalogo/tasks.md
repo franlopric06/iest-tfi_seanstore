@@ -75,6 +75,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** ninguna pantalla queda en blanco.
 - [x] **T29** · `carga-fotos.sql` cuando estén las fotos generadas con IA en `frontend/public/img/productos/` · Requisito: R12, R13 · Archivos: crear `backend/src/db/carga-fotos.sql` y sumar los WebP · Test: manual en Neon y en la página
   **Listo cuando:** las fotos se ven en tarjetas y detalle, con su leyenda.
+  **Listo cuando:** las fotos se ven en tarjetas y detalle, con su leyenda.
 
 ## Cambio del 20/10/2026 · los productos no son solo blancos
 
