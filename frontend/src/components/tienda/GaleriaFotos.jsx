@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import textos from '../../data/textos.js'
 
 const GaleriaFotos = ({ fotos }) => {
   const [indice, setIndice] = useState(0)
@@ -10,12 +11,17 @@ const GaleriaFotos = ({ fotos }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="overflow-hidden rounded-marca bg-gris-claro">
+      <div className="relative overflow-hidden rounded-marca bg-gris-claro">
         <img
           src={principal.url}
           alt={principal.alt}
           className="aspect-square w-full object-cover"
         />
+        {principal.generada_con_ia && (
+          <span className="absolute bottom-2 left-2 rounded-marca bg-grafito/70 px-2 py-0.5 text-[10px] font-semibold text-white">
+            {textos.generadoConIA}
+          </span>
+        )}
       </div>
 
       {fotosOrdenadas.length > 1 && (

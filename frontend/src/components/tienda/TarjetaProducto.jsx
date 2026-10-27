@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import formatearPrecio from '../../utils/formatearPrecio.js'
+import textos from '../../data/textos.js'
 
 const PasadaTinta = () => (
   <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 flex w-1/2 gap-2.5 -skew-x-12 -translate-x-full opacity-85 transition-transform duration-500 ease-out group-hover:translate-x-[300%]">
@@ -32,6 +33,11 @@ const TarjetaProducto = ({ producto }) => {
               className={`aspect-square w-full object-cover ${quieto ? '' : 'duration-500 transition-transform group-hover:scale-[1.04]'}`}
             />
             {!quieto && <PasadaTinta />}
+            {producto.foto.generada_con_ia && (
+              <span className="absolute bottom-1.5 left-1.5 z-10 rounded-marca bg-grafito/70 px-2 py-0.5 text-[10px] font-semibold text-white">
+                {textos.generadoConIA}
+              </span>
+            )}
           </div>
         )}
         <div className="flex flex-col gap-2.5 p-3 md:p-4">

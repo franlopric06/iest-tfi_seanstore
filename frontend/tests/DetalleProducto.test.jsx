@@ -200,6 +200,26 @@ describe('Detalle · galería de fotos (R10)', () => {
   })
 })
 
+describe('Detalle · leyenda generado con IA (R12)', () => {
+  it('R12 · cuando la foto principal tiene generada_con_ia true muestra la leyenda', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    expect(screen.getByText('«Generado con IA»')).toBeInTheDocument()
+  })
+
+  it('R12 · cuando la foto principal tiene generada_con_ia false no muestra la leyenda', async () => {
+    const sinLeyenda = clonar()
+    sinLeyenda.fotos = sinLeyenda.fotos.map((f) => ({ ...f, generada_con_ia: false }))
+    api.obtenerProducto.mockResolvedValue(sinLeyenda)
+    armar()
+
+    await esperarTitulo()
+    expect(screen.queryByText('«Generado con IA»')).not.toBeInTheDocument()
+  })
+})
+
 describe('Detalle · volver al catálogo y cambio de producto', () => {
   it('R10 · el enlace "Volver al catálogo" lleva a /catalogo, con estilo del tema', async () => {
     api.obtenerProducto.mockResolvedValue(clonar())

@@ -63,7 +63,7 @@ Orden: primero lo que se ve (inicio), después la API y por último las pantalla
   **Listo cuando:** el test pasa.
 - [ ] **T23** · Página "No encontramos esta página" (ruta `*` y 404 del detalle) · Requisito: R11 · Archivos: crear `frontend/src/pages/tienda/NoEncontrada.jsx`, `frontend/tests/NoEncontrada.test.jsx`; modificar `App.jsx`, `DetalleProducto.jsx` · Test: texto y botón al catálogo
   **Listo cuando:** un slug inexistente lleva a la página 404.
-- [ ] **T24** · Etiqueta «Generado con IA» sobre la foto si `generada_con_ia = TRUE`, en tarjeta y detalle · Requisito: R12 · Archivos: modificar `TarjetaProducto.jsx`, `GaleriaFotos.jsx`, sus tests · Test: `TRUE` la muestra; `FALSE` no
+- [x] **T24** · Etiqueta «Generado con IA» sobre la foto si `generada_con_ia = TRUE`, en tarjeta y detalle · Requisito: R12 · Archivos: modificar `TarjetaProducto.jsx`, `GaleriaFotos.jsx`, sus tests · Test: `TRUE` la muestra; `FALSE` no
   **Listo cuando:** los dos casos pasan.
 - [ ] **T25** · Recuadro con el nombre del producto cuando no tiene fotos · Requisito: R13 · Archivos: modificar `TarjetaProducto.jsx`, `DetalleProducto.jsx`, sus tests · Test: sin fotos → recuadro con el nombre
   **Listo cuando:** con la base sin fotos, todas las tarjetas se ven completas.

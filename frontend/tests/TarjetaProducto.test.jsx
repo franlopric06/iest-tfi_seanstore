@@ -67,6 +67,20 @@ describe('TarjetaProducto · tarjeta de producto', () => {
   })
 })
 
+describe('TarjetaProducto · leyenda generado con IA (R12)', () => {
+  it('R12 · con generada_con_ia true muestra la leyenda sobre la foto', () => {
+    armar({ ...producto, foto: { ...producto.foto, generada_con_ia: true } })
+
+    expect(screen.getByText('«Generado con IA»')).toBeInTheDocument()
+  })
+
+  it('R12 · con generada_con_ia false no muestra la leyenda', () => {
+    armar({ ...producto, foto: { ...producto.foto, generada_con_ia: false } })
+
+    expect(screen.queryByText('«Generado con IA»')).not.toBeInTheDocument()
+  })
+})
+
 describe('formatearPrecio · precio en formato argentino', () => {
   it('convierte el texto "12000.00" que manda la API en $ 12.000', () => {
     expect(formatearPrecio('12000.00')).toBe('$ 12.000')

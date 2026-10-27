@@ -130,6 +130,7 @@ const textos = {
       { titulo: 'Retiralo o te lo enviamos.', texto: 'Te avisamos cuando esté listo.' },
     ],
   },
+  generadoConIA: '«Generado con IA»',
   detalle: {
     cargando: 'Cargando detalle del producto',
     talles: 'Talles disponibles',
