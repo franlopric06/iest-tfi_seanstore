@@ -163,6 +163,12 @@ const textos = {
     boton: 'Consultar por WhatsApp',
     mensaje: "Hola, Sean's Store. No tengo diseño, ¿me ayudan a armarlo?",
   },
+  whatsapp: {
+    plantillaPedido: 'Hola! Quiero pedir: {producto}, color {color}, talle {talle}, cantidad {cantidad}. ¿Cómo seguimos?',
+    plantillaPedidoSinTalle: 'Hola! Quiero pedir: {producto}, color {color}, cantidad {cantidad}. ¿Cómo seguimos?',
+    plantillaConsulta: 'Hola! Me interesa {producto}, color {color}, talle {talle}, cantidad {cantidad}. ¿Tienen disponibilidad?',
+    plantillaConsultaSinTalle: 'Hola! Me interesa {producto}, color {color}, cantidad {cantidad}. ¿Tienen disponibilidad?',
+  },
 }
 
 export default textos
