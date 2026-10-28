@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import BotonWhatsAppFlotante from './components/atencion/BotonWhatsAppFlotante.jsx'
 import Header from './components/layout/Header.jsx'
 import Footer from './components/layout/Footer.jsx'
 import Inicio from './pages/tienda/Inicio.jsx'
@@ -19,6 +20,7 @@ function App() {
           <Route path="*" element={<NoEncontrada />} />
         </Routes>
       </main>
+      <BotonWhatsAppFlotante />
       <Footer />
     </BrowserRouter>
   )

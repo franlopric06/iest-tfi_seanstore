@@ -23,6 +23,7 @@ beforeAll(() => {
 
 afterEach(() => {
   cleanup()
+  vi.unstubAllEnvs()
   estadoMovimiento.reducido = false
 })
 
@@ -34,5 +35,14 @@ describe('App', () => {
     expect(h1).toHaveTextContent(titulo.slice(0, titulo.indexOf(',') + 1))
     expect(h1).toHaveTextContent(titulo.slice(titulo.indexOf(',') + 2))
     expect(screen.getByText('Sitio de demostración: precios y datos de ejemplo.')).toBeInTheDocument()
+  })
+
+  it('muestra el botón flotante de WhatsApp en el layout de la tienda', () => {
+    vi.stubEnv('VITE_WHATSAPP', '543837123456')
+    render(<App />)
+
+    expect(
+      screen.getByRole('button', { name: textos.whatsapp.ariaFlotante }),
+    ).toBeInTheDocument()
   })
 })

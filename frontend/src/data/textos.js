@@ -175,6 +175,8 @@ const textos = {
     seccionCantidad: 'Cantidad',
     pedir: 'Pedir por WhatsApp',
     consultar: 'Consultar por WhatsApp',
+    ariaFlotante: 'Escribinos por WhatsApp',
+    mensajeFlotante: 'Hola! Te escribo desde la tienda, quiero hacer una consulta.',
   },
 }
 

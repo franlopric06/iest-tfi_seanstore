@@ -31,7 +31,7 @@ Orden: primero las funciones puras (sin DOM), después el hook, después los com
 
 ## Botón flotante
 
-- [ ] **T08** · `BotonWhatsAppFlotante.jsx` en el layout de la tienda: fijo abajo a la derecha (`fixed`), 44 × 44 px mínimo, ícono `MessageCircle`, `aria-label`, enlaces a `wa.me` con el mensaje genérico "Hola! Te escribo desde la tienda, quiero hacer una consulta." (decisión 4); no aparece sin `VITE_WHATSAPP`; no se coloca en rutas administrativas (la primera etapa tiene solo el layout de la tienda) · Requisito: R5, R6 · Archivos: crear `frontend/src/components/atencion/BotonWhatsAppFlotante.jsx` y `frontend/tests/BotonWhatsAppFlotante.test.jsx`; modificar `frontend/src/App.jsx` y `frontend/src/data/textos.js` · Test: dentro del layout, área táctil y `aria-label`, tocar muestra `window.open` con el mensaje genérico, y sin variable el botón no existe
+- [x] **T08** · `BotonWhatsAppFlotante.jsx` en el layout de la tienda: fijo abajo a la derecha (`fixed`), 44 × 44 px mínimo, ícono `MessageCircle`, `aria-label`, enlaces a `wa.me` con el mensaje genérico "Hola! Te escribo desde la tienda, quiero hacer una consulta." (decisión 4); no aparece sin `VITE_WHATSAPP`; no se coloca en rutas administrativas (la primera etapa tiene solo el layout de la tienda) · Requisito: R5, R6 · Archivos: crear `frontend/src/components/atencion/BotonWhatsAppFlotante.jsx` y `frontend/tests/BotonWhatsAppFlotante.test.jsx`; modificar `frontend/src/App.jsx`, `frontend/src/data/textos.js` y `frontend/tests/App.test.jsx` · Test: dentro del layout, área táctil y `aria-label`, tocar muestra `window.open` con el mensaje genérico, y sin variable el botón no existe
   **Listo cuando:** el test pasa y el botón se ve en portada, catálogo y detalle.
 
 ## Cierre
