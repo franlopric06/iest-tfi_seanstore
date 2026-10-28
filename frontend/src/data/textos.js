@@ -170,6 +170,9 @@ const textos = {
     plantillaConsultaSinTalle: 'Hola! Me interesa {producto}, color {color}, cantidad {cantidad}. ¿Tienen disponibilidad?',
     avisoColor: 'Elegí un color para continuar',
     avisoTalle: 'Elegí un talle para continuar',
+    seccionColor: 'Color',
+    seccionTalle: 'Talle',
+    seccionCantidad: 'Cantidad',
   },
 }
 
