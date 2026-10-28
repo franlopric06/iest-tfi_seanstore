@@ -1,9 +1,10 @@
 import textos from '../../data/textos.js'
 
-export default function BotonAsistente({ abierto, alAbrir }) {
+export default function BotonAsistente({ abierto, alAbrir, ref }) {
   return (
     <button
       type="button"
+      ref={ref}
       aria-expanded={abierto}
       aria-controls="asistente-panel"
       onClick={alAbrir}

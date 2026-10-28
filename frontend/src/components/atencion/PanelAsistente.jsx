@@ -15,6 +15,7 @@ export default function PanelAsistente({
 
   return (
     <motion.section
+      id="asistente-panel"
       aria-labelledby="asistente-titulo"
       initial={movimientoReducido ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}

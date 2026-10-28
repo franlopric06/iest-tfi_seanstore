@@ -16,6 +16,10 @@ describe('PanelAsistente', () => {
       />,
     )
 
+    expect(screen.getByRole('region', { name: textos.asistente.saludo })).toHaveAttribute(
+      'id',
+      'asistente-panel',
+    )
     expect(screen.getByRole('heading', { name: textos.asistente.saludo })).toBeInTheDocument()
     expect(screen.getByRole('searchbox', { name: textos.asistente.etiquetaBusqueda })).toBeInTheDocument()
     textos.asistente.preguntas.forEach(({ pregunta }) => {

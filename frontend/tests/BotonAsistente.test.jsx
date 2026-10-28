@@ -1,3 +1,4 @@
+import { createRef } from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import BotonAsistente from '../src/components/atencion/BotonAsistente.jsx'
@@ -28,5 +29,12 @@ describe('BotonAsistente (R1)', () => {
     fireEvent.click(screen.getByRole('button', { name: textos.asistente.boton }))
 
     expect(alAbrir).toHaveBeenCalledOnce()
+  })
+
+  it('asigna la ref recibida al botón para poder devolverle el foco', () => {
+    const botonRef = createRef()
+    render(<BotonAsistente abierto={false} alAbrir={vi.fn()} ref={botonRef} />)
+
+    expect(botonRef.current).toBe(screen.getByRole('button', { name: textos.asistente.boton }))
   })
 })
