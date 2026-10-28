@@ -178,6 +178,43 @@ const textos = {
     ariaFlotante: 'Escribinos por WhatsApp',
     mensajeFlotante: 'Hola! Te escribo desde la tienda, quiero hacer una consulta.',
   },
+  asistente: {
+    saludo: '¡Hola! ¿En qué te ayudo?',
+    etiquetaBusqueda: 'Buscar preguntas frecuentes',
+    placeholderBusqueda: 'Escribí una palabra clave',
+    cerrar: 'Cerrar ayuda',
+    preguntas: [
+      {
+        pregunta: '¿Cómo hago un pedido?',
+        respuesta:
+          'Elegí el producto, el color, el talle y la cantidad en su página y tocá "Pedir por WhatsApp". Te llega el mensaje ya armado y seguimos por ahí.',
+      },
+      {
+        pregunta: '¿Cuánto tarda?',
+        respuesta:
+          'Entre 3 y 5 días hábiles, según la cantidad y el diseño. Si lo necesitás para una fecha, avisanos por WhatsApp.',
+      },
+      {
+        pregunta: '¿Hacen envíos?',
+        respuesta:
+          'Sí. Podés retirarlo en el local en Tinogasta o te lo enviamos; el costo del envío depende del destino y lo coordinamos por WhatsApp.',
+      },
+      {
+        pregunta: '¿Qué diseños aceptan?',
+        respuesta:
+          'Una foto, tu logo, una frase o el número de tu equipo, en buena calidad (JPG o PNG). Si no tenés diseño, te lo armamos.',
+      },
+      {
+        pregunta: '¿Cómo pago?',
+        respuesta: 'Por ahora el pago se coordina por WhatsApp: transferencia o efectivo al retirar.',
+      },
+      {
+        pregunta: '¿Puedo ver cómo queda antes?',
+        respuesta:
+          'Sí. Te mandamos un boceto por WhatsApp y lo ajustamos hasta que te guste, antes de estampar.',
+      },
+    ],
+  },
 }
 
 export default textos
