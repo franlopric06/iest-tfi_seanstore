@@ -179,6 +179,7 @@ const textos = {
     mensajeFlotante: 'Hola! Te escribo desde la tienda, quiero hacer una consulta.',
   },
   asistente: {
+    boton: '¿Tenés dudas?',
     saludo: '¡Hola! ¿En qué te ayudo?',
     etiquetaBusqueda: 'Buscar preguntas frecuentes',
     placeholderBusqueda: 'Escribí una palabra clave',
