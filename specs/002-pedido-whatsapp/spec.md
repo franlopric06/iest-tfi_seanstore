@@ -1,6 +1,6 @@
 # Spec 002-pedido-whatsapp · Pedido por WhatsApp y botón flotante
 
-**RF de origen:** RF07 (adaptado), RF24 · **Estado:** borrador · **Fecha:** 26/10/2026
+**RF de origen:** RF07 (adaptado), RF24 · **Estado:** clarificación cerrada, decisión pendiente · **Fecha:** 26/10/2026
 
 ## Contexto
 
@@ -19,22 +19,24 @@ El negocio cierra todas las ventas por WhatsApp: no hay carrito ni pago online e
 | --- | --- | --- | --- |
 | R1 | Por evento | Cuando el cliente entre a `/producto/:slug`, el sistema deberá mostrar un selector de color (los disponibles del producto), un selector de talle (solo si `talles` no está vacío), un campo de cantidad (entero, mínimo 1, máximo 50, valor inicial 1) y el botón "Pedir por WhatsApp" o "Consultar por WhatsApp" según el stock. (RF07 adaptado) | Alta |
 | R2 | Por evento | Cuando el cliente toque "Pedir por WhatsApp" (stock > 0), el sistema deberá abrir `https://wa.me/{VITE_WHATSAPP}?text=…` en una pestaña nueva con el mensaje: "Hola! Quiero pedir: {nombre del producto}, color {color}, talle {talle}, cantidad {cantidad}. ¿Me pasás el precio y cómo seguimos?" — omitiendo la parte del talle si el producto no tiene talles. (RF07 adaptado) | Alta |
-| R3 | Por evento | Cuando el cliente toque "Consultar por WhatsApp" (stock = 0), el sistema deberá abrir `https://wa.me/{VITE_WHATSAPP}?text=…` en una pestaña nueva con el mensaje: "Hola! Me interesa {nombre del producto}, color {color}. ¿Tienen disponibilidad?" — omitiendo la parte del talle si el producto no tiene talles. (RF07 adaptado) | Alta |
-| R4 | Ubicuo | El sistema deberá mostrar el botón de WhatsApp del detalle en verde (`bg-verde`) con el ícono de WhatsApp de Lucide, con texto "Pedir por WhatsApp" o "Consultar por WhatsApp" según el stock, con un área táctil de al menos 44 px de alto, foco visible y texto alternativo para lectores de pantalla. (RNF03) | Alta |
+| R3 | Por evento | Cuando el cliente toque "Consultar por WhatsApp" (stock = 0), el sistema deberá abrir `https://wa.me/{VITE_WHATSAPP}?text=…` en una pestaña nueva con el mensaje: "Hola! Me interesa {nombre del producto}, color {color}, talle {talle}, cantidad {cantidad}. ¿Tienen disponibilidad?" — omitiendo la parte del talle si el producto no tiene talles. (RF07 adaptado) | Alta |
+| R4 | Ubicuo | El sistema deberá mostrar el botón de WhatsApp del detalle con los tokens de la marca `bg-whatsapp` y `text-whatsapp-texto` y el ícono `MessageCircle` de Lucide, con texto "Pedir por WhatsApp" o "Consultar por WhatsApp" según el stock, con un área táctil de al menos 44 px de alto, foco visible y texto alternativo para lectores de pantalla. (RNF03) | Alta |
 | R5 | Si | Si `VITE_WHATSAPP` no está definido o está vacío, entonces el sistema no deberá mostrar ni el botón del detalle ni el botón flotante. (RF07 adaptado, RF24) | Alta |
-| R6 | Ubicuo | El sistema deberá mostrar un botón flotante de WhatsApp en todas las páginas de la tienda (no en el panel `/admin`), fijo en la esquina inferior derecha, con el ícono de WhatsApp, `aria-label` descriptivo y área táctil de al menos 44 × 44 px. Al tocarlo, deberá abrir `https://wa.me/{VITE_WHATSAPP}` en una pestaña nueva. (RF24) | Alta |
-| R7 | Por estado | Mientras el cliente no haya elegido un color, el sistema deberá deshabilitar el botón de WhatsApp del detalle y mostrar un mensaje de ayuda que indique que falta elegir el color. (RF07 adaptado) | Alta |
+| R6 | Ubicuo | El sistema deberá mostrar un botón flotante de WhatsApp en todas las páginas de la tienda (no en el panel `/admin`), fijo en la esquina inferior derecha, con el ícono `MessageCircle` de Lucide, `aria-label` descriptivo y área táctil de al menos 44 × 44 px. Al tocarlo, deberá abrir `https://wa.me/{VITE_WHATSAPP}?text=…` en una pestaña nueva con el mensaje "Hola! Te escribo desde la tienda, quiero hacer una consulta." (RF24) | Alta |
+| R7 | Por estado | Cuando el producto tenga más de un color disponible y el cliente no haya elegido uno, el sistema deberá deshabilitar el botón de WhatsApp del detalle y mostrar debajo del botón, en pequeño, el mensaje de ayuda "Elegí un color para continuar". (RF07 adaptado) | Alta |
 | R8 | Ubicuo | El sistema deberá inicializar la cantidad en 1 y no permitir valores fuera del rango 1–50; si el cliente intenta bajar de 1 o subir de 50, el control deberá mantenerse en el límite correspondiente. (RF07 adaptado) | Alta |
-| R9 | Donde | Donde el producto tenga talles, el sistema deberá mostrar el selector de talle y, mientras no se elija uno, deshabilitar el botón de WhatsApp y mostrar un mensaje de ayuda que indique que falta elegir el talle. (RF07 adaptado) | Alta |
+| R9 | Donde | Donde el producto tenga más de un talle, el sistema deberá mostrar el selector de talle y, mientras el cliente no elija uno, deshabilitar el botón de WhatsApp del detalle y mostrar debajo del botón, en pequeño, el mensaje de ayuda "Elegí un talle para continuar". (RF07 adaptado) | Alta |
 | R10 | Ubicuo | El sistema deberá incluir en el mensaje de WhatsApp el nombre del producto, el color elegido y la cantidad; e incluir el talle solo si el producto tiene talles. Nunca deberá incluir el precio en el mensaje (es de ejemplo y lo confirma el negocio). (RF07 adaptado, RNF07) | Alta |
+| R11 | Por estado | Cuando el producto tenga un solo color disponible o un solo talle (incluso "Talle único"), el sistema deberá mostrar esa opción como ya elegida: el botón de WhatsApp no se deshabilita por ese factor y no aparece el mensaje de ayuda correspondiente. (RF07 adaptado) | Alta |
 
 ## Casos límite
 
 - **`VITE_WHATSAPP` no definido o vacío:** ni el botón del detalle ni el flotante se muestran. La tienda sigue funcionando normalmente.
-- **Color no elegido:** botón deshabilitado con mensaje de ayuda. El botón se habilita solo cuando hay color (y talle, si corresponde).
-- **Talle no elegido (en productos con talles):** ídem anterior.
+- **Color no elegido (con más de un color):** botón deshabilitado y debajo el mensaje "Elegí un color para continuar" (R7). Se habilita solo cuando hay color elegido (y talle, si corresponde).
+- **Talle no elegido (con más de un talle):** ídem anterior, con "Elegí un talle para continuar" (R9).
+- **Un solo color o un solo talle (o "Talle único"):** la opción única aparece ya elegida y no bloquea el botón (R11).
 - **Cantidad fuera de rango:** el control no acepta valores menores a 1 ni mayores a 50; al salir del campo con un valor inválido se corrije al límite más cercano.
-- **Stock = 0:** el botón cambia a "Consultar por WhatsApp" y el mensaje pregunta por disponibilidad en vez de pedir el producto. El selector de color y cantidad siguen activos; el de talle también si el producto los tiene.
+- **Stock = 0:** el botón cambia a "Consultar por WhatsApp" y el mensaje pregunta por disponibilidad con color, talle (si hay) y cantidad (R3). El selector de color y cantidad siguen activos; el de talle también si el producto lo tiene.
 - **Producto sin talles:** el selector de talle no aparece y la parte "talle {talle}" no se incluye en el mensaje.
 - **Nombre del producto largo:** el mensaje de WhatsApp usa el nombre tal como viene de la API, sin truncar.
 - **Celular (desde 360 px):** los selectores y el botón deben entrar en una sola columna sin desbordarse; área táctil de 44 px mínimo.
@@ -61,3 +63,4 @@ El negocio cierra todas las ventas por WhatsApp: no hay carrito ni pago online e
 | Fecha | Cambio | Motivo |
 | --- | --- | --- |
 | 26/10/2026 | Creación de la spec | Fase 1 del ciclo SDD para 002-pedido-whatsapp; sin entrevista porque el estudiante proveyó todas las decisiones directamente |
+| 27/10/2026 | Clarificación cerrada con 8 decisiones. R4: en lugar del token inexistente `bg-verde`, se usan `bg-whatsapp` y `text-whatsapp-texto` (ya en `index.css`), y el ícono es `MessageCircle` de Lucide (no hay ícono de WhatsApp); ídem en el flotante de R6. R7/R9 definidos: mensaje de ayuda fijo debajo del botón ("Elegí un color para continuar" / "Elegí un talle para continuar") y solo bloquea cuando hay más de una opción — un color o talle único viene ya elegido (R11). R3 con mensaje completo: "Hola! Me interesa {producto}, color {color}, talle {talle}, cantidad {cantidad}. ¿Tienen disponibilidad?" (con cantidad y talle, coherente con R2). R6 con mensaje genérico: "Hola! Te escribo desde la tienda, quiero hacer una consulta." | Fase 2 del ciclo SDD: las 8 decisiones del estudiante (`clarificacion.md`) |
