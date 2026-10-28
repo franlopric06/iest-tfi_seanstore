@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from '../src/App.jsx'
 import textos from '../src/data/textos.js'
 
@@ -21,8 +21,13 @@ beforeAll(() => {
   }
 })
 
+beforeEach(() => {
+  vi.spyOn(window, 'scrollTo').mockImplementation(() => {})
+})
+
 afterEach(() => {
   cleanup()
+  vi.restoreAllMocks()
   vi.unstubAllEnvs()
   estadoMovimiento.reducido = false
 })
