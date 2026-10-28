@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { ChevronDown, Search, X } from 'lucide-react'
 import textos from '../../data/textos.js'
+import { armarEnlaceWhatsApp } from '../../utils/whatsapp.js'
 
 export default function PanelAsistente({
   consulta,
@@ -12,6 +13,12 @@ export default function PanelAsistente({
 }) {
   const [preguntaAbierta, setPreguntaAbierta] = useState(null)
   const movimientoReducido = useReducedMotion()
+  const enlaceDerivacion =
+    preguntas.length === 0
+      ? armarEnlaceWhatsApp(
+          textos.asistente.plantillaDerivacion.replace('{consulta}', consulta),
+        )
+      : null
 
   return (
     <motion.section
@@ -56,33 +63,51 @@ export default function PanelAsistente({
         />
       </div>
 
-      <ul className="space-y-2">
-        {preguntas.map(({ pregunta, respuesta }, indice) => {
-          const abierta = preguntaAbierta === pregunta
-          const respuestaId = `asistente-respuesta-${indice}`
+      {preguntas.length === 0 ? (
+        <div className="space-y-2">
+          <p role="status" className="text-sm text-grafito">
+            {textos.asistente.sinResultados}
+          </p>
+          {enlaceDerivacion && (
+            <a
+              href={enlaceDerivacion}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center rounded-marca text-magenta underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
+            >
+              {textos.asistente.enlaceDerivacion}
+            </a>
+          )}
+        </div>
+      ) : (
+        <ul className="space-y-2">
+          {preguntas.map(({ pregunta, respuesta }, indice) => {
+            const abierta = preguntaAbierta === pregunta
+            const respuestaId = `asistente-respuesta-${indice}`
 
-          return (
-            <li key={pregunta} className="rounded-marca border border-gris-claro">
-              <button
-                type="button"
-                aria-expanded={abierta}
-                aria-controls={respuestaId}
-                onClick={() => setPreguntaAbierta(abierta ? null : pregunta)}
-                className="flex min-h-11 w-full items-center justify-between gap-3 rounded-marca px-3 py-2 text-left font-titulos text-sm text-violeta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
-              >
-                {pregunta}
-                <ChevronDown
-                  aria-hidden="true"
-                  className={`h-4 w-4 shrink-0 transition-transform ${abierta ? 'rotate-180' : ''}`}
-                />
-              </button>
-              <div id={respuestaId} hidden={!abierta} className="px-3 pb-3 text-sm text-grafito">
-                <p>{respuesta}</p>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
+            return (
+              <li key={pregunta} className="rounded-marca border border-gris-claro">
+                <button
+                  type="button"
+                  aria-expanded={abierta}
+                  aria-controls={respuestaId}
+                  onClick={() => setPreguntaAbierta(abierta ? null : pregunta)}
+                  className="flex min-h-11 w-full items-center justify-between gap-3 rounded-marca px-3 py-2 text-left font-titulos text-sm text-violeta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
+                >
+                  {pregunta}
+                  <ChevronDown
+                    aria-hidden="true"
+                    className={`h-4 w-4 shrink-0 transition-transform ${abierta ? 'rotate-180' : ''}`}
+                  />
+                </button>
+                <div id={respuestaId} hidden={!abierta} className="px-3 pb-3 text-sm text-grafito">
+                  <p>{respuesta}</p>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      )}
     </motion.section>
   )
 }

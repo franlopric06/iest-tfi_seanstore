@@ -184,6 +184,10 @@ const textos = {
     etiquetaBusqueda: 'Buscar preguntas frecuentes',
     placeholderBusqueda: 'Escribí una palabra clave',
     cerrar: 'Cerrar ayuda',
+    sinResultados: 'No encontramos una respuesta para esa búsqueda.',
+    enlaceDerivacion: '¿No encontraste tu respuesta? Escribinos por WhatsApp',
+    plantillaDerivacion:
+      'Hola! Te escribo desde la tienda. Busqué "{consulta}" y no encontré la respuesta.',
     preguntas: [
       {
         pregunta: '¿Cómo hago un pedido?',

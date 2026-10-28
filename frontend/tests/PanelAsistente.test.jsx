@@ -1,10 +1,18 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import PanelAsistente from '../src/components/atencion/PanelAsistente.jsx'
 import textos from '../src/data/textos.js'
 
-afterEach(cleanup)
+beforeEach(() => {
+  vi.stubEnv('VITE_WHATSAPP', '543837123456')
+})
+
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+  vi.unstubAllEnvs()
+})
 
 describe('PanelAsistente', () => {
   it('muestra el saludo, la búsqueda y las seis preguntas frecuentes', () => {
@@ -79,5 +87,50 @@ describe('PanelAsistente', () => {
     expect(alCambiarConsulta).toHaveBeenLastCalledWith('transferencia')
     await usuario.click(screen.getByRole('button', { name: textos.asistente.cerrar }))
     expect(alCerrar).toHaveBeenCalledOnce()
+  })
+
+  it('muestra el estado vacío y el enlace contextual codificado en WhatsApp', () => {
+    const consulta = '¿Puedo pagar por transferencia? & hoy'
+    render(
+      <PanelAsistente
+        consulta={consulta}
+        alCambiarConsulta={vi.fn()}
+        alCerrar={vi.fn()}
+        preguntas={[]}
+      />,
+    )
+
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'No encontramos una respuesta para esa búsqueda.',
+    )
+    const enlace = screen.getByRole('link', { name: textos.asistente.enlaceDerivacion })
+    const mensaje = `Hola! Te escribo desde la tienda. Busqué "${consulta}" y no encontré la respuesta.`
+    expect(enlace).toHaveAttribute(
+      'href',
+      `https://wa.me/543837123456?text=${encodeURIComponent(mensaje)}`,
+    )
+    expect(enlace).toHaveAttribute('target', '_blank')
+    expect(enlace).toHaveAttribute('rel', 'noopener noreferrer')
+  })
+
+  it.each([
+    ['variable ausente', undefined],
+    ['variable vacía', ''],
+  ])('mantiene el panel y oculta el enlace con la %s', (_caso, numero) => {
+    vi.stubEnv('VITE_WHATSAPP', numero)
+    render(
+      <PanelAsistente
+        consulta="sin coincidencias"
+        alCambiarConsulta={vi.fn()}
+        alCerrar={vi.fn()}
+        preguntas={[]}
+      />,
+    )
+
+    expect(screen.getByRole('heading', { name: textos.asistente.saludo })).toBeInTheDocument()
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'No encontramos una respuesta para esa búsqueda.',
+    )
+    expect(screen.queryByRole('link', { name: textos.asistente.enlaceDerivacion })).not.toBeInTheDocument()
   })
 })
