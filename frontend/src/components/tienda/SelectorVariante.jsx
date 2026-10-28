@@ -47,7 +47,7 @@ export function SelectorVariante({
         </fieldset>
       )}
 
-      <div>
+      <div className="flex items-center gap-3">
         <label htmlFor="cantidad" className="font-titulos text-violeta">
           {textos.whatsapp.seccionCantidad}
         </label>
@@ -59,7 +59,7 @@ export function SelectorVariante({
           defaultValue={cantidad}
           key={cantidad}
           onBlur={(e) => alCambiarCantidad(e.target.value)}
-          className="mt-2 min-h-11 w-20 rounded-marca border border-gris-claro px-3 text-violeta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
+          className="min-h-11 w-20 rounded-marca border border-gris-claro px-3 text-violeta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
         />
       </div>
     </div>

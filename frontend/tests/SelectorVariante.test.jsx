@@ -47,8 +47,11 @@ describe('SelectorVariante · cantidad (R1, R8)', () => {
   it('el campo con etiqueta visible corrige la cantidad al salir del campo', () => {
     const alCambiarCantidad = vi.fn()
     render(<SelectorVariante {...base} cantidad={1} alCambiarCantidad={alCambiarCantidad} />)
+    const etiqueta = screen.getByText('Cantidad')
+    expect(etiqueta.parentElement).toHaveClass('flex', 'items-center', 'gap-3')
     const campo = screen.getByLabelText('Cantidad')
     expect(campo).toHaveValue(1)
+    expect(campo).not.toHaveClass('mt-2')
     fireEvent.change(campo, { target: { value: '3' } })
     expect(alCambiarCantidad).not.toHaveBeenCalled()
     fireEvent.blur(campo)
