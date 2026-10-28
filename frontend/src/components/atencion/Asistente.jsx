@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import BotonAsistente from './BotonAsistente.jsx'
 import PanelAsistente from './PanelAsistente.jsx'
+import textos from '../../data/textos.js'
+import { filtrarPreguntas } from '../../utils/filtrarPreguntas.js'
 
 export default function Asistente() {
   const [abierto, setAbierto] = useState(false)
   const [consulta, setConsulta] = useState('')
   const disparadorRef = useRef(null)
   const tituloRef = useRef(null)
+  const preguntasFiltradas = filtrarPreguntas(textos.asistente.preguntas, consulta)
 
   const cerrar = () => {
     setAbierto(false)
@@ -40,6 +43,7 @@ export default function Asistente() {
           consulta={consulta}
           alCambiarConsulta={setConsulta}
           alCerrar={cerrar}
+          preguntas={preguntasFiltradas}
           tituloRef={tituloRef}
         />
       )}

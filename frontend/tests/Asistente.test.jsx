@@ -72,4 +72,31 @@ describe('Asistente (R1, R2, R7)', () => {
 
     expect(screen.getByRole('region', { name: textos.asistente.saludo })).toBeInTheDocument()
   })
+
+  it('filtra por la respuesta, ignora mayúsculas y tildes, y restaura la lista al borrar', async () => {
+    const usuario = userEvent.setup()
+    render(<Asistente />)
+    await usuario.click(screen.getByRole('button', { name: textos.asistente.boton }))
+
+    const busqueda = screen.getByRole('searchbox', { name: textos.asistente.etiquetaBusqueda })
+    await usuario.type(busqueda, 'transferencia')
+
+    expect(screen.getByRole('button', { name: '¿Cómo pago?' })).toBeInTheDocument()
+    expect(screen.getAllByRole('button').filter((boton) =>
+      textos.asistente.preguntas.some(({ pregunta }) => pregunta === boton.textContent),
+    )).toHaveLength(1)
+
+    await usuario.clear(busqueda)
+    await usuario.type(busqueda, 'ENVIOS')
+
+    expect(screen.getByRole('button', { name: '¿Hacen envíos?' })).toBeInTheDocument()
+    expect(screen.getAllByRole('button').filter((boton) =>
+      textos.asistente.preguntas.some(({ pregunta }) => pregunta === boton.textContent),
+    )).toHaveLength(1)
+
+    await usuario.clear(busqueda)
+    textos.asistente.preguntas.forEach(({ pregunta }) => {
+      expect(screen.getByRole('button', { name: pregunta })).toBeInTheDocument()
+    })
+  })
 })
