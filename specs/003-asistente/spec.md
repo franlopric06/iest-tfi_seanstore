@@ -1,6 +1,6 @@
 # Spec 003-asistente · Asistente de preguntas frecuentes
 
-**RF de origen:** RF25 · **Estado:** borrador · **Fecha:** 28/10/2026
+**RF de origen:** RF25 · **Estado:** aprobada · **Fecha:** 28/10/2026
 
 > Las respuestas de demostración fueron provistas y aprobadas por el estudiante el 28/10/2026.
 
@@ -33,12 +33,12 @@ Estas respuestas son los textos de demostración elegidos por el estudiante para
 | ID | Tipo | Requisito | Prioridad |
 | --- | --- | --- | --- |
 | R1 | Ubicuo | El sistema deberá mostrar en todas las páginas de la tienda un botón fijo “¿Tenés dudas?” abajo a la izquierda, separado del botón flotante de WhatsApp que permanece abajo a la derecha, con un área táctil de al menos 44 × 44 px y foco visible. | Alta |
-| R2 | Por evento | Cuando el cliente active “¿Tenés dudas?”, el sistema deberá abrir un panel de ayuda con un título o saludo, un campo de búsqueda y las preguntas frecuentes disponibles. | Alta |
-| R3 | Por evento | Cuando el cliente elija una pregunta frecuente visible, el sistema deberá mostrar su respuesta propuesta dentro del panel. | Alta |
-| R4 | Por evento | Cuando el cliente escriba en el campo de búsqueda, el sistema deberá filtrar las preguntas comparando el texto buscado con la pregunta y su respuesta, sin distinguir mayúsculas ni tildes; si el campo queda vacío, deberá volver a mostrar todas las preguntas. | Alta |
+| R2 | Por evento | Cuando el cliente active “¿Tenés dudas?”, el sistema deberá abrir un panel de ayuda con un título o saludo, un campo de búsqueda y las preguntas frecuentes disponibles, y mover el foco a su título programáticamente enfocable (`tabIndex="-1"`). | Alta |
+| R3 | Por evento | Cuando el cliente elija una pregunta frecuente visible, el sistema deberá mostrar su respuesta propuesta dentro del panel; solo una respuesta podrá permanecer abierta a la vez. | Alta |
+| R4 | Por evento | Cuando el cliente escriba en el campo de búsqueda, el sistema deberá filtrar las preguntas comparando todas las palabras de la búsqueda contra el texto combinado de la pregunta y su respuesta, sin distinguir mayúsculas ni tildes; si el campo queda vacío, deberá volver a mostrar todas las preguntas. | Alta |
 | R5 | Si | Si la búsqueda no encuentra ninguna pregunta, entonces el sistema deberá mostrar un estado sin resultados y el enlace “¿No encontraste tu respuesta? Escribinos por WhatsApp”. | Alta |
-| R6 | Si | Si `VITE_WHATSAPP` no está definida o está vacía, entonces el sistema no deberá mostrar el enlace de derivación a WhatsApp; el resto del asistente deberá seguir funcionando. Cuando la variable exista, el enlace deberá usar `armarEnlaceWhatsApp` y abrir WhatsApp en una pestaña nueva. | Alta |
-| R7 | Por evento | Cuando el cliente cierre el panel con su botón de cierre o con la tecla Escape, el sistema deberá cerrarlo y devolver el foco al botón “¿Tenés dudas?” que lo abrió. | Alta |
+| R6 | Si | Si `VITE_WHATSAPP` no está definida o está vacía, entonces el sistema no deberá mostrar el enlace de derivación a WhatsApp; el resto del asistente deberá seguir funcionando. Cuando la variable exista, el enlace deberá usar `armarEnlaceWhatsApp` con el mensaje “Hola! Te escribo desde la tienda. Busqué "{consulta}" y no encontré la respuesta.”, donde `{consulta}` se reemplaza por el texto de búsqueda, y abrir WhatsApp en una pestaña nueva. | Alta |
+| R7 | Por evento | Cuando el cliente cierre el panel con su botón de cierre o con la tecla Escape, el sistema deberá cerrarlo y devolver el foco al botón “¿Tenés dudas?” que lo abrió; el foco no deberá quedar atrapado dentro del panel, y tocar fuera del panel no deberá cerrarlo. | Alta |
 | R8 | Ubicuo | El sistema deberá guardar las preguntas y respuestas de ejemplo en `frontend/src/data/textos.js`; el asistente no deberá usar IA generativa, claves, backend ni base de datos. | Alta |
 
 ## Casos límite
@@ -46,10 +46,14 @@ Estas respuestas son los textos de demostración elegidos por el estudiante para
 - Al abrir el panel, la búsqueda vacía muestra todas las preguntas disponibles.
 - La búsqueda ignora diferencias de mayúsculas y tildes; por ejemplo, “envios” encuentra “¿Hacen envíos?”.
 - La búsqueda también compara las respuestas; por ejemplo, “transferencia” encuentra “¿Cómo pago?”.
+- Si la búsqueda contiene más de una palabra, todas deben aparecer en el texto combinado de la pregunta y su respuesta, sin importar el orden.
 - Si ninguna pregunta coincide, se muestra el estado sin resultados y, solo si `VITE_WHATSAPP` está configurada, el enlace de derivación.
+- El mensaje del enlace de derivación incluye el texto de búsqueda en lugar de `{consulta}`: “Hola! Te escribo desde la tienda. Busqué "{consulta}" y no encontré la respuesta.”
 - Si `VITE_WHATSAPP` no existe o está vacía, las preguntas y respuestas siguen disponibles; solo se omite el enlace externo.
 - Al borrar el texto de búsqueda, vuelve la lista completa.
-- Escape cierra el panel y devuelve el foco al botón que lo abrió.
+- Al abrir el panel, el foco va a su título (`tabIndex="-1"`); el panel no atrapa el foco.
+- Escape y el botón de cierre cierran el panel y devuelven el foco al botón que lo abrió; un clic o toque fuera no lo cierra.
+- Solo una respuesta puede quedar abierta a la vez; al abrir otra pregunta, se cierra la respuesta anterior.
 - En celular, el botón de ayuda y su panel no deben desbordar la pantalla ni tapar el botón flotante de WhatsApp.
 - El panel contiene seis preguntas y sus respuestas locales; no depende de la conexión ni de una API.
 
@@ -60,7 +64,6 @@ Estas respuestas son los textos de demostración elegidos por el estudiante para
 - Carga de preguntas desde `preguntas_frecuentes`.
 - Animación de “escribiendo…” descrita en `docs/06-DISENO-UI.md`; queda como próximo paso para una etapa posterior.
 - Búsqueda semántica o coincidencias aproximadas: esta etapa filtra preguntas por palabras clave, sin distinguir mayúsculas ni tildes.
-- Mensaje de búsqueda preescrito con la consulta del cliente; la derivación reutiliza el enlace y el mensaje genérico de WhatsApp existentes.
 
 ## Criterios de finalización
 
@@ -74,3 +77,4 @@ Estas respuestas son los textos de demostración elegidos por el estudiante para
 | Fecha | Cambio | Motivo |
 | --- | --- | --- |
 | 28/10/2026 | Creación del borrador de spec para RF25; respuestas ajustadas a los textos exactos del estudiante | Definir el panel de preguntas frecuentes de la primera etapa y registrar sus respuestas de demostración aprobadas |
+| 28/10/2026 | Spec clarificada y aprobada; búsqueda contra pregunta y respuesta, mensaje de derivación contextual y reglas de interacción y foco precisadas | Registrar las decisiones del estudiante de `clarificacion.md` |
