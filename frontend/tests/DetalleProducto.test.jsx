@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Route, Routes, Link } from 'react-router-dom'
-import { afterEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import DetalleProducto from '../src/pages/tienda/DetalleProducto.jsx'
 import textos from '../src/data/textos.js'
 
@@ -129,23 +129,21 @@ describe('Detalle · datos del producto (R10)', () => {
     expect(precio).toHaveTextContent('18.000')
   })
 
-  it('R10 · lista los talles disponibles, los colores y la descripción', async () => {
+  it('R10 · muestra los talles y colores como opciones del selector y la descripción', async () => {
     api.obtenerProducto.mockResolvedValue(clonar())
     armar()
 
     await esperarTitulo()
     expect(screen.getByText(producto.descripcion)).toBeInTheDocument()
 
-    const talles = screen.getByRole('list', { name: textos.detalle.talles })
-    const enTalles = screen.getAllByRole('listitem').filter((item) => talles.contains(item))
-    expect(enTalles).toHaveLength(producto.talles.length)
     producto.talles.forEach((talle) => {
-      expect(enTalles.find((item) => item.textContent === talle)).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: talle })).toBeInTheDocument()
     })
-
     producto.colores.forEach((color) => {
-      expect(screen.getByRole('listitem', { name: color })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: color })).toBeInTheDocument()
     })
+    expect(screen.queryByText(textos.detalle.talles)).not.toBeInTheDocument()
+    expect(screen.queryByText(textos.detalle.colores)).not.toBeInTheDocument()
   })
 
   it('R10 · si la descripción es null, el bloque no aparece y no se rellena', async () => {
@@ -347,5 +345,103 @@ describe('Detalle · volver al catálogo y cambio de producto', () => {
 
     expect(await screen.findByRole('heading', { level: 1, name: 'Taza de cerámica' })).toBeInTheDocument()
     expect(api.obtenerProducto).toHaveBeenNthCalledWith(2, 'taza-ceramica')
+  })
+})
+
+describe('Detalle · pedido por WhatsApp (R1, R2, R7, R9, R11)', () => {
+  beforeEach(() => {
+    vi.stubEnv('VITE_WHATSAPP', '543837123456')
+  })
+
+  afterEach(() => {
+    vi.unstubAllEnvs()
+    vi.restoreAllMocks()
+  })
+
+  it('deshabilita el botón y muestra los avisos hasta elegir color y talle', async () => {
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    const boton = screen.getByRole('button', { name: 'Pedir por WhatsApp' })
+    expect(boton).toBeDisabled()
+    const avisoColor = screen.getByText('Elegí un color para continuar')
+    const avisoTalle = screen.getByText('Elegí un talle para continuar')
+    expect(avisoColor).toHaveClass('text-grafito')
+    expect(avisoTalle).toHaveClass('text-grafito')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Negro' }))
+    fireEvent.click(screen.getByRole('button', { name: 'M' }))
+
+    expect(boton).toBeEnabled()
+    expect(screen.queryByText('Elegí un color para continuar')).not.toBeInTheDocument()
+    expect(screen.queryByText('Elegí un talle para continuar')).not.toBeInTheDocument()
+  })
+
+  it('abre WhatsApp con el mensaje armado después de elegir las variantes', async () => {
+    const abrir = vi.spyOn(window, 'open').mockImplementation(() => {})
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar()
+
+    await esperarTitulo()
+    fireEvent.click(screen.getByRole('button', { name: 'Negro' }))
+    fireEvent.click(screen.getByRole('button', { name: 'M' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Pedir por WhatsApp' }))
+
+    const mensaje =
+      'Hola! Quiero pedir: Remera, color Negro, talle M, cantidad 1. ¿Cómo seguimos?'
+    expect(abrir).toHaveBeenCalledWith(
+      `https://wa.me/543837123456?text=${encodeURIComponent(mensaje)}`,
+      '_blank',
+      'noopener,noreferrer',
+    )
+  })
+
+  it('preselecciona el color y talle únicos sin mostrar avisos', async () => {
+    api.obtenerProducto.mockResolvedValue({
+      ...clonar(),
+      colores: ['Blanco'],
+      talles: ['Único'],
+    })
+    armar()
+
+    await esperarTitulo()
+    expect(screen.getByRole('button', { name: 'Blanco' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByRole('button', { name: 'Único' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    )
+    expect(screen.getByRole('button', { name: 'Pedir por WhatsApp' })).toBeEnabled()
+    expect(screen.queryByText('Elegí un color para continuar')).not.toBeInTheDocument()
+    expect(screen.queryByText('Elegí un talle para continuar')).not.toBeInTheDocument()
+  })
+
+  it('reinicia la selección al cambiar de producto', async () => {
+    const usuario = userEvent.setup()
+    api.obtenerProducto.mockResolvedValue(clonar())
+    armar('/producto/remera', true)
+
+    await esperarTitulo()
+    await usuario.click(screen.getByRole('button', { name: 'Negro' }))
+    await usuario.click(screen.getByRole('button', { name: 'M' }))
+
+    api.obtenerProducto.mockResolvedValue({
+      ...clonar(),
+      slug: 'buzo',
+      nombre: 'Buzo',
+    })
+    await usuario.click(screen.getByRole('link', { name: 'otro producto' }))
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Buzo' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Negro' })).toHaveAttribute(
+      'aria-pressed',
+      'false',
+    )
+    expect(screen.getByRole('button', { name: 'M' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: 'Pedir por WhatsApp' })).toBeDisabled()
+    expect(screen.getByLabelText('Cantidad')).toHaveValue(1)
   })
 })

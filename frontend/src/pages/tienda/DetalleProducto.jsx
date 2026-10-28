@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import GaleriaFotos from '../../components/tienda/GaleriaFotos.jsx'
+import PedidoWhatsApp from '../../components/tienda/PedidoWhatsApp.jsx'
 import MensajeError from '../../components/comunes/MensajeError.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import NoEncontrada from './NoEncontrada.jsx'
@@ -90,40 +91,11 @@ const DetalleProducto = () => {
             </p>
           )}
 
-          <div>
-            <p className="mb-2 text-sm font-bold">{textos.detalle.talles}</p>
-            {tieneTalles ? (
-              <ul aria-label={textos.detalle.talles} className="flex flex-wrap gap-2">
-                {producto.talles.map((talle) => (
-                  <li
-                    key={talle}
-                    className="rounded-marca border border-gris-claro px-3 py-1 text-sm"
-                  >
-                    {talle}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-sm">{textos.detalle.talleUnico}</p>
-            )}
-          </div>
-
-          {Array.isArray(producto.colores) && producto.colores.length > 0 && (
-            <div>
-              <p className="mb-2 text-sm font-bold">{textos.detalle.colores}</p>
-              <ul aria-label={textos.detalle.colores} className="flex flex-wrap gap-2">
-                {producto.colores.map((color) => (
-                  <li
-                    key={color}
-                    aria-label={color}
-                    className="rounded-marca border border-gris-claro px-3 py-1 text-sm"
-                  >
-                    {color}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {!tieneTalles && (
+            <p className="text-sm">{textos.detalle.talleUnico}</p>
           )}
+
+          <PedidoWhatsApp key={producto.slug} producto={producto} />
 
           <Link
             to="/catalogo"
