@@ -111,7 +111,7 @@ Fondo `bg-violeta`, isotipo, "Sublimación y productos personalizados.", Visitan
 
 ### 12. Botones flotantes
 
-Abajo a la derecha: la burbuja violeta del **asistente** y, debajo, el círculo verde de **WhatsApp**. No aparecen en el checkout ni en el panel.
+En la primera etapa, el botón fijo del **asistente** va abajo a la izquierda, en amarillo con texto violeta, `shadow-elevada`, borde blanco fino (`border-2 border-white`) e ícono `HelpCircle` de Lucide decorativo (`aria-hidden`). El botón de **WhatsApp** va abajo a la derecha. No aparecen en el checkout ni en el panel.
 
 ## Animaciones al bajar
 

@@ -8,7 +8,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 
 ## Estado actual
 
-- **Etapa:** primera etapa (`ETAPA-1.md`), funcionalidad 003-asistente, fase 5 (`/implementar`). T01–T07 completadas; implementación de 003 finalizada, próxima fase: `/verificar 003-asistente`.
+- **Etapa:** primera etapa (`ETAPA-1.md`); botón del asistente amarillo con texto violeta, test y diseño sincronizados; validación frontend 137/137 y build correctos; commit y push autorizados.
 - **Hecho 003 T01 (28/10/2026):** `frontend/src/utils/filtrarPreguntas.js` filtra preguntas por todos los términos de la búsqueda, comparando pregunta y respuesta sin distinguir mayúsculas ni tildes; con búsqueda vacía devuelve todas. `frontend/tests/filtrarPreguntas.test.js` cubre 4 casos y se escribió primero (falló antes de crear la función). Validación: frontend 18 archivos/120 tests, backend 4 archivos/18 tests, build frontend y lint focalizado en verde.
 - **Hecho 003 T02 (28/10/2026):** `frontend/src/data/textos.js` contiene el saludo, etiquetas y las seis preguntas/respuestas aprobadas; `frontend/src/components/atencion/PanelAsistente.jsx` presenta el encabezado, búsqueda controlada, botón de cierre y acordeón de una respuesta a la vez, con apertura Motion que respeta `useReducedMotion`; `frontend/tests/PanelAsistente.test.jsx` cubre contenido, expansión exclusiva y callbacks. Tests escritos primero; tras implementar pasan 4/4. Validación: frontend 19 archivos/124 tests, backend 4 archivos/18 tests, build y lint focalizado en verde.
 - **Hecho 003 T03 (28/10/2026):** `frontend/src/components/atencion/BotonAsistente.jsx` muestra el disparador fijo abajo a la izquierda con nombre accesible, área táctil mínima de 44 × 44 px, foco visible y estado/control del panel por props; recibe la ref para restaurar el foco; `PanelAsistente.jsx` define el id controlado `asistente-panel`; `frontend/src/data/textos.js` incorpora la etiqueta; los tests prueban nombre, clases, atributos accesibles, callback, ref e id. Validación: frontend 20 archivos/127 tests, backend 4 archivos/18 tests y build en verde.
@@ -99,6 +99,7 @@ Memoria compartida entre las conversaciones con el agente. Se lee al empezar y s
 | 19/10/2026 | Fotos de producto generadas con IA en `frontend/public/img/productos/` (WebP); `producto_fotos.generada_con_ia` y leyenda en tarjeta y detalle | Clarificación 001-catalogo (decisiones 5 y 6; RNF12) |
 | 19/10/2026 | Tablas de la v1: `categorias`, `productos`, `producto_fotos`, `consultas`, `preguntas_frecuentes`; carga por SQL escrito por el agente y ejecutado por el estudiante en Neon (la `DATABASE_URL` nunca pasa por el chat) | Clarificación 001-catalogo (decisiones 8 y 3) |
 | 19/10/2026 | JSON-LD de producto sin `offers` y sin Open Graph por producto; solo OG general en `index.html` | Clarificación 001-catalogo (decisiones 7 y 10); los precios son de ejemplo |
+| 28/10/2026 | Botón del asistente amarillo con texto violeta, sombra elevada, borde blanco e ícono HelpCircle | Se distingue del fondo violeta; el ícono es decorativo y queda oculto a tecnologías de asistencia |
 
 ## Problemas resueltos
 

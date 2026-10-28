@@ -15,11 +15,17 @@ describe('BotonAsistente (R1)', () => {
       'left-4',
       'min-h-11',
       'min-w-11',
+      'bg-amarillo',
+      'text-violeta',
+      'shadow-elevada',
+      'border-2',
+      'border-white',
       'focus-visible:ring-2',
       'focus-visible:ring-magenta',
     )
     expect(boton).toHaveAttribute('aria-expanded', 'false')
     expect(boton).toHaveAttribute('aria-controls', 'asistente-panel')
+    expect(boton.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
   })
 
   it('al activarlo llama el callback recibido', () => {
