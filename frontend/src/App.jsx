@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Asistente from './components/atencion/Asistente.jsx'
 import BotonWhatsAppFlotante from './components/atencion/BotonWhatsAppFlotante.jsx'
 import Header from './components/layout/Header.jsx'
 import Footer from './components/layout/Footer.jsx'
@@ -21,6 +22,7 @@ function App() {
         </Routes>
       </main>
       <BotonWhatsAppFlotante />
+      <Asistente />
       <Footer />
     </BrowserRouter>
   )

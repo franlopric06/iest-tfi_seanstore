@@ -44,5 +44,6 @@ describe('App', () => {
     expect(
       screen.getByRole('button', { name: textos.whatsapp.ariaFlotante }),
     ).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: textos.asistente.boton })).toBeInTheDocument()
   })
 })
