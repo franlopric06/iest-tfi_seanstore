@@ -4,6 +4,7 @@ import AsiDeFacil from '../../components/tienda/AsiDeFacil.jsx'
 import CintaProductos from '../../components/tienda/CintaProductos.jsx'
 import FranjaCategorias from '../../components/tienda/FranjaCategorias.jsx'
 import HeroSublimado from '../../components/tienda/HeroSublimado.jsx'
+import NuestroTaller from '../../components/inicio/NuestroTaller.jsx'
 import LosMasPedidos from '../../components/tienda/LosMasPedidos.jsx'
 import NoTenesDiseno from '../../components/tienda/NoTenesDiseno.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
@@ -28,6 +29,7 @@ const Inicio = () => {
         destacados.length > 0 && <LosMasPedidos destacados={destacados} />
       )}
       <AsiDeFacil />
+      <NuestroTaller />
       <NoTenesDiseno />
     </>
   )

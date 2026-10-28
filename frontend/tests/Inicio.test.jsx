@@ -97,6 +97,20 @@ afterEach(() => {
 const armar = () => render(<MemoryRouter><Inicio /></MemoryRouter>)
 
 describe('Inicio Â· portada de la tienda', () => {
+  it('ubica Nuestro taller después de "Así de fácil" y antes de "¿No tenés diseño?"', () => {
+    armar()
+
+    const taller = screen.getByRole('heading', { level: 2, name: textos.nuestroTaller.titulo })
+    const facil = screen.getByRole('heading', { level: 2, name: textos.facil.titulo })
+    const sinDiseno = screen.getByRole('heading', {
+      level: 2,
+      name: textos.sinDiseno.titulo,
+    })
+
+    expect(facil.compareDocumentPosition(taller) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(taller.compareDocumentPosition(sinDiseno) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
   it('R1 Â· muestra la portada, la franja, la cinta, "AsÃ­ de fÃ¡cil" y "Â¿No tenÃ©s diseÃ±o?"', () => {
     vi.stubEnv('VITE_WHATSAPP', '5493851234567')
     armar()
@@ -189,4 +203,3 @@ describe('Inicio Â· portada de la tienda', () => {
     expect(screen.queryByText(textos.masPedidos.enlace)).not.toBeInTheDocument()
   })
 })
-

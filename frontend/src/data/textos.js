@@ -135,6 +135,20 @@ const textos = {
       { titulo: 'Retiralo o te lo enviamos.', texto: 'Te avisamos cuando esté listo.' },
     ],
   },
+  nuestroTaller: {
+    titulo: 'Nuestro taller',
+    texto: 'Cada pedido se diseña y se estampa en nuestro taller de Tinogasta.',
+    fotos: [
+      {
+        src: '/img/sitio/nuestro-taller.jpg',
+        alt: 'Interior del taller de sublimación con una prensa térmica y productos personalizados',
+      },
+      {
+        src: '/img/sitio/nuestro-taller-clienta.jpg',
+        alt: 'Una clienta sostiene una remera personalizada en el taller de sublimación',
+      },
+    ],
+  },
   generadoConIA: '«Generado con IA»',
   detalle: {
     cargando: 'Cargando detalle del producto',
