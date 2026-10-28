@@ -15,6 +15,14 @@ describe('Layout · Header y Footer de la primera etapa', () => {
     expect(enlace).toHaveAttribute('href', '/catalogo')
   })
 
+  it('El header queda fijo arriba sin crecer demasiado en celular', () => {
+    armar(<Header />)
+    const header = screen.getByRole('banner')
+
+    expect(header).toHaveClass('sticky', 'top-0', 'z-30', 'bg-violeta', 'shadow-tarjeta')
+    expect(header.firstElementChild).toHaveClass('h-16', 'md:h-20')
+  })
+
   it('El footer muestra el isotipo, la descripción y el contacto por WhatsApp', () => {
     armar(<Footer />)
     const isotipo = screen.getByRole('img', { name: textos.footer.altIsotipo })

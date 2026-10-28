@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import textos from '../../data/textos.js'
 
 const Header = () => (
-  <header className="bg-violeta">
+  <header className="sticky top-0 z-30 bg-violeta shadow-tarjeta">
     <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20">
       <img
         src="/img/logo-seanstore-negativo.png"

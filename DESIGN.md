@@ -29,7 +29,8 @@ Este archivo describe **cómo se ve y cómo se mueve** la tienda, empezando por 
 
 ### 2. Header
 
-- Fondo `bg-violeta`, logo negativo a la izquierda (64 px de alto en PC, 44 px en celular).
+- Fijo arriba al desplazarse (`sticky top-0 z-30`), con fondo sólido `bg-violeta` y sombra suave `shadow-tarjeta`; el panel del asistente (`z-40`) y los botones flotantes (`z-50`) quedan por encima.
+- Logo negativo a la izquierda (64 px de alto en PC, 44 px en celular). En la primera etapa, el contenedor mantiene 64 px de alto en celular y 80 px desde `md`.
 - Menú: Catálogo, Trabajos, Equipos y egresados, Contacto.
 - Íconos de Lucide a la derecha: buscar, mi cuenta, favoritos y carrito con contador `bg-amarillo text-violeta`.
 - En celular: logo, carrito y botón de menú (hamburguesa).
