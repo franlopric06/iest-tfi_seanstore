@@ -173,6 +173,8 @@ const textos = {
     seccionColor: 'Color',
     seccionTalle: 'Talle',
     seccionCantidad: 'Cantidad',
+    pedir: 'Pedir por WhatsApp',
+    consultar: 'Consultar por WhatsApp',
   },
 }
 
