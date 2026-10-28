@@ -4,7 +4,7 @@
 
 Reglas: cada tarea dura menos de 30 minutos, empieza por su test y no toca más de 3 o 4 archivos. Un commit por tarea. No se implementa hasta que el estudiante apruebe esta lista.
 
-- [ ] **T01** · Crear primero tests para el filtrado y después la función pura `filtrarPreguntas` que compara todos los términos con pregunta + respuesta sin mayúsculas ni tildes; consulta vacía devuelve todas · Requisito: R4 · Archivos: crear `frontend/tests/filtrarPreguntas.test.js` y `frontend/src/utils/filtrarPreguntas.js` · Test: coincidencia por pregunta, respuesta (“transferencia”), mayúsculas, tildes, varios términos y consulta vacía.
+- [x] **T01** · Crear primero tests para el filtrado y después la función pura `filtrarPreguntas` que compara todos los términos con pregunta + respuesta sin mayúsculas ni tildes; consulta vacía devuelve todas · Requisito: R4 · Archivos: crear `frontend/tests/filtrarPreguntas.test.js` y `frontend/src/utils/filtrarPreguntas.js` · Test: coincidencia por pregunta, respuesta (“transferencia”), mayúsculas, tildes, varios términos y consulta vacía.
   **Listo cuando:** `npm test -- filtrarPreguntas.test.js` pasa y la función no depende de React ni del DOM.
 
 - [ ] **T02** · Crear primero tests del contenido y comportamiento del panel; guardar saludo, las seis preguntas/respuestas aprobadas y textos de interfaz en `textos.js`; implementar el panel presentacional con una sola respuesta abierta · Requisitos: R2, R3, R8 · Archivos: crear `frontend/tests/PanelAsistente.test.jsx` y `frontend/src/components/atencion/PanelAsistente.jsx`; modificar `frontend/src/data/textos.js` · Test: aparecen las seis preguntas, cada respuesta se revela al tocarla y al abrir otra se cierra la anterior.
