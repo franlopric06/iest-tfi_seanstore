@@ -30,6 +30,9 @@ const TarjetaProducto = ({ producto }) => {
               src={producto.foto.url}
               alt={producto.foto.alt}
               loading="lazy"
+              decoding="async"
+              width="1024"
+              height="1024"
               className={`aspect-square w-full object-cover ${quieto ? '' : 'duration-500 transition-transform group-hover:scale-[1.04]'}`}
             />
             {!quieto && <PasadaTinta />}

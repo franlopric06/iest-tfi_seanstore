@@ -6,6 +6,10 @@ const Footer = () => (
       <img
         src="/img/isotipo-seanstore-fondo.png"
         alt={textos.footer.altIsotipo}
+        loading="lazy"
+        decoding="async"
+        width="128"
+        height="128"
         className="h-16 w-auto"
       />
       <p className="font-titulos text-xl">{textos.footer.descripcion}</p>

@@ -1,4 +1,5 @@
 const textos = {
+  cargandoPagina: 'Cargando página',
   inicio: {
     seo: {
       titulo: "Sean's Store · Sublimación y productos personalizados",

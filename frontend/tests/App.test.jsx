@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import App from '../src/App.jsx'
 import textos from '../src/data/textos.js'
@@ -19,6 +19,21 @@ beforeAll(() => {
     unobserve() {}
     disconnect() {}
   }
+  window.ResizeObserver = class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  window.matchMedia = (consulta) => ({
+    matches: false,
+    media: consulta,
+    onchange: null,
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    addListener: () => {},
+    removeListener: () => {},
+    dispatchEvent: () => false,
+  })
 })
 
 beforeEach(() => {
@@ -33,22 +48,32 @@ afterEach(() => {
 })
 
 describe('App', () => {
-  it('muestra el inicio dentro del layout con el header y el footer', () => {
+  it('muestra el inicio dentro del layout con el header y el footer', async () => {
     render(<App />)
     const titulo = textos.hero.titulo
-    const h1 = screen.getByRole('heading', { level: 1 })
+    const h1 = await screen.findByRole('heading', { level: 1 })
     expect(h1).toHaveTextContent(titulo.slice(0, titulo.indexOf(',') + 1))
     expect(h1).toHaveTextContent(titulo.slice(titulo.indexOf(',') + 2))
-    expect(screen.getByText('Sitio de demostración: precios y datos de ejemplo.')).toBeInTheDocument()
+    expect(await screen.findByText('Sitio de demostración: precios y datos de ejemplo.')).toBeInTheDocument()
   })
 
-  it('muestra el botón flotante de WhatsApp en el layout de la tienda', () => {
+  it('muestra el botón flotante de WhatsApp en el layout de la tienda', async () => {
     vi.stubEnv('VITE_WHATSAPP', '543837123456')
     render(<App />)
 
     expect(
-      screen.getByRole('button', { name: textos.whatsapp.ariaFlotante }),
+      await screen.findByRole('button', { name: textos.whatsapp.ariaFlotante }),
     ).toBeInTheDocument()
     expect(screen.getByRole('button', { name: textos.asistente.boton })).toBeInTheDocument()
+  })
+
+  it('carga el catálogo al navegar desde la portada', async () => {
+    render(<App />)
+
+    fireEvent.click(screen.getByRole('link', { name: textos.header.enlaceCatalogo }))
+
+    expect(
+      await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo }),
+    ).toBeInTheDocument()
   })
 })

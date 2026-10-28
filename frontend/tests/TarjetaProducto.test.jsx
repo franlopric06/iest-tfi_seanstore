@@ -30,7 +30,12 @@ describe('TarjetaProducto · tarjeta de producto', () => {
   it('R5 · muestra la foto principal, "Personalizable", el nombre y enlaza al detalle', () => {
     armar()
 
-    expect(screen.getByRole('img', { name: producto.foto.alt })).toHaveAttribute('src', producto.foto.url)
+    const imagen = screen.getByRole('img', { name: producto.foto.alt })
+    expect(imagen).toHaveAttribute('src', producto.foto.url)
+    expect(imagen).toHaveAttribute('loading', 'lazy')
+    expect(imagen).toHaveAttribute('decoding', 'async')
+    expect(imagen).toHaveAttribute('width', '1024')
+    expect(imagen).toHaveAttribute('height', '1024')
     expect(screen.getByText('Personalizable')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /taza de cerámica/i })).toHaveAttribute('href', '/producto/taza-ceramica')
   })

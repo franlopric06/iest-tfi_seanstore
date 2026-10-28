@@ -15,6 +15,8 @@ const GaleriaFotos = ({ fotos }) => {
         <img
           src={principal.url}
           alt={principal.alt}
+          width="1024"
+          height="1024"
           className="aspect-square w-full object-cover"
         />
         {principal.generada_con_ia && (
@@ -41,6 +43,10 @@ const GaleriaFotos = ({ fotos }) => {
               <img
                 src={foto.url}
                 alt=""
+                loading="lazy"
+                decoding="async"
+                width="1024"
+                height="1024"
                 className="aspect-square w-16 object-cover"
               />
             </button>

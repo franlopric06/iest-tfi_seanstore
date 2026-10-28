@@ -227,6 +227,11 @@ describe('Detalle · galería de fotos (R10)', () => {
     // Las miniaturas son botones; la segunda foto aparece como botón no presionado
     const botonDos = screen.getByRole('button', { name: altDos })
     expect(botonDos).toHaveAttribute('aria-pressed', 'false')
+    const miniatura = botonDos.querySelector('img')
+    expect(miniatura).toHaveAttribute('loading', 'lazy')
+    expect(miniatura).toHaveAttribute('decoding', 'async')
+    expect(miniatura).toHaveAttribute('width', '1024')
+    expect(miniatura).toHaveAttribute('height', '1024')
   })
 
   it('R10 · al tocar una miniatura pasas a verla como foto principal', async () => {
