@@ -168,6 +168,8 @@ const textos = {
     plantillaPedidoSinTalle: 'Hola! Quiero pedir: {producto}, color {color}, cantidad {cantidad}. ¿Cómo seguimos?',
     plantillaConsulta: 'Hola! Me interesa {producto}, color {color}, talle {talle}, cantidad {cantidad}. ¿Tienen disponibilidad?',
     plantillaConsultaSinTalle: 'Hola! Me interesa {producto}, color {color}, cantidad {cantidad}. ¿Tienen disponibilidad?',
+    avisoColor: 'Elegí un color para continuar',
+    avisoTalle: 'Elegí un talle para continuar',
   },
 }
 

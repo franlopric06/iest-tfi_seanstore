@@ -17,7 +17,7 @@ Orden: primero las funciones puras (sin DOM), después el hook, después los com
 
 - [x] **T03** · Hook `useSeleccionPedido(producto)`: guarda color, talle, cantidad (arranca en 1); preselección si el producto tiene un solo color (R11); tope 1–50 con corrección al límite (R8) · Requisito: R1, R8, R11 · Archivos: crear `frontend/src/hooks/useSeleccionPedido.js` y `frontend/tests/useSeleccionPedido.test.jsx` · Test: cantidad inicial 1, llegar a 50 y no pasar, preselección con color único
   **Listo cuando:** el test pasa con el hook probado con ReactDOM (sin pantallas).
-- [ ] **T04** · Hook: avisos de faltante — con más de un color sin elegir, `faltaColor` en `true` y aviso "Elegí un color para continuar" (R7); ídem `faltaTalle` con "Elegí un talle para continuar" (R9); nunca hay aviso cuando la opción es única · Requisito: R7, R9, R11 · Archivos: modificar `frontend/src/hooks/useSeleccionPedido.js` y `frontend/tests/useSeleccionPedido.test.jsx`; modificar `frontend/src/data/textos.js` · Test: avisos apenas el producto pide elegir y desaparecen al elegir; con un solo color/talle no hay aviso
+- [x] **T04** · Hook: avisos de faltante — con más de un color sin elegir, `faltaColor` en `true` y aviso "Elegí un color para continuar" (R7); ídem `faltaTalle` con "Elegí un talle para continuar" (R9); nunca hay aviso cuando la opción es única · Requisito: R7, R9, R11 · Archivos: modificar `frontend/src/hooks/useSeleccionPedido.js` y `frontend/tests/useSeleccionPedido.test.jsx`; modificar `frontend/src/data/textos.js` · Test: avisos apenas el producto pide elegir y desaparecen al elegir; con un solo color/talle no hay aviso
   **Listo cuando:** el test pasa y los textos viven en `textos.js`.
 
 ## Componentes y pantalla

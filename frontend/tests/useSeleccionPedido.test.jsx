@@ -95,6 +95,56 @@ describe('useSeleccionPedido · preselección única (R11)', () => {
   })
 })
 
+describe('useSeleccionPedido · avisos de faltante (R7, R9)', () => {
+  it('con más de un color y ninguno elegido, faltaColor true con el aviso; al elegir, desaparece', () => {
+    const { result } = renderHook(() =>
+      useSeleccionPedido({ nombre: 'Taza', talles: ['S'], colores: ['Blanco', 'Negro'] }),
+    )
+    expect(result.current.faltaColor).toBe(true)
+    expect(result.current.avisoColor).toBe('Elegí un color para continuar')
+    act(() => {
+      result.current.elegirColor('Negro')
+    })
+    expect(result.current.faltaColor).toBe(false)
+    expect(result.current.avisoColor).toBeNull()
+  })
+
+  it('con un solo color no hay falta ni aviso (R11 preselección)', () => {
+    const { result } = renderHook(() =>
+      useSeleccionPedido({ nombre: 'Taza', talles: ['S'], colores: ['Blanco'] }),
+    )
+    expect(result.current.faltaColor).toBe(false)
+    expect(result.current.avisoColor).toBeNull()
+  })
+
+  it('con más de un talle y ninguno elegido, faltaTalle true con el aviso; al elegir, desaparece', () => {
+    const { result } = renderHook(() =>
+      useSeleccionPedido({ nombre: 'Remera', talles: ['S', 'M', 'L', 'XXL'], colores: ['Blanco'] }),
+    )
+    expect(result.current.faltaTalle).toBe(true)
+    expect(result.current.avisoTalle).toBe('Elegí un talle para continuar')
+    act(() => {
+      result.current.elegirTalle('M')
+    })
+    expect(result.current.faltaTalle).toBe(false)
+    expect(result.current.avisoTalle).toBeNull()
+  })
+
+  it('con un talle único o sin talles no hay falta ni aviso', () => {
+    const unico = renderHook(() =>
+      useSeleccionPedido({ nombre: 'Canillera', talles: ['Único'], colores: [] }),
+    )
+    expect(unico.result.current.faltaTalle).toBe(false)
+    expect(unico.result.current.avisoTalle).toBeNull()
+    unico.unmount()
+    const vacio = renderHook(() =>
+      useSeleccionPedido({ nombre: 'Taza', talles: [], colores: ['Blanco'] }),
+    )
+    expect(vacio.result.current.faltaTalle).toBe(false)
+    expect(vacio.result.current.avisoTalle).toBeNull()
+  })
+})
+
 describe('useSeleccionPedido · cantidad inválida (R8)', () => {
   it('texto vacío y NaN dejan la cantidad en 1', () => {
     const { result } = renderHook(() =>
