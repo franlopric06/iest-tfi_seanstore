@@ -26,3 +26,9 @@ export function armarMensajePedido(producto, eleccion) {
     cantidad: eleccion.cantidad,
   })
 }
+
+export function armarEnlaceWhatsApp(mensaje) {
+  const numero = import.meta.env.VITE_WHATSAPP
+  if (!numero) return null
+  return `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`
+}

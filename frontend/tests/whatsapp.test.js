@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest'
-import { armarMensajePedido } from '../src/utils/whatsapp'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+import { armarEnlaceWhatsApp, armarMensajePedido } from '../src/utils/whatsapp'
 
 const productoConTalles = {
   nombre: 'Remera',
@@ -46,6 +46,30 @@ describe('armarMensajePedido · consulta (R3)', () => {
     expect(
       armarMensajePedido({ ...productoSinTalles, stock: 0 }, { color: 'Blanco', talle: null, cantidad: 1 }),
     ).toBe('Hola! Me interesa Termo, color Blanco, cantidad 1. ¿Tienen disponibilidad?')
+  })
+})
+
+describe('armarEnlaceWhatsApp · enlace y variable (R5)', () => {
+  afterEach(() => {
+    vi.unstubAllEnvs()
+  })
+
+  it('con número devuelve el enlace wa.me con el texto codificado', () => {
+    vi.stubEnv('VITE_WHATSAPP', '543837123456')
+    const enlace = armarEnlaceWhatsApp('Hola! Quiero pedir: Termo, color Blanco, cantidad 1. ¿Cómo seguimos?')
+    expect(enlace).toBe(
+      'https://wa.me/543837123456?text=Hola!%20Quiero%20pedir%3A%20Termo%2C%20color%20Blanco%2C%20cantidad%201.%20%C2%BFC%C3%B3mo%20seguimos%3F',
+    )
+  })
+
+  it('sin variable devuelve null', () => {
+    vi.stubEnv('VITE_WHATSAPP', '')
+    expect(armarEnlaceWhatsApp('Hola')).toBeNull()
+  })
+
+  it('con la variable indefinida devuelve null', () => {
+    vi.stubEnv('VITE_WHATSAPP', undefined)
+    expect(armarEnlaceWhatsApp('Hola')).toBeNull()
   })
 })
 
