@@ -18,7 +18,7 @@ describe('BotonWhatsAppFlotante (R5, R6)', () => {
     render(<BotonWhatsAppFlotante />)
     const boton = screen.getByRole('button', { name: textos.whatsapp.ariaFlotante })
 
-    expect(boton).toHaveClass('fixed', 'min-h-11', 'min-w-11')
+    expect(boton).toHaveClass('fixed', 'min-h-11', 'min-w-11', 'shadow-elevada')
   })
 
   it('abre WhatsApp con el mensaje genérico en pestaña nueva y aislada', () => {

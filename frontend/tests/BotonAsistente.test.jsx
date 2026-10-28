@@ -18,11 +18,10 @@ describe('BotonAsistente (R1)', () => {
       'bg-amarillo',
       'text-violeta',
       'shadow-elevada',
-      'border-2',
-      'border-white',
       'focus-visible:ring-2',
       'focus-visible:ring-magenta',
     )
+    expect(boton).not.toHaveClass('border-2', 'border-white')
     expect(boton).toHaveAttribute('aria-expanded', 'false')
     expect(boton).toHaveAttribute('aria-controls', 'asistente-panel')
     expect(boton.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')

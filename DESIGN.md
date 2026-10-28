@@ -111,7 +111,7 @@ Fondo `bg-violeta`, isotipo, "Sublimación y productos personalizados.", Visitan
 
 ### 12. Botones flotantes
 
-En la primera etapa, el botón fijo del **asistente** va abajo a la izquierda, en amarillo con texto violeta, `shadow-elevada`, borde blanco fino (`border-2 border-white`) e ícono `HelpCircle` de Lucide decorativo (`aria-hidden`). El botón de **WhatsApp** va abajo a la derecha. No aparecen en el checkout ni en el panel.
+En la primera etapa, el botón fijo del **asistente** va abajo a la izquierda, en amarillo con texto violeta, `shadow-elevada` e ícono `HelpCircle` de Lucide decorativo (`aria-hidden`). El botón de **WhatsApp** va abajo a la derecha, con la misma sombra `shadow-elevada`. No aparecen en el checkout ni en el panel.
 
 ## Animaciones al bajar
 
