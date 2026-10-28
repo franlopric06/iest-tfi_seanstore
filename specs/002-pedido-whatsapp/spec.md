@@ -1,6 +1,6 @@
 # Spec 002-pedido-whatsapp · Pedido por WhatsApp y botón flotante
 
-**RF de origen:** RF07 (adaptado), RF24 · **Estado:** clarificación cerrada, decisión pendiente · **Fecha:** 26/10/2026
+**RF de origen:** RF07 (adaptado), RF24 · **Estado:** aprobada · **Fecha:** 26/10/2026
 
 ## Contexto
 
