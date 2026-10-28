@@ -130,6 +130,8 @@ Abajo a la derecha: la burbuja violeta del **asistente** y, debajo, el círculo 
 | Radio de tarjetas y botones | `rounded-marca` | `rounded-marca` |
 | Chips y etiquetas (hero, "Personalizable", "Sin stock", filtro) | `rounded-marca` | `rounded-marca` |
 
+**Excepción:** el botón flotante de WhatsApp es circular (`rounded-full`) en celular y escritorio. Su forma redonda se mantiene porque es una convención visual reconocible para contactar por WhatsApp.
+
 ## Prototipos aprobados
 
 | Archivo | Qué es |

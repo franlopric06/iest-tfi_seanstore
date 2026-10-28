@@ -36,7 +36,8 @@ Orden: primero las funciones puras (sin DOM), después el hook, después los com
 
 ## Cierre
 
-- [ ] **T09** · Revisión con la skill `revisar-marca` (tokens del tema, foco visible, accesibilidad, sin relleno) y prueba manual en `/producto/:slug`: pedido y consulta con una variable real de `VITE_WHATSAPP` local (mensaje que llega al chat del negocio), y en celular los tres controles y el botón entran sin desbordarse · Requisito: R4, R7, R9, R11 (vista) · Archivos: ninguno (revisión) · Test: manual
+- [x] **T09** · Revisión con la skill `revisar-marca` (tokens del tema, foco visible, accesibilidad, sin relleno) y prueba manual en `/producto/:slug`: pedido y consulta con una variable real de `VITE_WHATSAPP` local (mensaje que llega al chat del negocio), y en celular los tres controles y el botón entran sin desbordarse · Requisito: R4, R7, R9, R11 (vista) · Archivos: ninguno (revisión) · Test: manual
+  **Resultado (28/10/2026):** revisión de marca completada; el botón flotante conserva `rounded-full` como excepción aprobada y documentada en `DESIGN.md`, por ser una convención visual reconocible de WhatsApp. Prueba manual realizada por el estudiante en `sean-store.vercel.app`: pedido de remera con color y talle, taza con opción única y botón flotante en todas las páginas; todo correcto.
   **Listo cuando:** el estudiante revisa y guarda la captura; lo que falla entra como tarea nueva o `/cambio`.
 
 Después: `/verificar 002-pedido-whatsapp` con la skill `verificar-criterios`, Lighthouse 80+ y actualizar `memory.md`.
