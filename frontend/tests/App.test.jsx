@@ -45,6 +45,8 @@ afterEach(() => {
   vi.restoreAllMocks()
   vi.unstubAllEnvs()
   estadoMovimiento.reducido = false
+  sessionStorage.clear()
+  window.history.replaceState(null, '', '/')
 })
 
 describe('App', () => {
@@ -74,6 +76,23 @@ describe('App', () => {
 
     expect(
       await screen.findByRole('heading', { level: 1, name: textos.catalogo.titulo }),
+    ).toBeInTheDocument()
+  })
+
+  it('redirige de /admin a /ingresar cuando no hay sesión', async () => {
+    window.history.replaceState(null, '', '/admin')
+    render(<App />)
+
+    expect(await screen.findByRole('heading', { name: 'Ingresar al panel' })).toBeInTheDocument()
+  })
+
+  it('redirige de /ingresar al panel cuando ya hay sesión', async () => {
+    sessionStorage.setItem('seanstore_admin_token', 'jwt-de-prueba')
+    window.history.replaceState(null, '', '/ingresar')
+    render(<App />)
+
+    expect(
+      await screen.findByRole('heading', { name: 'Panel de administración' }),
     ).toBeInTheDocument()
   })
 })
