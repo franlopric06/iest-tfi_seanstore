@@ -9,7 +9,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
 
 - [x] **T01** · Validar y hashear contraseñas · Requisito: B1-R4 · Duración: 20 min · Archivos: `backend/tests/utils/contrasena.test.js`, `backend/src/utils/contrasena.js` · Test primero: mínimo 12 caracteres, máximo 72 bytes UTF-8 y bcrypt costo 12.
   **Listo cuando:** las pruebas de límites y del costo pasan; la utilidad no expone la contraseña.
-- [ ] **T02** · Crear el generador interactivo del hash · Requisito: B1-R4 · Duración: 20 min · Archivos: `backend/tests/generar-hash.test.js`, `backend/scripts/generar-hash.js` · Test primero: entrada oculta, llamada a `contrasena.js` y salida exclusiva del hash.
+- [x] **T02** · Crear el generador interactivo del hash · Requisito: B1-R4 · Duración: 20 min · Archivos: `backend/tests/generar-hash.test.js`, `backend/scripts/generar-hash.js` · Test primero: entrada oculta, llamada a `contrasena.js` y salida exclusiva del hash.
   **Listo cuando:** el test confirma que el script no imprime la contraseña ni duplica la lógica de validación/hash.
 - [ ] **T03** · Preparar el esquema del panel · Requisitos: B1-R3, B4-R1 · Duración: 25 min · Archivos: `backend/src/db/esquema-panel.sql` · Revisión primero: verificar campos, singleton de administradores, singleton de contenido y valores iniciales del taller contra los datos actuales.
   **Listo cuando:** el SQL está listo para revisión manual del estudiante; no incluye creación de contraseña/hash ni una prueba automática contra Neon.
