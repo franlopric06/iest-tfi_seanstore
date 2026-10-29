@@ -61,7 +61,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** función pura determinista genera código compatible y permite detectar/reintentar colisiones de base.
 - [x] **T24** · Generar slug único · Requisitos: B2-R3, B2-R4 · Duración: 25 min · Archivos: `backend/tests/generarSlug.test.js`, `backend/src/utils/generarSlug.js` · Test primero: normalización del nombre, acentos, caracteres y colisiones.
   **Listo cuando:** slug nuevo es estable y único sin modificar slugs ya persistidos.
-- [ ] **T25** · Crear productos completos en backend · Requisitos: B2-R1, B2-R2, B2-R3, B2-R6 · Duración: 25 min · Archivos: `backend/tests/admin.productos.test.js`, `backend/src/controllers/admin.productos.controller.js` · Test primero: crea con código/slug generados, valida categoría y campos, rechaza errores y colisiones no resueltas.
+- [x] **T25** · Crear productos completos en backend · Requisitos: B2-R1, B2-R2, B2-R3, B2-R6 · Duración: 25 min · Archivos: `backend/tests/admin.productos.test.js`, `backend/src/controllers/admin.productos.controller.js` · Test primero: crea con código/slug generados, valida categoría y campos, rechaza errores y colisiones no resueltas.
   **Listo cuando:** la inserción SQL es parametrizada y las restricciones únicas se manejan con error explícito.
 - [ ] **T26** · Completar alta, edición y estado de productos en rutas · Requisitos: B2-R1–R6 · Duración: 25 min · Archivos: `backend/tests/admin.productos.test.js`, `backend/src/routes/admin.productos.routes.js`, `backend/src/controllers/admin.productos.controller.js` · Test primero: rutas POST, PATCH completo, ocultar/reactivar; editar nombre mantiene slug/código.
   **Listo cuando:** todos los endpoints están bajo middleware admin y rechazan datos inválidos antes de persistir.
@@ -101,3 +101,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** mocks verifican orden de operaciones y errores sin alterar la foto nueva activa. **Se hace con el bloque 3.**
 - [ ] **T41** · Crear editor de Nuestro taller · Requisitos: B4-R4–R7 · Duración: 25 min · Archivos: `frontend/tests/EditorTaller.test.jsx`, `frontend/src/components/admin/EditorTaller.jsx`, `frontend/src/pages/admin/Panel.jsx` · Test primero: edición de texto, alts obligatorios, selección de fotos, guardado/error y estados accesibles.
   **Listo cuando:** editor conserva datos previos ante error y se integra en la pestaña «Nuestro taller». **Parte de texto hecha (29/10/2026): Título y Párrafo con Guardar, role="status"/"alert" y estados de carga/error. Falta la parte de fotos y alts, con T40 en el bloque 3.**
+
+## Pendiente para después (29/10/2026)
+
+- Partir `admin.productos.controller.js` en archivos más chicos: `admin.productos.listar.controller.js`, `admin.productos.crear.controller.js`, `admin.productos.editar.controller.js` y `admin.productos.estado.controller.js` (hoy supera las ~150 líneas de la guía).

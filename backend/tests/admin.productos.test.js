@@ -148,3 +148,160 @@ describe("PATCH /api/admin/productos/:id/edicion-rapida", () => {
     );
   });
 });
+
+const cuerpoProducto = {
+  nombre: "Taza nueva",
+  categoria_id: 1,
+  precio: 15000,
+  stock: 25,
+  descripcion: "Taza estampada con el diseño que elijas.",
+  talles: [],
+  colores: ["Blanco"],
+  destacado: false,
+};
+
+const filaCreada = {
+  id: 13,
+  codigo: "TAZ-003",
+  slug: "taza-nueva",
+  nombre: "Taza nueva",
+  precio: "15000.00",
+  stock: 25,
+  destacado: false,
+  activo: true,
+};
+
+describe("POST /api/admin/productos", () => {
+  it("B2-R1..R3 · crea con código y slug generados y todos los valores por parámetros", async () => {
+    consultaSimulada
+      .mockResolvedValueOnce({ rows: [{ id: 1 }] })
+      .mockResolvedValueOnce({ rows: [{ codigo: "TAZ-001" }, { codigo: "TAZ-002" }] })
+      .mockResolvedValueOnce({
+        rows: [{ slug: "taza-ceramica" }, { slug: "taza-polimero" }],
+      })
+      .mockResolvedValueOnce({ rows: [filaCreada] });
+
+    const respuesta = await comoAdmin("post", "/api/admin/productos").send(cuerpoProducto);
+
+    expect(respuesta.status).toBe(201);
+    expect(respuesta.body).toEqual(filaCreada);
+    expect(consultaSimulada).toHaveBeenNthCalledWith(
+      1,
+      expect.stringMatching(/SELECT id FROM categorias/i),
+      [1],
+    );
+    expect(consultaSimulada).toHaveBeenNthCalledWith(
+      2,
+      expect.stringMatching(/SELECT codigo FROM productos[\s\S]*LIKE/i),
+      ["TAZ-%"],
+    );
+    expect(consultaSimulada).toHaveBeenNthCalledWith(
+      3,
+      expect.stringMatching(/slug = \$1[\s\S]*slug LIKE \$2/s),
+      ["taza-nueva", "taza-nueva-%"],
+    );
+    expect(consultaSimulada).toHaveBeenNthCalledWith(
+      4,
+      expect.stringMatching(/INSERT INTO productos[\s\S]*VALUES[\s\S]*\$11/s),
+      [
+        "TAZ-003",
+        "taza-nueva",
+        "Taza nueva",
+        1,
+        15000,
+        25,
+        "Taza estampada con el diseño que elijas.",
+        [],
+        ["Blanco"],
+        false,
+        true,
+      ],
+    );
+  });
+
+  it("B2-R6 · rechaza datos inválidos sin consultar la base", async () => {
+    const respuesta = await comoAdmin("post", "/api/admin/productos").send({
+      ...cuerpoProducto,
+      precio: -1,
+    });
+
+    expect(respuesta.status).toBe(400);
+    expect(respuesta.body).toHaveProperty("error");
+    expect(consultaSimulada).not.toHaveBeenCalled();
+  });
+
+  it("B2-R6 · rechaza el campo desconocido del cuerpo", async () => {
+    const respuesta = await comoAdmin("post", "/api/admin/productos").send({
+      ...cuerpoProducto,
+      extra: true,
+    });
+
+    expect(respuesta.status).toBe(400);
+    expect(consultaSimulada).not.toHaveBeenCalled();
+  });
+
+  it("B2-R6 · rechaza cuando la categoría no existe", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [] });
+
+    const respuesta = await comoAdmin("post", "/api/admin/productos").send(cuerpoProducto);
+
+    expect(respuesta.status).toBe(400);
+    expect(respuesta.body.error).toMatch(/categor/i);
+    expect(consultaSimulada).toHaveBeenCalledTimes(1);
+  });
+
+  it("B2-R2 · reintenta y crea cuando el código choca con la restricción única", async () => {
+    const errorColision = new Error("duplicate key");
+    errorColision.code = "23505";
+    const filaReintento = { ...filaCreada, codigo: "TAZ-004", slug: "taza-nueva-2" };
+    consultaSimulada
+      .mockResolvedValueOnce({ rows: [{ id: 1 }] })
+      .mockResolvedValueOnce({ rows: [{ codigo: "TAZ-001" }, { codigo: "TAZ-002" }] })
+      .mockResolvedValueOnce({ rows: [] })
+      .mockRejectedValueOnce(errorColision)
+      .mockResolvedValueOnce({ rows: [{ codigo: "TAZ-003" }] })
+      .mockResolvedValueOnce({ rows: [{ slug: "taza-nueva" }] })
+      .mockResolvedValueOnce({ rows: [filaReintento] });
+
+    const respuesta = await comoAdmin("post", "/api/admin/productos").send(cuerpoProducto);
+
+    expect(respuesta.status).toBe(201);
+    expect(respuesta.body).toEqual(filaReintento);
+    const inserciones = consultaSimulada.mock.calls.filter(([sql]) => /INSERT INTO/i.test(sql));
+    expect(inserciones).toHaveLength(2);
+    expect(inserciones[1][1]).toEqual([
+      "TAZ-004",
+      "taza-nueva-2",
+      "Taza nueva",
+      1,
+      15000,
+      25,
+      "Taza estampada con el diseño que elijas.",
+      [],
+      ["Blanco"],
+      false,
+      true,
+    ]);
+  });
+
+  it("B2-R2 · avisa el error explícito cuando no logra un código o slug único", async () => {
+    const errorColision = new Error("duplicate key");
+    errorColision.code = "23505";
+    consultaSimulada.mockImplementation((sql) => {
+      if (/INSERT INTO/i.test(sql)) {
+        return Promise.reject(errorColision);
+      }
+      if (/FROM categorias/i.test(sql)) {
+        return Promise.resolve({ rows: [{ id: 1 }] });
+      }
+      return Promise.resolve({ rows: [] });
+    });
+
+    const respuesta = await comoAdmin("post", "/api/admin/productos").send(cuerpoProducto);
+
+    expect(respuesta.status).toBe(409);
+    expect(respuesta.body).toHaveProperty("error");
+    const inserciones = consultaSimulada.mock.calls.filter(([sql]) => /INSERT INTO/i.test(sql));
+    expect(inserciones).toHaveLength(3);
+  });
+});

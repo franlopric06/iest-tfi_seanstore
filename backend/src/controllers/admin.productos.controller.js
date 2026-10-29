@@ -1,4 +1,7 @@
 import { consulta } from "../db/conexion.js";
+import { validarProducto } from "../validaciones/producto.js";
+import { generarCodigo, prefijoDeNombre } from "../utils/generarCodigo.js";
+import { generarSlug } from "../utils/generarSlug.js";
 
 const SQL_LISTAR_PRODUCTOS = `
   SELECT
@@ -27,10 +30,100 @@ const SQL_EDICION_RAPIDA = `
   RETURNING id, codigo, slug, nombre, precio, stock, destacado, activo
 `;
 
+const SQL_VERIFICAR_CATEGORIA = "SELECT id FROM categorias WHERE id = $1";
+
+const SQL_CODIGOS_DEL_PREFIJO = `
+  SELECT codigo FROM productos WHERE codigo LIKE $1
+`;
+
+const SQL_SLUGS_PARECIDOS = `
+  SELECT slug FROM productos WHERE slug = $1 OR slug LIKE $2
+`;
+
+const SQL_INSERTAR_PRODUCTO = `
+  INSERT INTO productos
+    (codigo, slug, nombre, categoria_id, precio, stock, descripcion, talles, colores, destacado, activo)
+  VALUES
+    ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+  RETURNING id, codigo, slug, nombre, precio, stock, destacado, activo
+`;
+
+const esIdValido = (id) => /^[1-9]\d*$/.test(id) && Number.isSafeInteger(Number(id));
+
 export const listarProductosAdmin = async (_req, res, next) => {
   try {
     const { rows } = await consulta(SQL_LISTAR_PRODUCTOS, []);
     res.json(rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const crearProducto = async (req, res, next) => {
+  const datos = req.body;
+  const errores = validarProducto(datos);
+
+  if (Object.keys(errores).length > 0) {
+    res.status(400).json({ error: "Los datos del producto no son válidos." });
+    return;
+  }
+
+  try {
+    const categoria = await consulta(SQL_VERIFICAR_CATEGORIA, [datos.categoria_id]);
+    if (categoria.rows.length === 0) {
+      res.status(400).json({ error: "La categoría elegida no existe." });
+      return;
+    }
+
+    const nombre = datos.nombre.trim();
+    const descripcion = typeof datos.descripcion === "string" ? datos.descripcion.trim() : null;
+    const activo = datos.activo ?? true;
+
+    // Reintento acotado: si carrera con otra alta choca la restricción única,
+    // se vuelven a generar código y slug para volver a intentar (máx. 3 veces).
+    for (let intento = 1; intento <= 3; intento += 1) {
+      const prefijo = `${prefijoDeNombre(nombre)}-%`;
+      const codigos = await consulta(SQL_CODIGOS_DEL_PREFIJO, [prefijo]);
+      const codigo = generarCodigo(
+        nombre,
+        codigos.rows.map((fila) => fila.codigo),
+      );
+
+      const base = generarSlug(nombre, []);
+      const slugs = await consulta(SQL_SLUGS_PARECIDOS, [base, `${base}-%`]);
+      const slug = generarSlug(
+        nombre,
+        slugs.rows.map((fila) => fila.slug),
+      );
+
+      try {
+        const resultado = await consulta(SQL_INSERTAR_PRODUCTO, [
+          codigo,
+          slug,
+          nombre,
+          datos.categoria_id,
+          datos.precio,
+          datos.stock,
+          descripcion,
+          datos.talles,
+          datos.colores,
+          datos.destacado,
+          activo,
+        ]);
+        res.status(201).json(resultado.rows[0]);
+        return;
+      } catch (error) {
+        if (error?.code !== "23505" || intento === 3) {
+          if (error?.code === "23505") {
+            res.status(409).json({
+              error: "No pudimos generar un código o slug único, probá de nuevo.",
+            });
+            return;
+          }
+          throw error;
+        }
+      }
+    }
   } catch (error) {
     next(error);
   }
