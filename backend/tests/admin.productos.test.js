@@ -81,3 +81,70 @@ describe("GET /api/admin/productos", () => {
     expect(consultaSimulada).not.toHaveBeenCalled();
   });
 });
+
+describe("PATCH /api/admin/productos/:id/edicion-rapida", () => {
+  it("B1-R15 · actualiza precio, stock y destacado con parámetros", async () => {
+    const productoActualizado = {
+      ...productos[0],
+      precio: "12500.00",
+      stock: 6,
+      destacado: false,
+    };
+    consultaSimulada.mockResolvedValueOnce({ rows: [productoActualizado] });
+
+    const respuesta = await comoAdmin(
+      "patch",
+      "/api/admin/productos/1/edicion-rapida",
+    ).send({
+      precio: 12500,
+      stock: 6,
+      destacado: false,
+    });
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.body).toEqual(productoActualizado);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(
+        /UPDATE productos[\s\S]*SET[\s\S]*precio\s*=\s*\$1[\s\S]*stock\s*=\s*\$2[\s\S]*destacado\s*=\s*\$3[\s\S]*WHERE id\s*=\s*\$4[\s\S]*RETURNING/i,
+      ),
+      [12500, 6, false, "1"],
+    );
+  });
+
+  it.each([
+    ["precio negativo", { precio: -1, stock: 2, destacado: true }],
+    ["precio no numérico", { precio: "12000", stock: 2, destacado: true }],
+    ["stock negativo", { precio: 100, stock: -1, destacado: true }],
+    ["stock decimal", { precio: 100, stock: 1.5, destacado: true }],
+    ["destacado no booleano", { precio: 100, stock: 2, destacado: "true" }],
+  ])("B1-R16 · rechaza %s antes de consultar la base", async (_caso, cuerpo) => {
+    const respuesta = await comoAdmin(
+      "patch",
+      "/api/admin/productos/1/edicion-rapida",
+    ).send(cuerpo);
+
+    expect(respuesta.status).toBe(400);
+    expect(respuesta.body).toHaveProperty("error");
+    expect(consultaSimulada).not.toHaveBeenCalled();
+  });
+
+  it("B1-R15 · responde 404 cuando el producto no existe", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [] });
+
+    const respuesta = await comoAdmin(
+      "patch",
+      "/api/admin/productos/999/edicion-rapida",
+    ).send({
+      precio: 100,
+      stock: 2,
+      destacado: true,
+    });
+
+    expect(respuesta.status).toBe(404);
+    expect(respuesta.body).toHaveProperty("error");
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/UPDATE productos/),
+      [100, 2, true, "999"],
+    );
+  });
+});
