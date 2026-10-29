@@ -9,6 +9,7 @@ const api = vi.hoisted(() => ({
   editarProducto: vi.fn(),
   cambiarEstadoProducto: vi.fn(),
   editarRapidoProducto: vi.fn(),
+  obtenerFotosProducto: vi.fn(),
 }));
 
 vi.mock("../src/services/api.js", () => api);
@@ -37,6 +38,7 @@ const taza = {
 beforeEach(() => {
   Object.values(api).forEach((funcion) => funcion.mockReset());
   api.obtenerProductosAdmin.mockResolvedValue([taza]);
+  api.obtenerFotosProducto.mockResolvedValue([]);
   api.obtenerCategorias.mockResolvedValue([
     { id: 1, nombre: "Tazas y termos" },
     { id: 2, nombre: "Indumentaria" },

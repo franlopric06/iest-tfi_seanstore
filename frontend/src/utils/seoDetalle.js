@@ -15,7 +15,10 @@ const seoDetalle = (producto) => {
     productoLd.description = producto.descripcion
   }
   if (Array.isArray(producto.fotos) && producto.fotos.length > 0) {
-    productoLd.image = producto.fotos.map((foto) => URL_SITIO + foto.url)
+    // Las fotos subidas desde el panel ya traen la dirección completa (https://…).
+    productoLd.image = producto.fotos.map((foto) =>
+      /^https?:\/\//.test(foto.url) ? foto.url : URL_SITIO + foto.url,
+    )
   }
 
   const pasos = [

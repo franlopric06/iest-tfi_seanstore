@@ -106,3 +106,34 @@ export const guardarTextoTaller = (texto) =>
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(texto),
   })
+
+// Fotos (004-T34). Se mandan como FormData: el navegador arma solo el
+// Content-Type multipart, por eso acá no se escribe a mano.
+const formularioFoto = ({ archivo, alt, generadaConIA }) => {
+  const datos = new FormData()
+  datos.append('foto', archivo)
+  datos.append('alt', alt)
+  if (generadaConIA !== undefined) datos.append('generada_con_ia', String(generadaConIA))
+  return datos
+}
+
+export const obtenerFotosProducto = (id) =>
+  pedirAdmin(`/api/admin/productos/${encodeURIComponent(id)}/fotos`)
+
+export const subirFotoProducto = (id, foto) =>
+  pedirAdmin(`/api/admin/productos/${encodeURIComponent(id)}/fotos`, {
+    method: 'POST',
+    body: formularioFoto(foto),
+  })
+
+export const borrarFotoProducto = (fotoId) =>
+  pedirAdmin(`/api/admin/fotos/${encodeURIComponent(fotoId)}`, { method: 'DELETE' })
+
+export const elegirFotoPrincipal = (fotoId) =>
+  pedirAdmin(`/api/admin/fotos/${encodeURIComponent(fotoId)}/principal`, { method: 'PATCH' })
+
+export const cambiarFotoTaller = (numero, foto) =>
+  pedirAdmin(`/api/admin/taller/fotos/${encodeURIComponent(numero)}`, {
+    method: 'PUT',
+    body: formularioFoto(foto),
+  })

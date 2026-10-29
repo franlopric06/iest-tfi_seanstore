@@ -4,6 +4,7 @@ import Cargando from '../comunes/Cargando.jsx'
 import EstadoVacio from '../comunes/EstadoVacio.jsx'
 import MensajeError from '../comunes/MensajeError.jsx'
 import FormularioProducto from './FormularioProducto.jsx'
+import FotosProducto from './FotosProducto.jsx'
 import TablaProductos from './TablaProductos.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import {
@@ -93,6 +94,9 @@ const GestionProductos = () => {
             guardar={guardar}
             onCancelar={() => setFormulario(null)}
           />
+        )}
+        {formulario?.producto && (
+          <FotosProducto key={formulario.producto.id} producto={formulario.producto} alCambiar={reintentar} />
         )}
         {aviso && (
           <p role={aviso.tipo} className={`font-bold ${aviso.tipo === 'alert' ? 'text-error' : 'text-violeta'}`}>

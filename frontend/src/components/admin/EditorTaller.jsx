@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Cargando from '../comunes/Cargando.jsx'
 import MensajeError from '../comunes/MensajeError.jsx'
+import FotosTaller from './FotosTaller.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { guardarTextoTaller, obtenerTaller } from '../../services/api.js'
 import textos from '../../data/textos.js'
@@ -96,12 +97,17 @@ const EditorTaller = () => {
   }
 
   return (
-    <FormularioTextoTaller
-      contenido={{
-        titulo: typeof datos?.titulo === 'string' ? datos.titulo : '',
-        parrafo: typeof datos?.parrafo === 'string' ? datos.parrafo : '',
-      }}
-    />
+    <>
+      <FormularioTextoTaller
+        contenido={{
+          titulo: typeof datos?.titulo === 'string' ? datos.titulo : '',
+          parrafo: typeof datos?.parrafo === 'string' ? datos.parrafo : '',
+        }}
+      />
+      {Array.isArray(datos?.fotos) && datos.fotos.length > 0 && (
+        <FotosTaller fotosIniciales={datos.fotos} />
+      )}
+    </>
   )
 }
 

@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
+  borrarFotoProducto,
+  cambiarFotoTaller,
+  elegirFotoPrincipal,
+  subirFotoProducto,
   cambiarEstadoProducto,
   crearProducto,
   editarProducto,
@@ -186,5 +190,36 @@ describe('api.js', () => {
       headers: { Authorization: 'Bearer jwt-de-prueba', 'Content-Type': 'application/json' },
       body: JSON.stringify(cuerpo),
     })
+  })
+
+  it('B3-R1 · sube la foto como multipart con el token, sin Content-Type a mano', async () => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve({ id: 1 }) })
+    vi.stubGlobal('fetch', fetchSimulado)
+    const archivo = new File(['x'], 'a.jpg', { type: 'image/jpeg' })
+
+    await subirFotoProducto(3, { archivo, alt: 'Taza', generadaConIA: false })
+
+    const [ruta, opciones] = fetchSimulado.mock.calls[0]
+    expect(ruta).toBe(`${URL_BASE}/api/admin/productos/3/fotos`)
+    expect(opciones.method).toBe('POST')
+    expect(opciones.headers).toEqual({ Authorization: 'Bearer jwt-de-prueba' })
+    expect(opciones.body.get('foto')).toBe(archivo)
+    expect(opciones.body.get('alt')).toBe('Taza')
+    expect(opciones.body.get('generada_con_ia')).toBe('false')
+  })
+
+  it.each([
+    ['borra una foto', () => borrarFotoProducto(9), '/api/admin/fotos/9', 'DELETE'],
+    ['elige la principal', () => elegirFotoPrincipal(9), '/api/admin/fotos/9/principal', 'PATCH'],
+    ['cambia una foto del taller', () => cambiarFotoTaller(2, { archivo: new File(['x'], 'a.png'), alt: 'Taller' }), '/api/admin/taller/fotos/2', 'PUT'],
+  ])('%s en la ruta protegida', async (_nombre, llamar, ruta, metodo) => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve([]) })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await llamar()
+
+    expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}${ruta}`, expect.objectContaining({ method: metodo }))
   })
 })

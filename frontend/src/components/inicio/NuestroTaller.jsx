@@ -42,11 +42,15 @@ const NuestroTaller = () => {
               decoding="async"
               width="1017"
               height="572"
-              className="h-auto w-full object-cover"
+              className="aspect-video h-auto w-full object-cover"
             />
-            <figcaption className="absolute bottom-2 left-2 rounded-marca bg-grafito/70 px-2 py-0.5 text-[10px] font-semibold text-white">
-              {textos.generadoConIA}
-            </figcaption>
+            {/* Las fotos del proyecto (/img/...) se hicieron con IA; las que sube
+                el negocio desde el panel son fotos reales y no llevan la leyenda. */}
+            {src.startsWith('/') && (
+              <figcaption className="absolute bottom-2 left-2 rounded-marca bg-grafito/70 px-2 py-0.5 text-[10px] font-semibold text-white">
+                {textos.generadoConIA}
+              </figcaption>
+            )}
           </figure>
         ))}
       </div>

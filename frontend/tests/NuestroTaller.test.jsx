@@ -43,9 +43,10 @@ describe('NuestroTaller', () => {
       expect(imagen).toHaveAttribute('decoding', 'async')
     })
 
-    expect(
-      within(seccion).getAllByText(textos.generadoConIA),
-    ).toHaveLength(contenidoApi.fotos.length)
+    // La leyenda va solo en las fotos del proyecto (rutas /img/...), que son de IA;
+    // una foto subida desde el panel (URL de Blob) es una foto real del negocio.
+    const fotosDelProyecto = contenidoApi.fotos.filter(({ url }) => url.startsWith('/'))
+    expect(within(seccion).queryAllByText(textos.generadoConIA)).toHaveLength(fotosDelProyecto.length)
   })
 
   it('B4-R3 · usa los textos y fotos de respaldo cuando la API falla', async () => {
