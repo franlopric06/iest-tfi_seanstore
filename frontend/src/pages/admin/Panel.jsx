@@ -3,6 +3,7 @@ import Cargando from '../../components/comunes/Cargando.jsx'
 import EstadoVacio from '../../components/comunes/EstadoVacio.jsx'
 import MensajeError from '../../components/comunes/MensajeError.jsx'
 import TablaProductos from '../../components/admin/TablaProductos.jsx'
+import EditorTaller from '../../components/admin/EditorTaller.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { obtenerProductosAdmin } from '../../services/api.js'
@@ -97,6 +98,7 @@ const Panel = () => {
               ) : (
                 <TablaProductos productos={productos} />
               ))}
+            {pestaña.id === 'taller' && <EditorTaller />}
           </div>
         ))}
       </div>

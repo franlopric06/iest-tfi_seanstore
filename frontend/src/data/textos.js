@@ -55,6 +55,16 @@ const textos = {
       taller: 'Nuestro taller',
       etiqueta: 'Secciones del panel',
     },
+    taller: {
+      cargando: 'Cargando texto del taller',
+      tituloEditor: 'Editá el texto de Nuestro taller',
+      labelTitulo: 'Título',
+      labelParrafo: 'Párrafo',
+      guardar: 'Guardar',
+      guardando: 'Guardando…',
+      guardado: 'Cambios guardados.',
+      errorGuardar: 'No pudimos guardar el texto, probá de nuevo.',
+    },
   },
   errores: {
     frase: 'Algo salió mal, probá de nuevo',

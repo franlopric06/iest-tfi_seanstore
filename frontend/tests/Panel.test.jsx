@@ -2,14 +2,27 @@ import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const api = vi.hoisted(() => ({ obtenerProductosAdmin: vi.fn() }));
+const api = vi.hoisted(() => ({
+  obtenerProductosAdmin: vi.fn(),
+  obtenerTaller: vi.fn(),
+  guardarTextoTaller: vi.fn(),
+}));
 
 vi.mock("../src/services/api.js", () => api);
 
 import Panel from "../src/pages/admin/Panel.jsx";
 
+const contenidoTaller = {
+  titulo: "Nuestro taller",
+  parrafo: "Cada pedido se diseña y se estampa en nuestro taller de Tinogasta.",
+  fotos: [],
+};
+
 afterEach(cleanup);
-beforeEach(() => api.obtenerProductosAdmin.mockResolvedValue([]));
+beforeEach(() => {
+  api.obtenerProductosAdmin.mockResolvedValue([]);
+  api.obtenerTaller.mockResolvedValue(contenidoTaller);
+});
 
 describe("Panel", () => {
   it("muestra el título y evita la indexación", async () => {
@@ -84,5 +97,21 @@ describe("Panel", () => {
 
     expect(await screen.findByText("Todavía no hay productos cargados.")).toBeInTheDocument();
     expect(api.obtenerProductosAdmin).toHaveBeenCalledTimes(2);
+  });
+
+  it("muestra el editor del taller dentro de su pestaña", async () => {
+    const usuario = userEvent.setup();
+    render(<Panel />);
+
+    await usuario.click(screen.getByRole("tab", { name: "Nuestro taller" }));
+
+    expect(
+      await screen.findByRole("heading", { name: "Editá el texto de Nuestro taller" }),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Título")).toHaveValue("Nuestro taller");
+    expect(
+      screen.getByLabelText("Párrafo"),
+    ).toHaveValue("Cada pedido se diseña y se estampa en nuestro taller de Tinogasta.");
+    expect(api.obtenerTaller).toHaveBeenCalled();
   });
 });

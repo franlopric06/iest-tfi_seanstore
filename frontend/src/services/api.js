@@ -83,3 +83,10 @@ export const obtenerProductos = (opciones = {}) => {
 export const obtenerProducto = (slug) => pedir(`/api/productos/${encodeURIComponent(slug)}`)
 
 export const obtenerTaller = () => pedir('/api/taller')
+
+export const guardarTextoTaller = (texto) =>
+  pedirAdmin('/api/admin/taller', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(texto),
+  })
