@@ -13,7 +13,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** el test confirma que el script no imprime la contraseña ni duplica la lógica de validación/hash.
 - [x] **T03** · Preparar el esquema del panel · Requisitos: B1-R3, B4-R1 · Duración: 25 min · Archivos: `backend/src/db/esquema-panel.sql` · Revisión primero: verificar campos, singleton de administradores, singleton de contenido y valores iniciales del taller contra los datos actuales.
   **Listo cuando:** el SQL está listo para revisión manual del estudiante; no incluye creación de contraseña/hash ni una prueba automática contra Neon.
-- [ ] **T04** · Configurar CORS y proxy confiable · Requisitos: B1-R7, B1-R18 · Duración: 25 min · Archivos: `backend/tests/app.test.js`, `backend/src/app.js` · Test primero: origen permitido/rechazado, cabeceras, métodos, preflight y resolución de IP con `trust proxy = 1`.
+- [x] **T04** · Configurar CORS y proxy confiable · Requisitos: B1-R7, B1-R18 · Duración: 25 min · Archivos: `backend/tests/app.test.js`, `backend/src/app.js` · Test primero: origen permitido/rechazado, cabeceras, métodos, preflight y resolución de IP con `trust proxy = 1`.
   **Listo cuando:** solo `FRONTEND_URL` recibe CORS, `OPTIONS` responde a preflight y Express confía en un proxy.
 - [ ] **T05** · Limitar intentos fallidos de ingreso · Requisito: B1-R7 · Duración: 25 min · Archivos: `backend/tests/limiteIngreso.test.js`, `backend/src/middleware/limiteIngreso.js` · Test primero: cinco fallos pasan, el sexto recibe 429, éxito reinicia contador y ventana de 15 minutos; documentar que el estado es por instancia Vercel.
   **Listo cuando:** el limitador solo cuenta fallos y sus pruebas controlan el tiempo sin esperar 15 minutos reales.
