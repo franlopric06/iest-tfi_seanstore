@@ -93,7 +93,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
 
 - [x] **T37** · Publicar contenido del taller en la API · Requisitos: B4-R1, B4-R2 · Duración: 25 min · Archivos: `backend/tests/taller.test.js`, `backend/src/controllers/taller.controller.js`, `backend/src/routes/taller.routes.js`, `backend/src/routes/index.js` · Test primero: devuelve fila pública, ausencia de fila y error de base.
   **Listo cuando:** GET no requiere JWT y usa SQL parametrizado con `conexion.js`.
-- [ ] **T38** · Cargar NuestroTaller desde la API · Requisito: B4-R3 · Duración: 25 min · Archivos: `frontend/tests/NuestroTaller.test.jsx`, `frontend/src/components/inicio/NuestroTaller.jsx`, `frontend/src/services/api.js` · Test primero: respuesta de API, fallback ante error/ausencia, textos, alt y URLs.
+- [x] **T38** · Cargar NuestroTaller desde la API · Requisito: B4-R3 · Duración: 25 min · Archivos: `frontend/tests/NuestroTaller.test.jsx`, `frontend/src/components/inicio/NuestroTaller.jsx`, `frontend/src/services/api.js` · Test primero: respuesta de API, fallback ante error/ausencia, textos, alt y URLs.
   **Listo cuando:** portada conserva los datos locales ante fallo y las imágenes Blob usan la URL absoluta sin prefijo.
 - [ ] **T39** · Editar texto del taller en backend · Requisitos: B4-R4, B4-R6 · Duración: 25 min · Archivos: `backend/tests/admin.taller.test.js`, `backend/src/controllers/admin.taller.controller.js`, `backend/src/routes/admin.taller.routes.js` · Test primero: PATCH autenticado, campos válidos, rechazo de vacíos y conservación del anterior ante error.
   **Listo cuando:** validación ocurre en servidor y el endpoint actualiza la fila única mediante parámetros.

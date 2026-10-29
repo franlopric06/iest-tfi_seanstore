@@ -1,6 +1,25 @@
 import textos from '../../data/textos.js'
+import useObtenerDatos from '../../hooks/useObtenerDatos.js'
+import { obtenerTaller } from '../../services/api.js'
 
-export default function NuestroTaller() {
+const contenidoLocal = textos.nuestroTaller
+
+const NuestroTaller = () => {
+  const { datos } = useObtenerDatos(obtenerTaller)
+
+  const contenido =
+    datos && Array.isArray(datos.fotos) && datos.fotos.length > 0
+      ? {
+          titulo: datos.titulo,
+          texto: datos.parrafo,
+          fotos: datos.fotos.map(({ url, alt }) => ({ src: url, alt })),
+        }
+      : {
+          titulo: contenidoLocal.titulo,
+          texto: contenidoLocal.texto,
+          fotos: contenidoLocal.fotos,
+        }
+
   return (
     <section
       aria-labelledby="nuestro-taller-titulo"
@@ -10,11 +29,11 @@ export default function NuestroTaller() {
         id="nuestro-taller-titulo"
         className="mb-3 font-titulos text-3xl md:text-4xl"
       >
-        {textos.nuestroTaller.titulo}
+        {contenido.titulo}
       </h2>
-      <p className="mb-6 max-w-prose text-grafito">{textos.nuestroTaller.texto}</p>
+      <p className="mb-6 max-w-prose text-grafito">{contenido.texto}</p>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {textos.nuestroTaller.fotos.map(({ src, alt }) => (
+        {contenido.fotos.map(({ src, alt }) => (
           <figure key={src} className="relative overflow-hidden rounded-marca">
             <img
               src={src}
@@ -34,3 +53,5 @@ export default function NuestroTaller() {
     </section>
   )
 }
+
+export default NuestroTaller

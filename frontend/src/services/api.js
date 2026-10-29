@@ -81,3 +81,5 @@ export const obtenerProductos = (opciones = {}) => {
 }
 
 export const obtenerProducto = (slug) => pedir(`/api/productos/${encodeURIComponent(slug)}`)
+
+export const obtenerTaller = () => pedir('/api/taller')

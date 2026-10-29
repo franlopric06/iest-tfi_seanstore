@@ -14,7 +14,10 @@ vi.mock('motion/react', async (importOriginal) => {
   }
 })
 
-const api = vi.hoisted(() => ({ obtenerProductos: vi.fn() }))
+const api = vi.hoisted(() => ({
+  obtenerProductos: vi.fn(),
+  obtenerTaller: vi.fn().mockRejectedValue(new Error('sin conexión')),
+}))
 
 vi.mock('../src/services/api.js', () => api)
 
