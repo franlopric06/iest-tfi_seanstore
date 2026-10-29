@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
+  editarRapidoProducto,
   ingresar,
+  obtenerProductosAdmin,
   obtenerCategorias,
   obtenerProducto,
   obtenerProductos,
@@ -130,5 +132,38 @@ describe('api.js', () => {
 
     expect(sesion.borrarSesion).toHaveBeenCalledOnce()
     expect(window.location.pathname).toBe('/ingresar')
+  })
+
+  it("B1-R14 · lista productos administrativos con la sesión", async () => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve([]) })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await obtenerProductosAdmin()
+
+    expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}/api/admin/productos`, {
+      headers: { Authorization: "Bearer jwt-de-prueba" },
+    })
+  })
+
+  it("B1-R15 · envía la edición rápida al endpoint protegido", async () => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve({ id: 1 }) })
+    vi.stubGlobal('fetch', fetchSimulado)
+    const datos = { precio: 12500, stock: 12, destacado: true }
+
+    await editarRapidoProducto(1, datos)
+
+    expect(fetchSimulado).toHaveBeenCalledWith(
+      `${URL_BASE}/api/admin/productos/1/edicion-rapida`,
+      {
+        method: 'PATCH',
+        headers: expect.objectContaining({
+          Authorization: expect.stringMatching(/^Bearer /),
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify(datos),
+      },
+    )
   })
 })

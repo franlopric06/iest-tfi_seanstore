@@ -55,6 +55,15 @@ export const pedirAdmin = async (ruta, opciones = {}) => {
   }
 }
 
+export const obtenerProductosAdmin = () => pedirAdmin('/api/admin/productos')
+
+export const editarRapidoProducto = (id, datos) =>
+  pedirAdmin(`/api/admin/productos/${encodeURIComponent(id)}/edicion-rapida`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos),
+  })
+
 export const obtenerCategorias = () => pedir("/api/categorias")
 
 export const obtenerProductos = (opciones = {}) => {
