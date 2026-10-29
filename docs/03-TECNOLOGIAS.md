@@ -35,7 +35,9 @@ Se eligió una tienda en **React con Vite** y una **API en Express** aparte, en 
 - En un e-commerce, todo lo delicado (precios, stock, pagos, contraseñas, emails) vive en el servidor, y el navegador nunca toca la base de datos. Con la API separada esa frontera queda muy clara.
 - La misma API sirve para la tienda y para el panel, y más adelante podría usarla una app de celular sin cambiar nada.
 - Cada parte se publica por separado (dos proyectos de Vercel) y puede crecer sin tocar la otra.
+
 **Cambio respecto del TP3:** la API iba a publicarse en Railway, pero Railway da un crédito de prueba de USD 5 y después un plan gratuito de USD 1 por mes, que no alcanza para tener la API funcionando todo el tiempo. Para que el sitio siga funcionando en la defensa y después, la API se publica también en Vercel, que tiene plan gratuito.
+
 - El punto débil de una tienda en React puro es la vista previa al compartir links; se resuelve con el middleware de Vercel (ver `09-SEO.md`).
 
 ## Dependencias permitidas
@@ -46,14 +48,11 @@ frontend: react, react-dom, react-router-dom, tailwindcss, @tailwindcss/vite, mo
 dev:      prettier, prettier-plugin-tailwindcss, vitest, @testing-library/react,
           @testing-library/jest-dom, @testing-library/user-event, jsdom, oxlint
 backend:  express, pg, bcrypt, jsonwebtoken, cookie-parser, multer, cloudinary,
-          mercadopago, @getbrevo/brevo, helmet, express-rate-limit, cors, dotenv
+          @vercel/blob, mercadopago, @getbrevo/brevo, helmet, express-rate-limit, cors, dotenv
 backend dev: vitest, supertest
 ```
 
-En la primera etapa (`ETAPA-1.md`) solo se instalan las que se usan: en el frontend, todas menos `@mercadopago/sdk-react` y `@vercel/analytics`; en el backend, `express`, `pg`, `helmet`, `express-rate-limit`, `cors`, `dotenv` y, para el panel, `bcrypt`, `jsonwebtoken` y `cookie-parser`.
-
-```text
-```
+En la primera etapa (`ETAPA-1.md`) solo se instalan las que se usan: en el frontend, todas menos `@mercadopago/sdk-react` y `@vercel/analytics`; en el backend, `express`, `pg`, `helmet`, `express-rate-limit`, `cors` y `dotenv`; para el panel se agregan `bcrypt`, `jsonwebtoken`, `multer` y `@vercel/blob`. La autenticación del panel guarda el token de sesión en `sessionStorage` y lo envía en la cabecera `Authorization`; no usa `cookie-parser`.
 
 ## Cómo se conecta todo
 

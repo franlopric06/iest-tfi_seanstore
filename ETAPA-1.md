@@ -12,17 +12,18 @@ La carpeta `docs/` describe **la tienda completa**, como tiene que quedar cuando
 
 Una **tienda de demostración que funciona**: se ven los productos con precio, se elige uno y se pide por WhatsApp con un mensaje armado; y un asistente responde las dudas frecuentes.
 
-Es un proyecto educativo que usa Sean's Store como modelo. **Los precios, el stock y las descripciones son datos de ejemplo** cargados por el equipo. Si algún día la tienda se usa de verdad, se vacía la base y el negocio carga sus datos desde el panel (próxima etapa).
+Es un proyecto educativo que usa Sean's Store como modelo. **Los precios, el stock y las descripciones son datos de ejemplo** cargados por el equipo. Si algún día la tienda se usa de verdad, se vacía la base y el negocio carga sus datos desde el panel.
 
-## Las 3 funcionalidades de esta entrega
+## Las 4 funcionalidades de esta entrega
 
 | Orden | Carpeta | Funcionalidad | RF de `docs/02-REQUERIMIENTOS.md` |
 | --- | --- | --- | --- |
 | 1 | `specs/001-catalogo/` | Inicio, catálogo con filtro y detalle del producto con precio | RF01, RF02, RF04 |
 | 2 | `specs/002-pedido-whatsapp/` | Pedido por WhatsApp desde el detalle (con o sin diseño) y botón flotante | RF07 (adaptado), RF24 |
 | 3 | `specs/003-asistente/` | Asistente de preguntas frecuentes | RF25 |
+| 4 | `specs/004-panel/` | Panel de administración en cuatro bloques: ingreso y edición rápida, productos completos, fotos y contenido de Nuestro taller | RF34, RF35 (adaptado), RF38 (solo Nuestro taller); RF37 queda fuera por no guardar consultas |
 
-Se hacen **en este orden**.
+Se hacen **en este orden**. El panel se divide en cuatro bloques de prioridad Alta para poder entregar el alcance por partes.
 
 ### 1 · Catálogo
 
@@ -33,7 +34,7 @@ Se hacen **en este orden**.
 ### 2 · Pedido por WhatsApp
 
 - En el detalle, el cliente elige talle, color y cantidad, y "Tengo mi diseño" o "No tengo diseño", con un campo para contar su idea.
-- El botón "Pedir por WhatsApp" guarda la consulta en la base y abre WhatsApp con el mensaje armado.
+- El botón "Pedir por WhatsApp" abre WhatsApp con el mensaje armado; la consulta no se guarda en la base.
 - Botón flotante de WhatsApp en todas las páginas de la tienda.
 - El número de WhatsApp sale de la variable `VITE_WHATSAPP` (nunca escrito en el código).
 - No hay carrito ni pago online: el pedido se cierra por WhatsApp.
@@ -42,18 +43,18 @@ Se hacen **en este orden**.
 
 - Burbuja con las preguntas frecuentes de `docs/06-DISENO-UI.md`, que busca por palabras clave y deriva a WhatsApp si no encuentra respuesta.
 
-## Próximos pasos (fuera de esta entrega)
+### 4 · Panel de administración
 
-### 4 · Panel de administración (chico)
+Se incorpora a esta entrega por pedido de la docente (28/10/2026). Los cuatro bloques, en este orden, tienen prioridad Alta:
 
-Quedó fuera del TFI por falta de tiempo (entrega 28/10/2026) y límites de uso de los agentes de IA gratuitos. Es el siguiente paso natural una vez terminada la tienda pública.
+1. **Ingreso y edición rápida:** botón «Ingresar» del header y formulario en `/ingresar`; una cuenta de administrador creada por el estudiante en Neon. Contraseña con bcrypt (costo 12), JWT firmado con `JWT_SECRET` y vencimiento de 2 horas; máximo 5 intentos fallidos por IP cada 15 minutos. El token se guarda en `sessionStorage` y se envía como Bearer. `/admin` requiere sesión; lista todos los productos, incluso inactivos, y permite guardar precio, stock y destacado por separado. Incluye «Salir».
+2. **Productos completos:** crear, editar nombre, categoría existente, precio, stock, descripción, talles, colores y destacado. El código se genera automáticamente con el formato de los productos existentes y no se repite; no se edita en el formulario y sí aparece en el listado. El slug se genera del nombre y es único. Ocultar y reactivar un producto cambia `activo`; no se borra físicamente.
+3. **Fotos de productos:** subir JPG, PNG o WebP de hasta 2 MB a Vercel Blob. La base guarda la URL; `generada_con_ia` se puede elegir y por defecto es falso. Se pueden borrar fotos y elegir la principal.
+4. **Nuestro taller desde la base:** la tabla `contenido_taller` tiene una sola fila. La portada obtiene título, párrafo, URLs y textos alternativos con `GET /api/taller`; si falla, usa los textos de `data/textos.js`. Desde una pestaña del panel se editan título y párrafo y se cambian las fotos usando la carga anterior; cada alt es obligatorio.
 
-- **Ingreso** con email y contraseña, solo para el administrador (contraseña con bcrypt, sesión en cookie `httpOnly`).
-- **Productos:** listar, crear y editar nombre, categoría, precio, stock, descripción, talles, colores, destacado y activo.
-- **Consultas:** ver las consultas de WhatsApp y marcarlas como atendidas.
-- **Preguntas del asistente:** crear y editar.
-- Sin subida de fotos, pedidos, reseñas ni métricas (eso es de la tienda completa).
-- RF: RF34, RF35, RF37 y RF38 (reducidos). Carpeta: `specs/004-panel/`.
+El esquema y los datos iniciales de las tablas nuevas se preparan en `backend/src/db/esquema-panel.sql`, para que el estudiante los ejecute en Neon. `backend/scripts/generar-hash.js` solicita la contraseña por consola y muestra únicamente el hash bcrypt; el estudiante agrega el administrador con SQL. `JWT_SECRET` y `BLOB_READ_WRITE_TOKEN` son secretos solo del backend. `/ingresar` y `/admin` llevan `noindex` y no se incluyen en el sitemap.
+
+RF37 describe la administración de consultas, pero esa función no se implementa en esta etapa: no se guardan ni administran consultas de WhatsApp.
 
 ## Datos de demostración
 
@@ -87,14 +88,20 @@ Se cargan por SQL, los ejecuta el estudiante en el SQL Editor de Neon. Los produ
 ## Base de datos de la primera etapa
 
 - Tablas: `categorias`, `productos`, `producto_fotos`, `consultas` y `preguntas_frecuentes` (ya creadas).
-- La tabla `usuarios` (para el panel) queda para la próxima etapa.
+- El panel agrega `administradores` y `contenido_taller`, creadas por el estudiante desde `backend/src/db/esquema-panel.sql`. No se reutiliza `usuarios` ni se crean cuentas de clientes.
 - Las demás tablas de `docs/05-DATOS.md` son de la tienda completa.
 
 ## Header y footer de la primera etapa
 
-- **Header:** logo y "Catálogo". El panel no se enlaza desde la tienda (se entra por `/admin`).
+- **Header:** logo, "Catálogo" e "Ingresar"; con sesión activa ofrece "Salir".
 - **Footer:** isotipo, descripción del negocio, contacto por WhatsApp y el aviso de sitio de demostración. Sin legales ni botón de arrepentimiento, porque no hay compra online.
 
 ## Lo que no entra en esta entrega
 
-Carrito, checkout, Mercado Pago, cuentas de clientes, recuperar contraseña, favoritos, emails, seguimiento de pedidos, reseñas y testimonios (el modelo está en `docs/`, y nunca se inventan), legales de compra online, botón de arrepentimiento, promociones, galería de trabajos, buscador, guía de talles, subida de diseños e imágenes (Cloudinary), Open Graph por producto, sitemap, **y el panel de administración** (queda como próximo paso, ver arriba).
+Carrito, checkout, Mercado Pago, registro de clientes, varios administradores o roles, recuperar contraseña, favoritos, emails, seguimiento de pedidos, consultas de WhatsApp guardadas o administradas, pedidos desde el panel, reseñas y testimonios (el modelo está en `docs/`, y nunca se inventan), legales de compra online, botón de arrepentimiento, promociones, galería de trabajos, buscador, guía de talles, subida de diseños de clientes, edición de categorías, Open Graph por producto y sitemap.
+
+## Historial de cambios
+
+| Fecha | Cambio | Motivo |
+| --- | --- | --- |
+| 28/10/2026 | Se incorpora `004-panel` a la primera entrega, con cuatro bloques priorizados en `specs/004-panel/` | 28/10, pedido de la docente |
