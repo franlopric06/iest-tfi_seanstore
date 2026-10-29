@@ -1,13 +1,30 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { obtenerCategorias, obtenerProducto, obtenerProductos } from '../src/services/api.js'
+import {
+  ingresar,
+  obtenerCategorias,
+  obtenerProducto,
+  obtenerProductos,
+  pedirAdmin,
+} from '../src/services/api.js'
 
-const fetchSimulado = vi.hoisted(() => vi.fn())
+const { fetchSimulado, sesion } = vi.hoisted(() => ({
+  fetchSimulado: vi.fn(),
+  sesion: {
+    guardarSesion: vi.fn(),
+    obtenerSesion: vi.fn(),
+    borrarSesion: vi.fn(),
+  },
+}))
 
 const URL_BASE = import.meta.env.VITE_API_URL
 
+vi.mock('../src/utils/sesion.js', () => sesion)
+
 afterEach(() => {
+  window.history.replaceState(null, '', '/')
   vi.unstubAllGlobals()
   fetchSimulado.mockReset()
+  vi.resetAllMocks()
 })
 
 describe('api.js', () => {
@@ -64,5 +81,54 @@ describe('api.js', () => {
 
     expect(errorRespuesta.message).toBe('No encontramos este producto.')
     expect(errorRespuesta.status).toBe(404)
+  })
+
+  it('B1-R9 · ingresa con JSON, guarda el JWT en sessionStorage y devuelve el resultado', async () => {
+    fetchSimulado.mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ token: 'jwt-de-prueba' }),
+    })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await expect(ingresar('admin@seanstore.com', 'clave')).resolves.toEqual({
+      token: 'jwt-de-prueba',
+    })
+
+    expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}/api/auth/ingresar`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'admin@seanstore.com', contrasena: 'clave' }),
+    })
+    expect(sesion.guardarSesion).toHaveBeenCalledWith('jwt-de-prueba')
+  })
+
+  it('B1-R9 · envía Bearer en las solicitudes protegidas', async () => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve({ ok: true }) })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await pedirAdmin('/api/admin/productos')
+
+    expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}/api/admin/productos`, {
+      headers: { Authorization: 'Bearer jwt-de-prueba' },
+    })
+  })
+
+  it('B1-R10 · ante 401 borra sesión y redirige a /ingresar', async () => {
+    sesion.obtenerSesion.mockReturnValue('jwt-vencido')
+    fetchSimulado.mockResolvedValue({
+      ok: false,
+      status: 401,
+      json: () => Promise.resolve({ error: 'Autenticación requerida.' }),
+    })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await expect(pedirAdmin('/api/admin/productos')).rejects.toMatchObject({
+      message: 'Autenticación requerida.',
+      status: 401,
+    })
+
+    expect(sesion.borrarSesion).toHaveBeenCalledOnce()
+    expect(window.location.pathname).toBe('/ingresar')
   })
 })
