@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import NuestroTaller from '../src/components/inicio/NuestroTaller.jsx'
 import textos from '../src/data/textos.js'
