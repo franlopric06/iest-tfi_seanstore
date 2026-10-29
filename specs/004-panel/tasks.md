@@ -27,7 +27,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** aparecen ambas variables de entorno de backend con valores de ejemplo; no se agrega ningún secreto real.
 - [x] **T10** · Implementar utilidades de sesión del navegador · Requisitos: B1-R9, B1-R11 · Duración: 20 min · Archivos: `frontend/tests/sesion.test.js`, `frontend/src/utils/sesion.js` · Test primero: guardar, leer y borrar en `sessionStorage`, sin usar `localStorage`.
   **Listo cuando:** las tres operaciones pasan con almacenamiento simulado y manejan sesión ausente.
-- [ ] **T11** · Implementar el hook de sesión · Requisitos: B1-R1, B1-R11 · Duración: 20 min · Archivos: `frontend/tests/useSesion.test.js`, `frontend/src/hooks/useSesion.js` · Test primero: refleja sesión existente/ausente y la acción de salir borra sesión.
+- [x] **T11** · Implementar el hook de sesión · Requisitos: B1-R1, B1-R11 · Duración: 20 min · Archivos: `frontend/tests/useSesion.test.js`, `frontend/src/hooks/useSesion.js` · Test primero: refleja sesión existente/ausente y la acción de salir borra sesión.
   **Listo cuando:** hook y pruebas no duplican acceso directo al almacenamiento fuera de `utils/sesion.js`.
 - [ ] **T12** · Añadir llamadas de autenticación a la API frontend · Requisitos: B1-R9, B1-R10 · Duración: 25 min · Archivos: `frontend/tests/api.test.js`, `frontend/src/services/api.js` · Test primero: login, Bearer en llamadas protegidas, tratamiento de 401 con borrado de token y redirección.
   **Listo cuando:** toda llamada usa `services/api.js`, no hay `fetch` nuevo en componentes y no se conserva una sesión rechazada.
