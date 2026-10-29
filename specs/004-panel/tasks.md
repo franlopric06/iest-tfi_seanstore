@@ -29,9 +29,9 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** las tres operaciones pasan con almacenamiento simulado y manejan sesión ausente.
 - [x] **T11** · Implementar el hook de sesión · Requisitos: B1-R1, B1-R11 · Duración: 20 min · Archivos: `frontend/tests/useSesion.test.js`, `frontend/src/hooks/useSesion.js` · Test primero: refleja sesión existente/ausente y la acción de salir borra sesión.
   **Listo cuando:** hook y pruebas no duplican acceso directo al almacenamiento fuera de `utils/sesion.js`.
-- [ ] **T12** · Añadir llamadas de autenticación a la API frontend · Requisitos: B1-R9, B1-R10 · Duración: 25 min · Archivos: `frontend/tests/api.test.js`, `frontend/src/services/api.js` · Test primero: login, Bearer en llamadas protegidas, tratamiento de 401 con borrado de token y redirección.
+- [x] **T12** · Añadir llamadas de autenticación a la API frontend · Requisitos: B1-R9, B1-R10 · Duración: 25 min · Archivos: `frontend/tests/api.test.js`, `frontend/src/services/api.js` · Test primero: login, Bearer en llamadas protegidas, tratamiento de 401 con borrado de token y redirección.
   **Listo cuando:** toda llamada usa `services/api.js`, no hay `fetch` nuevo en componentes y no se conserva una sesión rechazada.
-- [ ] **T13** · Crear pantalla accesible de ingreso · Requisitos: B1-R2, B1-R13 · Duración: 25 min · Archivos: `frontend/tests/Ingresar.test.jsx`, `frontend/src/pages/admin/Ingresar.jsx` · Test primero: labels, foco, envío, error con `role="alert"` y `noindex`.
+- [x] **T13** · Crear pantalla accesible de ingreso · Requisitos: B1-R2, B1-R13 · Duración: 25 min · Archivos: `frontend/tests/Ingresar.test.jsx`, `frontend/src/pages/admin/Ingresar.jsx`, `frontend/src/data/textos.js` · Test primero: labels, foco, envío, error con `role="alert"` y `noindex`.
   **Listo cuando:** formulario usable por teclado, muestra envío/error y nunca incluye credenciales en mensajes de error.
 - [ ] **T14** · Crear ruta protegida del panel · Requisitos: B1-R12, B1-R13 · Duración: 20 min · Archivos: `frontend/tests/RutaProtegida.test.jsx`, `frontend/src/components/admin/RutaProtegida.jsx` · Test primero: sin sesión redirige a `/ingresar`; con sesión renderiza contenido.
   **Listo cuando:** redirección y render están probados con React Router y la ruta protegida no confía en datos fuera del token guardado.

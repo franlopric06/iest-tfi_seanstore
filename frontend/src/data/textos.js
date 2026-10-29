@@ -11,6 +11,17 @@ const textos = {
     altLogo: "Sean's Store: sublimación y productos personalizados",
     enlaceCatalogo: 'Catálogo',
   },
+  ingresar: {
+    titulo: 'Ingresar al panel',
+    descripcion: 'Ingreso para administración de Sean’s Store.',
+    email: 'Email',
+    contrasena: 'Contraseña',
+    boton: 'Ingresar',
+    ingresando: 'Ingresando…',
+    errorCredenciales: 'No pudimos iniciar sesión, probá de nuevo.',
+    errorLimite: 'Hiciste muchos intentos. Esperá 15 minutos y probá de nuevo.',
+    errorConexion: 'No pudimos conectar con la tienda, probá en un rato.',
+  },
   errores: {
     frase: 'Algo salió mal, probá de nuevo',
     boton: 'Reintentar',
