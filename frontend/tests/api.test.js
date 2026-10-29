@@ -1,5 +1,8 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
+  cambiarEstadoProducto,
+  crearProducto,
+  editarProducto,
   editarRapidoProducto,
   ingresar,
   obtenerProductosAdmin,
@@ -165,5 +168,23 @@ describe('api.js', () => {
         body: JSON.stringify(datos),
       },
     )
+  })
+
+  it.each([
+    ['B2-R1 · crea un producto', () => crearProducto({ nombre: 'Taza' }), '/api/admin/productos', 'POST', { nombre: 'Taza' }],
+    ['B2-R4 · edita un producto', () => editarProducto(3, { nombre: 'Taza' }), '/api/admin/productos/3', 'PATCH', { nombre: 'Taza' }],
+    ['B2-R5 · oculta un producto', () => cambiarEstadoProducto(3, false), '/api/admin/productos/3/estado', 'PATCH', { activo: false }],
+  ])('%s con el token del panel', async (_nombre, llamar, ruta, metodo, cuerpo) => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve({ id: 3 }) })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await llamar()
+
+    expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}${ruta}`, {
+      method: metodo,
+      headers: { Authorization: 'Bearer jwt-de-prueba', 'Content-Type': 'application/json' },
+      body: JSON.stringify(cuerpo),
+    })
   })
 })

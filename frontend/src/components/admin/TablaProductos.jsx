@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { editarRapidoProducto } from '../../services/api.js'
 import textos from '../../data/textos.js'
+import BotonesProducto from './BotonesProducto.jsx'
 import FotoProductoAdmin from './FotoProductoAdmin.jsx'
 import crearControlesEdicionRapida from './crearControlesEdicionRapida.jsx'
 
-const TablaProductos = ({ productos }) => {
+const TablaProductos = ({ productos, cambiandoId = null, alEditar, alCambiarEstado }) => {
   const [borradores, setBorradores] = useState({})
   const [resultados, setResultados] = useState({})
   const etiquetas = textos.panel.productos
@@ -78,6 +79,15 @@ const TablaProductos = ({ productos }) => {
       alGuardar: () => guardar(producto),
     })
 
+  const botones = (producto) => (
+    <BotonesProducto
+      producto={producto}
+      ocupado={cambiandoId === producto.id}
+      alEditar={alEditar}
+      alCambiarEstado={alCambiarEstado}
+    />
+  )
+
   return (
     <div className="space-y-4">
       <div className="hidden overflow-x-auto md:block">
@@ -108,7 +118,12 @@ const TablaProductos = ({ productos }) => {
                   <td className="p-3">{stock}</td>
                   <td className="p-3">{destacado}</td>
                   <td className="p-3">{producto.activo ? etiquetas.activo : etiquetas.oculto}</td>
-                  <td className="p-3">{guardar}</td>
+                  <td className="p-3">
+                    <div className="flex flex-col items-start gap-2">
+                      {guardar}
+                      {botones(producto)}
+                    </div>
+                  </td>
                 </tr>
               )
             })}
@@ -134,6 +149,7 @@ const TablaProductos = ({ productos }) => {
                 {producto.activo ? etiquetas.activo : etiquetas.oculto}
               </p>
               <div className="flex flex-col gap-3">{controles(producto)}</div>
+              {botones(producto)}
             </article>
           </li>
         ))}

@@ -1,20 +1,12 @@
 import { useRef, useState } from 'react'
-import Cargando from '../../components/comunes/Cargando.jsx'
-import EstadoVacio from '../../components/comunes/EstadoVacio.jsx'
-import MensajeError from '../../components/comunes/MensajeError.jsx'
-import TablaProductos from '../../components/admin/TablaProductos.jsx'
+import GestionProductos from '../../components/admin/GestionProductos.jsx'
 import EditorTaller from '../../components/admin/EditorTaller.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
-import useObtenerDatos from '../../hooks/useObtenerDatos.js'
-import { obtenerProductosAdmin } from '../../services/api.js'
 import textos from '../../data/textos.js'
 
 const Panel = () => {
   const [pestanaActiva, setPestanaActiva] = useState('productos')
   const botonesPestanas = useRef([])
-  const { cargando, datos: productos, error, reintentar } = useObtenerDatos(
-    obtenerProductosAdmin,
-  )
   const pestañas = [
     { id: 'productos', texto: textos.panel.pestañas.productos },
     { id: 'taller', texto: textos.panel.pestañas.taller },
@@ -88,16 +80,7 @@ const Panel = () => {
             tabIndex={0}
             hidden={pestanaActiva !== pestaña.id}
           >
-            {pestaña.id === 'productos' &&
-              (cargando ? (
-                <Cargando etiqueta={textos.panel.productos.cargando} cantidad={3} />
-              ) : error ? (
-                <MensajeError alReintentar={reintentar} />
-              ) : productos.length === 0 ? (
-                <EstadoVacio frase={textos.panel.productos.vacio} />
-              ) : (
-                <TablaProductos productos={productos} />
-              ))}
+            {pestaña.id === 'productos' && <GestionProductos />}
             {pestaña.id === 'taller' && <EditorTaller />}
           </div>
         ))}

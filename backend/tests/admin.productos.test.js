@@ -67,6 +67,15 @@ describe("GET /api/admin/productos", () => {
     expect(consultaSimulada.mock.calls[0][0]).not.toMatch(/WHERE\s+p\.activo\s*=\s*TRUE/i);
   });
 
+  it("B2-R4 · trae los datos que necesita el formulario de edición", async () => {
+    await comoAdmin("get", "/api/admin/productos");
+
+    const sql = consultaSimulada.mock.calls[0][0];
+    for (const columna of ["p.categoria_id", "p.descripcion", "p.talles", "p.colores"]) {
+      expect(sql).toContain(columna);
+    }
+  });
+
   it("B1-R12 · requiere un JWT admin válido", async () => {
     const respuesta = await request(app).get("/api/admin/productos");
 

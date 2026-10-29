@@ -9,9 +9,13 @@ const SQL_LISTAR_PRODUCTOS = `
     p.codigo,
     p.slug,
     p.nombre,
+    p.categoria_id,
     json_build_object('slug', c.slug, 'nombre', c.nombre) AS categoria,
     p.precio,
     p.stock,
+    p.descripcion,
+    p.talles,
+    p.colores,
     p.destacado,
     p.activo,
     CASE WHEN f.url IS NULL THEN NULL

@@ -64,6 +64,22 @@ export const editarRapidoProducto = (id, datos) =>
     body: JSON.stringify(datos),
   })
 
+// Envía un cuerpo JSON a una ruta del panel con el método indicado.
+const enviarAdmin = (ruta, metodo, datos) =>
+  pedirAdmin(ruta, {
+    method: metodo,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(datos),
+  })
+
+export const crearProducto = (datos) => enviarAdmin('/api/admin/productos', 'POST', datos)
+
+export const editarProducto = (id, datos) =>
+  enviarAdmin(`/api/admin/productos/${encodeURIComponent(id)}`, 'PATCH', datos)
+
+export const cambiarEstadoProducto = (id, activo) =>
+  enviarAdmin(`/api/admin/productos/${encodeURIComponent(id)}/estado`, 'PATCH', { activo })
+
 export const obtenerCategorias = () => pedir("/api/categorias")
 
 export const obtenerProductos = (opciones = {}) => {

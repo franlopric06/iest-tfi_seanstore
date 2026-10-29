@@ -65,10 +65,11 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** la inserción SQL es parametrizada y las restricciones únicas se manejan con error explícito.
 - [x] **T26** · Completar alta, edición y estado de productos en rutas · Requisitos: B2-R1–R6 · Duración: 25 min · Archivos: `backend/tests/admin.productos.test.js`, `backend/src/routes/admin.productos.routes.js`, `backend/src/controllers/admin.productos.controller.js` · Test primero: rutas POST, PATCH completo, ocultar/reactivar; editar nombre mantiene slug/código.
   **Listo cuando:** todos los endpoints están bajo middleware admin y rechazan datos inválidos antes de persistir.
-- [ ] **T27** · Crear formulario reutilizable de producto · Requisitos: B2-R1, B2-R4, B2-R6 · Duración: 25 min · Archivos: `frontend/tests/FormularioProducto.test.jsx`, `frontend/src/components/admin/FormularioProducto.jsx` · Test primero: labels, valores, validación visible y modo alta/edición sin campo código/slug.
+- [x] **T27** · Crear formulario reutilizable de producto · Requisitos: B2-R1, B2-R4, B2-R6 · Duración: 25 min · Archivos: `frontend/tests/FormularioProducto.test.jsx`, `frontend/src/components/admin/FormularioProducto.jsx` · Test primero: labels, valores, validación visible y modo alta/edición sin campo código/slug.
   **Listo cuando:** formulario accesible envía solo campos editables y muestra errores sin descartar los valores ingresados.
-- [ ] **T28** · Integrar altas y ediciones completas al panel · Requisitos: B2-R1–R6 · Duración: 25 min · Archivos: `frontend/tests/TablaProductos.test.jsx`, `frontend/src/components/admin/TablaProductos.jsx`, `frontend/src/pages/admin/Panel.jsx` · Test primero: abrir alta/edición, guardar, cancelar, ocultar y reactivar.
+- [x] **T28** · Integrar altas y ediciones completas al panel · Requisitos: B2-R1–R6 · Duración: 25 min · Archivos: `frontend/tests/TablaProductos.test.jsx`, `frontend/src/components/admin/TablaProductos.jsx`, `frontend/src/pages/admin/Panel.jsx` · Test primero: abrir alta/edición, guardar, cancelar, ocultar y reactivar.
   **Listo cuando:** tabla refresca después de éxito y conserva el producto anterior ante error.
+  **Nota (29/10/2026):** OpenCode se quedó sin cuota a mitad de T27. Lo terminó Claude (asistente de pago, declarado en el informe): corrigió dos tests del agente, separó las funciones del formulario en `utils/formularioProducto.js`, agregó `GestionProductos.jsx` y `BotonesProducto.jsx`, y sumó a la lista del panel los campos que necesita la edición.
 
 ## Bloque 3 · Fotos de productos
 
