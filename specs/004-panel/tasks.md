@@ -5,6 +5,8 @@ Para ahorrar pedidos al agente, las tareas se implementan en paquetes de 2 o 3 t
 
 Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el anterior quede validado.
 
+**Nota de orden (29/10/2026):** por decisión del estudiante, la parte de texto del bloque 4 (T37, T38, T39 y T41 solo texto) se implementó antes del bloque 2. T40 y la parte de fotos de T41 quedan para el bloque 3.
+
 ## Bloque 1 · Ingreso y edición rápida
 
 - [x] **T01** · Validar y hashear contraseñas · Requisito: B1-R4 · Duración: 20 min · Archivos: `backend/tests/utils/contrasena.test.js`, `backend/src/utils/contrasena.js` · Test primero: mínimo 12 caracteres, máximo 72 bytes UTF-8 y bcrypt costo 12.
@@ -49,6 +51,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** la sección muestra cada estado y permite reintentar un error de carga.
 - [ ] **T21** · Configurar Neon y secretos del entorno · Requisitos: B1-R3, B1-R8, B3-R2 · Duración: 25 min · Archivos: `specs/004-panel/tasks.md` (marcar tarea cumplida, sin valores secretos) · Validación manual: revisar `esquema-panel.sql`; ejecutarlo en Neon; generar hash localmente y crear administrador con SQL; configurar `JWT_SECRET` y `BLOB_READ_WRITE_TOKEN` en Vercel sin compartirlos.
   **Listo cuando:** tablas y cuenta están creadas y ambas variables privadas están cargadas en Vercel; no se copia ningún valor secreto al repo, commits ni chat.
+  **Estado (29/10/2026):** casi completa por el estudiante: ejecutó `esquema-panel.sql` en Neon, creó el administrador y cargó `JWT_SECRET` en `.env` y Vercel. Falta `BLOB_READ_WRITE_TOKEN`, que se carga con el bloque 3.
 
 ## Bloque 2 · Productos completos
 
@@ -88,7 +91,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
 
 ## Bloque 4 · Nuestro taller desde la base
 
-- [ ] **T37** · Publicar contenido del taller en la API · Requisitos: B4-R1, B4-R2 · Duración: 25 min · Archivos: `backend/tests/taller.test.js`, `backend/src/controllers/taller.controller.js`, `backend/src/routes/taller.routes.js`, `backend/src/routes/index.js` · Test primero: devuelve fila pública, ausencia de fila y error de base.
+- [x] **T37** · Publicar contenido del taller en la API · Requisitos: B4-R1, B4-R2 · Duración: 25 min · Archivos: `backend/tests/taller.test.js`, `backend/src/controllers/taller.controller.js`, `backend/src/routes/taller.routes.js`, `backend/src/routes/index.js` · Test primero: devuelve fila pública, ausencia de fila y error de base.
   **Listo cuando:** GET no requiere JWT y usa SQL parametrizado con `conexion.js`.
 - [ ] **T38** · Cargar NuestroTaller desde la API · Requisito: B4-R3 · Duración: 25 min · Archivos: `frontend/tests/NuestroTaller.test.jsx`, `frontend/src/components/inicio/NuestroTaller.jsx`, `frontend/src/services/api.js` · Test primero: respuesta de API, fallback ante error/ausencia, textos, alt y URLs.
   **Listo cuando:** portada conserva los datos locales ante fallo y las imágenes Blob usan la URL absoluta sin prefijo.
