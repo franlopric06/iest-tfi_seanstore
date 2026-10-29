@@ -1,9 +1,15 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+const api = vi.hoisted(() => ({ obtenerProductosAdmin: vi.fn() }));
+
+vi.mock("../src/services/api.js", () => api);
+
 import Panel from "../src/pages/admin/Panel.jsx";
 
 afterEach(cleanup);
+beforeEach(() => api.obtenerProductosAdmin.mockResolvedValue([]));
 
 describe("Panel", () => {
   it("muestra el título y evita la indexación", async () => {
@@ -47,5 +53,36 @@ describe("Panel", () => {
 
     expect(taller).toHaveFocus();
     expect(taller).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("muestra carga y estado vacío de los productos administrativos", async () => {
+    api.obtenerProductosAdmin.mockReturnValue(new Promise(() => {}));
+    const { unmount } = render(<Panel />);
+
+    expect(screen.getByRole("status", { name: "Cargando productos del panel" })).toHaveAttribute(
+      "aria-busy",
+      "true",
+    );
+    unmount();
+
+    api.obtenerProductosAdmin.mockResolvedValue([]);
+    render(<Panel />);
+    expect(await screen.findByText("Todavía no hay productos cargados.")).toBeInTheDocument();
+  });
+
+  it("muestra un error de carga y permite volver a pedir los productos", async () => {
+    api.obtenerProductosAdmin
+      .mockRejectedValueOnce(new Error("Falló la API"))
+      .mockResolvedValueOnce([]);
+    const usuario = userEvent.setup();
+    render(<Panel />);
+
+    expect(await screen.findByRole("alert")).toHaveTextContent(
+      "Algo salió mal, probá de nuevo",
+    );
+    await usuario.click(screen.getByRole("button", { name: "Reintentar" }));
+
+    expect(await screen.findByText("Todavía no hay productos cargados.")).toBeInTheDocument();
+    expect(api.obtenerProductosAdmin).toHaveBeenCalledTimes(2);
   });
 });
