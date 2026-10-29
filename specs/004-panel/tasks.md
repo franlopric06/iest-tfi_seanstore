@@ -11,7 +11,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** las pruebas de límites y del costo pasan; la utilidad no expone la contraseña.
 - [x] **T02** · Crear el generador interactivo del hash · Requisito: B1-R4 · Duración: 20 min · Archivos: `backend/tests/generar-hash.test.js`, `backend/scripts/generar-hash.js` · Test primero: entrada oculta, llamada a `contrasena.js` y salida exclusiva del hash.
   **Listo cuando:** el test confirma que el script no imprime la contraseña ni duplica la lógica de validación/hash.
-- [ ] **T03** · Preparar el esquema del panel · Requisitos: B1-R3, B4-R1 · Duración: 25 min · Archivos: `backend/src/db/esquema-panel.sql` · Revisión primero: verificar campos, singleton de administradores, singleton de contenido y valores iniciales del taller contra los datos actuales.
+- [x] **T03** · Preparar el esquema del panel · Requisitos: B1-R3, B4-R1 · Duración: 25 min · Archivos: `backend/src/db/esquema-panel.sql` · Revisión primero: verificar campos, singleton de administradores, singleton de contenido y valores iniciales del taller contra los datos actuales.
   **Listo cuando:** el SQL está listo para revisión manual del estudiante; no incluye creación de contraseña/hash ni una prueba automática contra Neon.
 - [ ] **T04** · Configurar CORS y proxy confiable · Requisitos: B1-R7, B1-R18 · Duración: 25 min · Archivos: `backend/tests/app.test.js`, `backend/src/app.js` · Test primero: origen permitido/rechazado, cabeceras, métodos, preflight y resolución de IP con `trust proxy = 1`.
   **Listo cuando:** solo `FRONTEND_URL` recibe CORS, `OPTIONS` responde a preflight y Express confía en un proxy.
