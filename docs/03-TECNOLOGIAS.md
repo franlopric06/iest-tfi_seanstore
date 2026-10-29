@@ -19,7 +19,7 @@
 | Imágenes | **Multer + Cloudinary** | Recibir diseños y fotos, guardarlas en la nube y servirlas optimizadas |
 | Emails | **Brevo** (API de correos transaccionales) | Confirmación de compra, cambios de estado, recuperar contraseña, reseñas y arrepentimiento |
 | Tareas programadas | **Vercel Cron Jobs** (versión 2) | Enviar cada día los emails de "dejá tu reseña"; en Vercel no se puede dejar un proceso de node-cron corriendo |
-| Protección de la API | **helmet + express-rate-limit + cors** | Cabeceras seguras, límite de intentos y solo acepta pedidos del sitio |
+| Protección de la API | **helmet + middleware propio + cors** | Cabeceras seguras, límite de intentos y solo acepta pedidos del sitio |
 | Mapa | **Google Maps (mapa incrustado)** | Mostrar la ubicación del local en Contacto, sin clave de API |
 | Estadísticas | **Vercel Web Analytics** | Visitas y páginas más vistas, sin cookies de seguimiento |
 | Vista previa al compartir | **Vercel Routing Middleware** | Arma las etiquetas Open Graph de cada producto para WhatsApp e Instagram |
@@ -48,11 +48,11 @@ frontend: react, react-dom, react-router-dom, tailwindcss, @tailwindcss/vite, mo
 dev:      prettier, prettier-plugin-tailwindcss, vitest, @testing-library/react,
           @testing-library/jest-dom, @testing-library/user-event, jsdom, oxlint
 backend:  express, pg, bcrypt, jsonwebtoken, cookie-parser, multer, cloudinary,
-          @vercel/blob, mercadopago, @getbrevo/brevo, helmet, express-rate-limit, cors, dotenv
+          @vercel/blob, mercadopago, @getbrevo/brevo, helmet, cors, dotenv
 backend dev: vitest, supertest
 ```
 
-En la primera etapa (`ETAPA-1.md`) solo se instalan las que se usan: en el frontend, todas menos `@mercadopago/sdk-react` y `@vercel/analytics`; en el backend, `express`, `pg`, `helmet`, `express-rate-limit`, `cors` y `dotenv`; para el panel se agregan `bcrypt`, `jsonwebtoken`, `multer` y `@vercel/blob`. La autenticación del panel guarda el token de sesión en `sessionStorage` y lo envía en la cabecera `Authorization`; no usa `cookie-parser`.
+En la primera etapa (`ETAPA-1.md`) solo se instalan las que se usan: en el frontend, todas menos `@mercadopago/sdk-react` y `@vercel/analytics`; en el backend, `express`, `pg`, `helmet`, `cors` y `dotenv`; para el panel se agregan `bcrypt`, `jsonwebtoken`, `multer` y `@vercel/blob`. La limitación de intentos de ingreso se implementa con middleware propio en memoria por instancia, no con una dependencia. La autenticación del panel guarda el token de sesión en `sessionStorage` y lo envía en la cabecera `Authorization`; no usa `cookie-parser`.
 
 ## Cómo se conecta todo
 
