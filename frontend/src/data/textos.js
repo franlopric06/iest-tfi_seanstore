@@ -9,7 +9,11 @@ const textos = {
   },
   header: {
     altLogo: "Sean's Store: sublimación y productos personalizados",
+    enlaceInicio: 'Ir al inicio',
     enlaceCatalogo: 'Catálogo',
+    enlaceIngresar: 'Ingresar',
+    enlacePanel: 'Panel',
+    botonSalir: 'Salir',
   },
   ingresar: {
     titulo: 'Ingresar al panel',
@@ -21,6 +25,15 @@ const textos = {
     errorCredenciales: 'No pudimos iniciar sesión, probá de nuevo.',
     errorLimite: 'Hiciste muchos intentos. Esperá 15 minutos y probá de nuevo.',
     errorConexion: 'No pudimos conectar con la tienda, probá en un rato.',
+  },
+  panel: {
+    titulo: 'Panel de administración',
+    descripcion: 'Administración de productos y contenido de Nuestro taller.',
+    pestañas: {
+      productos: 'Productos',
+      taller: 'Nuestro taller',
+      etiqueta: 'Secciones del panel',
+    },
   },
   errores: {
     frase: 'Algo salió mal, probá de nuevo',
