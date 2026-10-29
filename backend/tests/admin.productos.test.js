@@ -305,3 +305,150 @@ describe("POST /api/admin/productos", () => {
     expect(inserciones).toHaveLength(3);
   });
 });
+
+const filaEditada = {
+  id: 13,
+  codigo: "TAZ-003",
+  slug: "taza-nueva",
+  nombre: "Taza editada",
+  precio: "16000.00",
+  stock: 18,
+  destacado: true,
+  activo: true,
+};
+
+describe("PATCH /api/admin/productos/:id", () => {
+  const cuerpoEdicion = {
+    nombre: "Taza editada",
+    categoria_id: 2,
+    precio: 16000,
+    stock: 18,
+    descripcion: "Taza con la descripción nueva.",
+    talles: [],
+    colores: ["Blanco", "Negro"],
+    destacado: true,
+  };
+
+  it("B2-R4 · edita nombre y datos y devuelve el producto con su código y slug intactos", async () => {
+    consultaSimulada
+      .mockResolvedValueOnce({ rows: [{ id: 2 }] })
+      .mockResolvedValueOnce({ rows: [filaEditada] });
+
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13").send(cuerpoEdicion);
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.body).toEqual(filaEditada);
+    expect(consultaSimulada).toHaveBeenNthCalledWith(
+      1,
+      expect.stringMatching(/SELECT id FROM categorias/i),
+      [2],
+    );
+    const [sql, parametros] = consultaSimulada.mock.calls[1];
+    expect(sql).toMatch(/UPDATE productos[\s\S]*SET[\s\S]*WHERE id = \$9/s);
+    expect(sql).not.toMatch(/codigo\s*=/);
+    expect(sql).not.toMatch(/slug\s*=/);
+    expect(parametros).toEqual([
+      "Taza editada",
+      2,
+      16000,
+      18,
+      "Taza con la descripción nueva.",
+      [],
+      ["Blanco", "Negro"],
+      true,
+      "13",
+    ]);
+  });
+
+  it("B2-R6 · rechaza datos inválidos sin consultar la base", async () => {
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13").send({
+      ...cuerpoEdicion,
+      stock: -1,
+    });
+
+    expect(respuesta.status).toBe(400);
+    expect(respuesta.body).toHaveProperty("error");
+    expect(consultaSimulada).not.toHaveBeenCalled();
+  });
+
+  it("B2-R6 · rechaza cambiar activo por la edición completa", async () => {
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13").send({
+      ...cuerpoEdicion,
+      activo: false,
+    });
+
+    expect(respuesta.status).toBe(400);
+    expect(consultaSimulada).not.toHaveBeenCalled();
+  });
+
+  it("B2-R6 · rechaza cuando la categoría no existe", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [] });
+
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13").send(cuerpoEdicion);
+
+    expect(respuesta.status).toBe(400);
+    expect(respuesta.body.error).toMatch(/categor/i);
+    expect(consultaSimulada).toHaveBeenCalledTimes(1);
+  });
+
+  it("B2-R4 · responde 404 cuando el producto no existe", async () => {
+    consultaSimulada
+      .mockResolvedValueOnce({ rows: [{ id: 2 }] })
+      .mockResolvedValueOnce({ rows: [] });
+
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13").send(cuerpoEdicion);
+
+    expect(respuesta.status).toBe(404);
+    expect(respuesta.body).toHaveProperty("error");
+  });
+});
+
+describe("PATCH /api/admin/productos/:id/estado", () => {
+  it("B2-R5 · oculta y reactiva el producto con activo, sin borrar la fila", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [{ ...filaEditada, activo: false }] });
+
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13/estado").send({
+      activo: false,
+    });
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.body.activo).toBe(false);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/UPDATE productos\s+SET activo = \$1\s+WHERE id = \$2\s+RETURNING/s),
+      [false, "13"],
+    );
+
+    consultaSimulada.mockResolvedValueOnce({ rows: [filaEditada] });
+    const reactivado = await comoAdmin("patch", "/api/admin/productos/13/estado").send({
+      activo: true,
+    });
+    expect(reactivado.status).toBe(200);
+    expect(reactivado.body.activo).toBe(true);
+  });
+
+  it.each([
+    ["activo no booleano", { activo: "true" }],
+    ["cuerpo vacío", {}],
+    ["campos de más", { activo: true, extra: 1 }],
+  ])("B2-R6 · rechaza %s sin consultar la base", async (_caso, cuerpo) => {
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/13/estado").send(cuerpo);
+
+    expect(respuesta.status).toBe(400);
+    expect(consultaSimulada).not.toHaveBeenCalled();
+  });
+
+  it("B2-R5 · responde 404 cuando el producto no existe", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [] });
+
+    const respuesta = await comoAdmin("patch", "/api/admin/productos/999/estado").send({
+      activo: true,
+    });
+
+    expect(respuesta.status).toBe(404);
+    expect(respuesta.body).toHaveProperty("error");
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/UPDATE productos\s+SET activo/),
+      [true, "999"],
+    );
+  });
+});

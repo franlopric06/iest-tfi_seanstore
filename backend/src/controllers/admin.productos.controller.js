@@ -173,3 +173,104 @@ export const editarRapidoProducto = async (req, res, next) => {
     next(error);
   }
 };
+
+const CAMPOS_EDICION = [
+  "nombre",
+  "categoria_id",
+  "precio",
+  "stock",
+  "descripcion",
+  "talles",
+  "colores",
+  "destacado",
+];
+
+const SQL_EDITAR_PRODUCTO = `
+  UPDATE productos
+  SET nombre = $1, categoria_id = $2, precio = $3, stock = $4, descripcion = $5, talles = $6, colores = $7, destacado = $8
+  WHERE id = $9
+  RETURNING id, codigo, slug, nombre, precio, stock, destacado, activo
+`;
+
+export const editarProducto = async (req, res, next) => {
+  const { id } = req.params;
+  const datos = req.body;
+  const cuerpoCompleto =
+    datos &&
+    typeof datos === "object" &&
+    !Array.isArray(datos) &&
+    Object.keys(datos).length === CAMPOS_EDICION.length &&
+    CAMPOS_EDICION.every((campo) => Object.hasOwn(datos, campo));
+  const errores = validarProducto(datos);
+
+  if (!esIdValido(id) || !cuerpoCompleto || Object.keys(errores).length > 0) {
+    res.status(400).json({ error: "Los datos del producto no son válidos." });
+    return;
+  }
+
+  try {
+    const categoria = await consulta(SQL_VERIFICAR_CATEGORIA, [datos.categoria_id]);
+    if (categoria.rows.length === 0) {
+      res.status(400).json({ error: "La categoría elegida no existe." });
+      return;
+    }
+
+    const { rows } = await consulta(SQL_EDITAR_PRODUCTO, [
+      datos.nombre.trim(),
+      datos.categoria_id,
+      datos.precio,
+      datos.stock,
+      typeof datos.descripcion === "string" ? datos.descripcion.trim() : null,
+      datos.talles,
+      datos.colores,
+      datos.destacado,
+      id,
+    ]);
+
+    if (rows.length === 0) {
+      res.status(404).json({ error: "No encontramos este producto." });
+      return;
+    }
+
+    res.json(rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const SQL_CAMBIAR_ESTADO = `
+  UPDATE productos
+  SET activo = $1
+  WHERE id = $2
+  RETURNING id, codigo, slug, nombre, precio, stock, destacado, activo
+`;
+
+export const cambiarEstadoProducto = async (req, res, next) => {
+  const { id } = req.params;
+  const datos = req.body;
+  const cuerpoValido =
+    datos &&
+    typeof datos === "object" &&
+    !Array.isArray(datos) &&
+    Object.keys(datos).length === 1 &&
+    Object.hasOwn(datos, "activo") &&
+    typeof datos.activo === "boolean";
+
+  if (!esIdValido(id) || !cuerpoValido) {
+    res.status(400).json({ error: "Los datos del estado no son válidos." });
+    return;
+  }
+
+  try {
+    const { rows } = await consulta(SQL_CAMBIAR_ESTADO, [datos.activo, id]);
+
+    if (rows.length === 0) {
+      res.status(404).json({ error: "No encontramos este producto." });
+      return;
+    }
+
+    res.json(rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
