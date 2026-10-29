@@ -57,7 +57,7 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
 
 - [x] **T22** · Validar datos de producto · Requisitos: B2-R1, B2-R6 · Duración: 25 min · Archivos: `backend/tests/validaciones/producto.test.js`, `backend/src/validaciones/producto.js` · Test primero: campos obligatorios, tipos, rangos, arrays, categoría y valores inválidos.
   **Listo cuando:** validador puro acepta datos válidos y devuelve errores identificables sin consultar servicios.
-- [ ] **T23** · Generar código único de producto · Requisito: B2-R2 · Duración: 25 min · Archivos: `backend/tests/generarCodigo.test.js`, `backend/src/utils/generarCodigo.js` · Test primero: prefijos conocidos, siguiente número y colisiones con sufijo numérico.
+- [x] **T23** · Generar código único de producto · Requisito: B2-R2 · Duración: 25 min · Archivos: `backend/tests/generarCodigo.test.js`, `backend/src/utils/generarCodigo.js` · Test primero: prefijos conocidos, siguiente número y colisiones con sufijo numérico.
   **Listo cuando:** función pura determinista genera código compatible y permite detectar/reintentar colisiones de base.
 - [ ] **T24** · Generar slug único · Requisitos: B2-R3, B2-R4 · Duración: 25 min · Archivos: `backend/tests/generarSlug.test.js`, `backend/src/utils/generarSlug.js` · Test primero: normalización del nombre, acentos, caracteres y colisiones.
   **Listo cuando:** slug nuevo es estable y único sin modificar slugs ya persistidos.
