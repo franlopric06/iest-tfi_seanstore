@@ -1,12 +1,14 @@
 import { del, put } from "@vercel/blob";
 
-// Único archivo que habla con Vercel Blob (004-T31). El token
-// BLOB_READ_WRITE_TOKEN lo lee el SDK de las variables de entorno y nunca
-// sale del servidor.
+// Único archivo que habla con Vercel Blob (004-T31). Las credenciales las lee
+// el SDK de las variables de entorno y nunca salen del servidor. Vercel conecta
+// el Blob de dos formas: con BLOB_STORE_ID (y el token OIDC que Vercel da a
+// cada función) o con la clave BLOB_READ_WRITE_TOKEN. Sirve cualquiera.
 
 const EXTENSIONES = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
 
-export const almacenamientoConfigurado = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+export const almacenamientoConfigurado = () =>
+  Boolean(process.env.BLOB_STORE_ID || process.env.BLOB_READ_WRITE_TOKEN);
 
 // Sube la foto y devuelve su URL pública absoluta (https://...blob.vercel-storage.com/...).
 export const subirFoto = async (carpeta, buffer, tipo) => {

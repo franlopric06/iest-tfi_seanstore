@@ -40,9 +40,13 @@ describe("almacenamiento", () => {
     expect(blob.del).toHaveBeenCalledWith(URL_BLOB);
   });
 
-  it("B3-R6 · sabe si falta el token de Blob", () => {
+  it("B3-R6 · sabe si el Blob está conectado, por OIDC o por clave", () => {
     vi.stubEnv("BLOB_READ_WRITE_TOKEN", "");
+    vi.stubEnv("BLOB_STORE_ID", "");
     expect(almacenamientoConfigurado()).toBe(false);
+    vi.stubEnv("BLOB_STORE_ID", "store_de_prueba");
+    expect(almacenamientoConfigurado()).toBe(true);
+    vi.stubEnv("BLOB_STORE_ID", "");
     vi.stubEnv("BLOB_READ_WRITE_TOKEN", "token-de-prueba");
     expect(almacenamientoConfigurado()).toBe(true);
   });
