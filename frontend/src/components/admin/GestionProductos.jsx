@@ -89,14 +89,14 @@ const GestionProductos = () => {
         )}
         {formulario && (
           <FormularioProducto
-            key={formulario.clave}
+            key={`formulario-${formulario.clave}`}
             producto={formulario.producto}
             guardar={guardar}
             onCancelar={() => setFormulario(null)}
           />
         )}
         {formulario?.producto && (
-          <FotosProducto key={formulario.producto.id} producto={formulario.producto} alCambiar={reintentar} />
+          <FotosProducto key={`fotos-${formulario.producto.id}`} producto={formulario.producto} alCambiar={reintentar} />
         )}
         {aviso && (
           <p role={aviso.tipo} className={`font-bold ${aviso.tipo === 'alert' ? 'text-error' : 'text-violeta'}`}>

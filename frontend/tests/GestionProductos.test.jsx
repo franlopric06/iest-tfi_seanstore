@@ -150,4 +150,19 @@ describe("GestionProductos", () => {
       "No pudimos cambiar el estado del producto, probá de nuevo.",
     );
   });
+
+  it("no deja formularios repetidos al guardar y volver a editar varias veces", async () => {
+    api.editarProducto.mockResolvedValue(taza);
+    const usuario = userEvent.setup();
+    render(<GestionProductos />);
+
+    for (let vuelta = 0; vuelta < 3; vuelta += 1) {
+      const tabla = await screen.findByRole("table", { name: "Productos" });
+      await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
+      expect(screen.getAllByRole("form", { name: "Editar producto" })).toHaveLength(1);
+      await usuario.click(within(screen.getByRole("form", { name: "Editar producto" })).getByRole("button", { name: "Guardar" }));
+      await screen.findByRole("status");
+      expect(screen.queryAllByRole("form", { name: "Editar producto" })).toHaveLength(0);
+    }
+  });
 });
