@@ -39,10 +39,17 @@ const GestionProductos = () => {
 
   const guardar = async (datos) => {
     const producto = formulario.producto
-    if (producto) await editarProducto(producto.id, datos)
-    else await crearProducto(datos)
-    setFormulario(null)
-    setAviso({ tipo: 'status', texto: producto ? etiquetas.actualizado : etiquetas.creado })
+    if (producto) {
+      await editarProducto(producto.id, datos)
+      setFormulario(null)
+      setAviso({ tipo: 'status', texto: etiquetas.actualizado })
+    } else {
+      // Al crear, el formulario queda abierto en modo edición del producto nuevo
+      // para poder agregarle las fotos (antes de existir no tiene dónde guardarlas).
+      const nuevo = await crearProducto(datos)
+      setFormulario({ producto: { ...datos, ...nuevo }, clave: nuevo.id })
+      setAviso({ tipo: 'status', texto: etiquetas.creado })
+    }
     reintentar()
   }
 
@@ -93,10 +100,12 @@ const GestionProductos = () => {
             producto={formulario.producto}
             guardar={guardar}
             onCancelar={() => setFormulario(null)}
+            antesDeBotones={
+              formulario.producto && (
+                <FotosProducto key={`fotos-${formulario.producto.id}`} producto={formulario.producto} alCambiar={reintentar} />
+              )
+            }
           />
-        )}
-        {formulario?.producto && (
-          <FotosProducto key={`fotos-${formulario.producto.id}`} producto={formulario.producto} alCambiar={reintentar} />
         )}
         {aviso && (
           <p role={aviso.tipo} className={`font-bold ${aviso.tipo === 'alert' ? 'text-error' : 'text-violeta'}`}>

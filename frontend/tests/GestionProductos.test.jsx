@@ -47,8 +47,10 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
+const zonaDe = (titulo) => screen.getByRole("region", { name: titulo });
+
 const completarAlta = async (usuario) => {
-  const formulario = screen.getByRole("form", { name: "Agregar producto" });
+  const formulario = zonaDe("Agregar producto");
   const campo = (etiqueta) => within(formulario).getByLabelText(etiqueta);
   await within(formulario).findByRole("option", { name: "Tazas y termos" });
   await usuario.type(campo("Nombre"), "Llavero de acrílico");
@@ -80,8 +82,11 @@ describe("GestionProductos", () => {
     expect(api.crearProducto).toHaveBeenCalledWith(
       expect.objectContaining({ nombre: "Llavero de acrílico", colores: ["Transparente"] }),
     );
-    expect(await screen.findByRole("status")).toHaveTextContent("Producto creado.");
-    expect(screen.queryByRole("form", { name: "Agregar producto" })).not.toBeInTheDocument();
+    expect(await screen.findByRole("status")).toHaveTextContent("Producto creado. Ahora podés agregarle fotos.");
+    // El formulario pasa a editar el producto nuevo, con la sección de fotos.
+    expect(screen.getByRole("form", { name: "Editar producto" })).toBeInTheDocument();
+    expect(await screen.findByText("Este producto todavía no tiene fotos.")).toBeInTheDocument();
+    expect(api.obtenerFotosProducto).toHaveBeenCalledWith(2);
     expect(api.obtenerProductosAdmin).toHaveBeenCalledTimes(2);
   });
 
@@ -93,7 +98,7 @@ describe("GestionProductos", () => {
     const tabla = await screen.findByRole("table", { name: "Productos" });
     await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
 
-    const formulario = screen.getByRole("form", { name: "Editar producto" });
+    const formulario = zonaDe("Editar producto");
     expect(within(formulario).getByLabelText("Nombre")).toHaveValue("Taza de cerámica");
     expect(within(formulario).getByLabelText("Colores")).toHaveValue("Blanco, Negro");
     await within(formulario).findByRole("option", { name: "Tazas y termos" });
@@ -160,9 +165,23 @@ describe("GestionProductos", () => {
       const tabla = await screen.findByRole("table", { name: "Productos" });
       await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
       expect(screen.getAllByRole("form", { name: "Editar producto" })).toHaveLength(1);
-      await usuario.click(within(screen.getByRole("form", { name: "Editar producto" })).getByRole("button", { name: "Guardar" }));
+      await usuario.click(within(zonaDe("Editar producto")).getByRole("button", { name: "Guardar" }));
       await screen.findByRole("status");
       expect(screen.queryAllByRole("form", { name: "Editar producto" })).toHaveLength(0);
     }
+  });
+
+  it("deja Guardar y Cancelar debajo de las fotos al editar", async () => {
+    const usuario = userEvent.setup();
+    render(<GestionProductos />);
+
+    const tabla = await screen.findByRole("table", { name: "Productos" });
+    await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
+
+    const zona = zonaDe("Editar producto");
+    const fotos = within(zona).getByRole("heading", { name: /Fotos del producto/ });
+    const guardar = within(zona).getByRole("button", { name: "Guardar" });
+    expect(fotos.compareDocumentPosition(guardar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(guardar).toHaveAttribute("form", "formulario-producto");
   });
 });

@@ -17,7 +17,7 @@ const FotosTaller = ({ fotosIniciales }) => {
   }
 
   return (
-    <section aria-labelledby="fotos-taller-titulo" className="flex flex-col gap-4 border-t border-gris-claro p-4 md:p-6">
+    <section aria-labelledby="fotos-taller-titulo" className="my-6 flex flex-col gap-4 border-y border-gris-claro py-6">
       <div>
         <h2 id="fotos-taller-titulo" className="font-titulos text-xl text-violeta">{etiquetas.tituloTaller}</h2>
         <p className="text-sm text-grafito">{etiquetas.ayudaTaller}</p>

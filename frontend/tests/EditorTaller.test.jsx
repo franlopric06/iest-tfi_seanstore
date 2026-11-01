@@ -110,4 +110,14 @@ describe('EditorTaller', () => {
       await screen.findByRole('button', { name: textosTaller.guardando }),
     ).toBeDisabled()
   })
+
+  it('deja el botón Guardar debajo de las fotos del taller', async () => {
+    api.obtenerTaller.mockResolvedValue(contenido)
+    render(<EditorTaller />)
+
+    const fotos = await screen.findByRole('heading', { name: 'Fotos de Nuestro taller' })
+    const guardar = screen.getByRole('button', { name: textosTaller.guardar })
+    expect(fotos.compareDocumentPosition(guardar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+    expect(guardar).toHaveAttribute('form', 'formulario-taller')
+  })
 })

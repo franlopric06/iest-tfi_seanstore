@@ -53,7 +53,7 @@ const textos = {
       editar: 'Editar',
       ocultar: 'Ocultar',
       mostrar: 'Mostrar',
-      creado: 'Producto creado.',
+      creado: 'Producto creado. Ahora podés agregarle fotos.',
       actualizado: 'Producto actualizado.',
       ocultado: 'Producto ocultado: ya no se ve en la tienda.',
       mostrado: 'Producto visible de nuevo en la tienda.',
