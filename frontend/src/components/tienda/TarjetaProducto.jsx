@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import formatearPrecio from '../../utils/formatearPrecio.js'
+import { fuentesTarjeta } from '../../utils/miniatura.js'
 import textos from '../../data/textos.js'
 
 const PasadaTinta = () => (
@@ -11,7 +12,8 @@ const PasadaTinta = () => (
   </span>
 )
 
-const TarjetaProducto = ({ producto }) => {
+// prioridad: las primeras tarjetas, que se ven sin bajar, cargan su foto enseguida.
+const TarjetaProducto = ({ producto, prioridad = false }) => {
   const quieto = useReducedMotion()
 
   return (
@@ -28,8 +30,10 @@ const TarjetaProducto = ({ producto }) => {
           <div className="relative overflow-hidden rounded-t-marca">
             <img
               src={producto.foto.url}
+              {...fuentesTarjeta(producto.foto.url)}
               alt={producto.foto.alt}
-              loading="lazy"
+              loading={prioridad ? 'eager' : 'lazy'}
+              fetchPriority={prioridad ? 'high' : undefined}
               decoding="async"
               width="1024"
               height="1024"

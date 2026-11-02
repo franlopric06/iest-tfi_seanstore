@@ -86,7 +86,7 @@ const Header = () => {
           aria-label={textos.header.enlaceInicio}
           className={`shrink-0 rounded-marca ${FOCO} focus-visible:ring-offset-violeta`}
         >
-          <img src="/img/logo-seanstore-negativo.png" alt={textos.header.altLogo} className="h-11 w-auto md:h-16" />
+          <img src="/img/logo-seanstore-negativo.webp" alt={textos.header.altLogo} width="295" height="128" fetchPriority="high" className="h-11 w-auto md:h-16" />
         </Link>
         <nav aria-label={textos.header.navegacion} className="hidden items-center gap-2 md:flex">
           <Enlaces sesion={sesion} alSalir={cerrarSesion} clase={claseCompu} />

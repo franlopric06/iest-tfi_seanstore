@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/img/isotipo-seanstore.png" />
+    <link rel="icon" type="image/png" href="/img/isotipo-seanstore-64.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
@@ -20,10 +20,20 @@
     <meta property="og:url" content="https://sean-store.vercel.app/" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Las fuentes se cargan sin frenar el primer dibujo de la página (rendimiento):
+         mientras llegan se ve la letra del sistema y después se reemplaza. -->
     <link
-      rel="stylesheet"
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Russo+One&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Russo+One&display=swap"
+      />
+    </noscript>
   </head>
   <body>
     <div id="root"></div>

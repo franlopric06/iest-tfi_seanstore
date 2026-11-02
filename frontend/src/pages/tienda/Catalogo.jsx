@@ -65,9 +65,9 @@ const Catalogo = () => {
           )}
           {Array.isArray(productos) && productos.length > 0 && (
             <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {productos.map((producto) => (
+              {productos.map((producto, indice) => (
                 <li key={producto.slug}>
-                  <TarjetaProducto producto={producto} />
+                  <TarjetaProducto producto={producto} prioridad={indice < 2} />
                 </li>
               ))}
             </ul>

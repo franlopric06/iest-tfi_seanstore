@@ -4,7 +4,7 @@ const Footer = () => (
   <footer className="bg-violeta text-white">
     <div className="mx-auto max-w-7xl space-y-6 px-5 py-10">
       <img
-        src="/img/isotipo-seanstore-fondo.png"
+        src="/img/isotipo-seanstore-fondo.webp"
         alt={textos.footer.altIsotipo}
         loading="lazy"
         decoding="async"

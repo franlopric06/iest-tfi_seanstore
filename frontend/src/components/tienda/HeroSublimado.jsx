@@ -59,8 +59,8 @@ const HeroSublimado = () => {
         <div className="flex-1">
           <motion.h1
             aria-label={textos.hero.titulo}
-            initial={quieto ? false : { y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            initial={quieto ? false : { y: 16 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="-skew-x-6 font-titulos text-[2rem] leading-none md:text-5xl lg:text-6xl"
           >
@@ -72,8 +72,10 @@ const HeroSublimado = () => {
           </motion.h1>
 
           <motion.p
-            initial={quieto ? false : { y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
+            // Sin opacity 0 al empezar: el texto se ve desde el primer dibujo y
+            // solo sube un poco. Así el navegador lo cuenta antes (mejor LCP).
+            initial={quieto ? false : { y: 16 }}
+            animate={{ y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.15 }}
             className="mt-5 max-w-xl text-lg text-white/90 md:text-xl"
           >

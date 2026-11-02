@@ -10,7 +10,7 @@ describe('Layout · Header y Footer de la primera etapa', () => {
   it('El header muestra el logo de la marca y el enlace "Catálogo"', () => {
     armar(<Header />)
     const logo = screen.getByRole('img', { name: textos.header.altLogo })
-    expect(logo).toHaveAttribute('src', '/img/logo-seanstore-negativo.png')
+    expect(logo).toHaveAttribute('src', '/img/logo-seanstore-negativo.webp')
     const enlace = screen.getByRole('link', { name: textos.header.enlaceCatalogo })
     expect(enlace).toHaveAttribute('href', '/catalogo')
   })
@@ -26,7 +26,7 @@ describe('Layout · Header y Footer de la primera etapa', () => {
   it('El footer muestra el isotipo, la descripción y el contacto por WhatsApp', () => {
     armar(<Footer />)
     const isotipo = screen.getByRole('img', { name: textos.footer.altIsotipo })
-    expect(isotipo).toHaveAttribute('src', '/img/isotipo-seanstore-fondo.png')
+    expect(isotipo).toHaveAttribute('src', '/img/isotipo-seanstore-fondo.webp')
     expect(isotipo).toHaveAttribute('loading', 'lazy')
     expect(isotipo).toHaveAttribute('decoding', 'async')
     expect(isotipo).toHaveAttribute('width', '128')
