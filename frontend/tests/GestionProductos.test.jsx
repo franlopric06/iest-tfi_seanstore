@@ -1,152 +1,144 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 
 const api = vi.hoisted(() => ({
   obtenerProductosAdmin: vi.fn(),
-  obtenerCategorias: vi.fn(),
-  crearProducto: vi.fn(),
-  editarProducto: vi.fn(),
   cambiarEstadoProducto: vi.fn(),
   editarRapidoProducto: vi.fn(),
-  obtenerFotosProducto: vi.fn(),
 }));
 
 vi.mock("../src/services/api.js", () => api);
 
-const { default: GestionProductos } = await import(
-  "../src/components/admin/GestionProductos.jsx"
-);
+const { default: GestionProductos } = await import("../src/components/admin/GestionProductos.jsx");
 
-const taza = {
-  id: 1,
-  codigo: "TAZ-001",
-  slug: "taza-ceramica",
-  nombre: "Taza de cerámica",
-  categoria_id: 1,
-  categoria: { nombre: "Tazas y termos" },
-  precio: "12000.00",
-  stock: 8,
-  descripcion: "Taza de 325 ml.",
-  talles: [],
-  colores: ["Blanco", "Negro"],
-  destacado: true,
-  activo: true,
+const producto = (id, nombre, categoria, activo = true) => ({
+  id,
+  codigo: `${nombre.slice(0, 3).toUpperCase()}-00${id}`,
+  slug: `p-${id}`,
+  nombre,
+  categoria: { nombre: categoria },
+  precio: "1000.00",
+  stock: 5,
+  destacado: false,
+  activo,
   foto: null,
-};
+});
+const taza = producto(1, "Taza de cerámica", "Tazas y termos");
+const remera = producto(2, "Remera", "Indumentaria", false);
+const gorra = producto(3, "Gorra", "Indumentaria");
+
+const MostrarRuta = () => <p data-testid="ruta">{useLocation().pathname}</p>;
+
+const renderizar = (estado) =>
+  render(
+    <MemoryRouter initialEntries={[{ pathname: "/admin", state: estado }]}>
+      <Routes>
+        <Route path="/admin" element={<GestionProductos />} />
+        <Route path="*" element={<MostrarRuta />} />
+      </Routes>
+    </MemoryRouter>,
+  );
 
 beforeEach(() => {
   Object.values(api).forEach((funcion) => funcion.mockReset());
-  api.obtenerProductosAdmin.mockResolvedValue([taza]);
-  api.obtenerFotosProducto.mockResolvedValue([]);
-  api.obtenerCategorias.mockResolvedValue([
-    { id: 1, nombre: "Tazas y termos" },
-    { id: 2, nombre: "Indumentaria" },
-  ]);
+  api.obtenerProductosAdmin.mockResolvedValue([taza, remera, gorra]);
 });
 
 afterEach(cleanup);
 
-const zonaDe = (titulo) => screen.getByRole("region", { name: titulo });
-
-const completarAlta = async (usuario) => {
-  const formulario = zonaDe("Agregar producto");
-  const campo = (etiqueta) => within(formulario).getByLabelText(etiqueta);
-  await within(formulario).findByRole("option", { name: "Tazas y termos" });
-  await usuario.type(campo("Nombre"), "Llavero de acrílico");
-  await usuario.selectOptions(campo("Categoría"), "1");
-  await usuario.type(campo("Precio"), "3500");
-  await usuario.type(campo("Stock"), "20");
-  await usuario.type(campo("Colores"), "Transparente");
-  return formulario;
-};
-
 describe("GestionProductos", () => {
-  it("B2-R1 · muestra «Nuevo producto» aunque todavía no haya productos", async () => {
+  it("B2-R1 · muestra «Nuevo producto» aunque todavía no haya productos y lleva a su pantalla", async () => {
     api.obtenerProductosAdmin.mockResolvedValue([]);
-    render(<GestionProductos />);
+    const usuario = userEvent.setup();
+    renderizar();
 
     expect(await screen.findByText("Todavía no hay productos cargados.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Nuevo producto" })).toBeInTheDocument();
+    await usuario.click(screen.getByRole("link", { name: "Nuevo producto" }));
+
+    expect(screen.getByTestId("ruta")).toHaveTextContent("/admin/productos/nuevo");
   });
 
-  it("B2-R1 · crea un producto, avisa y vuelve a pedir la lista", async () => {
-    api.crearProducto.mockResolvedValue({ id: 2 });
+  it("B2-R4 · «Editar» abre la pantalla propia del producto", async () => {
     const usuario = userEvent.setup();
-    render(<GestionProductos />);
-
-    await usuario.click(await screen.findByRole("button", { name: "Nuevo producto" }));
-    const formulario = await completarAlta(usuario);
-    await usuario.click(within(formulario).getByRole("button", { name: "Guardar" }));
-
-    expect(api.crearProducto).toHaveBeenCalledWith(
-      expect.objectContaining({ nombre: "Llavero de acrílico", colores: ["Transparente"] }),
-    );
-    expect(await screen.findByRole("status")).toHaveTextContent("Producto creado. Ahora podés agregarle fotos.");
-    // El formulario pasa a editar el producto nuevo, con la sección de fotos.
-    expect(screen.getByRole("form", { name: "Editar producto" })).toBeInTheDocument();
-    expect(await screen.findByText("Este producto todavía no tiene fotos.")).toBeInTheDocument();
-    expect(api.obtenerFotosProducto).toHaveBeenCalledWith(2);
-    expect(api.obtenerProductosAdmin).toHaveBeenCalledTimes(2);
-  });
-
-  it("B2-R4 · abre la edición con los datos del producto y guarda con su id", async () => {
-    api.editarProducto.mockResolvedValue(taza);
-    const usuario = userEvent.setup();
-    render(<GestionProductos />);
+    renderizar();
 
     const tabla = await screen.findByRole("table", { name: "Productos" });
     await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
 
-    const formulario = zonaDe("Editar producto");
-    expect(within(formulario).getByLabelText("Nombre")).toHaveValue("Taza de cerámica");
-    expect(within(formulario).getByLabelText("Colores")).toHaveValue("Blanco, Negro");
-    await within(formulario).findByRole("option", { name: "Tazas y termos" });
-    await usuario.click(within(formulario).getByRole("button", { name: "Guardar" }));
+    expect(screen.getByTestId("ruta")).toHaveTextContent("/admin/productos/1");
+  });
 
-    expect(api.editarProducto).toHaveBeenCalledWith(1, expect.objectContaining({ nombre: "Taza de cerámica" }));
+  it("muestra el aviso que deja la pantalla de edición al volver", async () => {
+    renderizar({ aviso: { tipo: "status", texto: "Producto actualizado." } });
+
     expect(await screen.findByRole("status")).toHaveTextContent("Producto actualizado.");
   });
 
-  it("cancela el formulario sin guardar nada", async () => {
+  it("busca por nombre sin importar tildes ni mayúsculas", async () => {
     const usuario = userEvent.setup();
-    render(<GestionProductos />);
+    renderizar();
 
-    await usuario.click(await screen.findByRole("button", { name: "Nuevo producto" }));
-    await usuario.click(screen.getByRole("button", { name: "Cancelar" }));
+    await usuario.type(await screen.findByLabelText("Buscar por nombre o código"), "CERAMICA");
 
-    expect(screen.queryByRole("form")).not.toBeInTheDocument();
-    expect(api.crearProducto).not.toHaveBeenCalled();
+    const tabla = screen.getByRole("table", { name: "Productos" });
+    expect(within(tabla).getByText("Taza de cerámica")).toBeInTheDocument();
+    expect(within(tabla).queryByText("Gorra")).not.toBeInTheDocument();
+    expect(screen.getByText("Mostrando 1 de 3 productos")).toBeInTheDocument();
   });
 
-  it("B2-R5 · oculta un producto activo sin borrarlo", async () => {
+  it("filtra por categoría y por estado", async () => {
+    const usuario = userEvent.setup();
+    renderizar();
+
+    await usuario.selectOptions(await screen.findByLabelText("Categoría"), "Indumentaria");
+    await usuario.selectOptions(screen.getByLabelText("Estado"), "ocultos");
+
+    const tabla = screen.getByRole("table", { name: "Productos" });
+    expect(within(tabla).getByText("Remera")).toBeInTheDocument();
+    expect(within(tabla).queryByText("Gorra")).not.toBeInTheDocument();
+    expect(within(tabla).queryByText("Taza de cerámica")).not.toBeInTheDocument();
+  });
+
+  it("avisa cuando ningún producto coincide con la búsqueda", async () => {
+    const usuario = userEvent.setup();
+    renderizar();
+
+    await usuario.type(await screen.findByLabelText("Buscar por nombre o código"), "zapatilla");
+
+    expect(screen.getByText("No hay productos que coincidan con la búsqueda.")).toBeInTheDocument();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+
+  it("B2-R5 · oculta un producto activo sin borrarlo y vuelve a pedir la lista", async () => {
     api.cambiarEstadoProducto.mockResolvedValue({ ...taza, activo: false });
     const usuario = userEvent.setup();
-    render(<GestionProductos />);
+    renderizar();
 
     const tabla = await screen.findByRole("table", { name: "Productos" });
     await usuario.click(within(tabla).getByRole("button", { name: "Ocultar Taza de cerámica" }));
 
     expect(api.cambiarEstadoProducto).toHaveBeenCalledWith(1, false);
     expect(await screen.findByRole("status")).toHaveTextContent("ya no se ve en la tienda");
+    expect(api.obtenerProductosAdmin).toHaveBeenCalledTimes(2);
   });
 
   it("B2-R5 · vuelve a mostrar un producto oculto", async () => {
-    api.obtenerProductosAdmin.mockResolvedValue([{ ...taza, activo: false }]);
-    api.cambiarEstadoProducto.mockResolvedValue(taza);
+    api.cambiarEstadoProducto.mockResolvedValue(remera);
     const usuario = userEvent.setup();
-    render(<GestionProductos />);
+    renderizar();
 
     const tabla = await screen.findByRole("table", { name: "Productos" });
-    await usuario.click(within(tabla).getByRole("button", { name: "Mostrar Taza de cerámica" }));
+    await usuario.click(within(tabla).getByRole("button", { name: "Mostrar Remera" }));
 
-    expect(api.cambiarEstadoProducto).toHaveBeenCalledWith(1, true);
+    expect(api.cambiarEstadoProducto).toHaveBeenCalledWith(2, true);
   });
 
   it("avisa si no pudo cambiar el estado", async () => {
     api.cambiarEstadoProducto.mockRejectedValue(new Error("Falló la API"));
     const usuario = userEvent.setup();
-    render(<GestionProductos />);
+    renderizar();
 
     const tabla = await screen.findByRole("table", { name: "Productos" });
     await usuario.click(within(tabla).getByRole("button", { name: "Ocultar Taza de cerámica" }));
@@ -154,34 +146,5 @@ describe("GestionProductos", () => {
     expect(await screen.findByRole("alert")).toHaveTextContent(
       "No pudimos cambiar el estado del producto, probá de nuevo.",
     );
-  });
-
-  it("no deja formularios repetidos al guardar y volver a editar varias veces", async () => {
-    api.editarProducto.mockResolvedValue(taza);
-    const usuario = userEvent.setup();
-    render(<GestionProductos />);
-
-    for (let vuelta = 0; vuelta < 3; vuelta += 1) {
-      const tabla = await screen.findByRole("table", { name: "Productos" });
-      await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
-      expect(screen.getAllByRole("form", { name: "Editar producto" })).toHaveLength(1);
-      await usuario.click(within(zonaDe("Editar producto")).getByRole("button", { name: "Guardar" }));
-      await screen.findByRole("status");
-      expect(screen.queryAllByRole("form", { name: "Editar producto" })).toHaveLength(0);
-    }
-  });
-
-  it("deja Guardar y Cancelar debajo de las fotos al editar", async () => {
-    const usuario = userEvent.setup();
-    render(<GestionProductos />);
-
-    const tabla = await screen.findByRole("table", { name: "Productos" });
-    await usuario.click(within(tabla).getByRole("button", { name: "Editar Taza de cerámica" }));
-
-    const zona = zonaDe("Editar producto");
-    const fotos = within(zona).getByRole("heading", { name: /Fotos del producto/ });
-    const guardar = within(zona).getByRole("button", { name: "Guardar" });
-    expect(fotos.compareDocumentPosition(guardar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(guardar).toHaveAttribute("form", "formulario-producto");
   });
 });

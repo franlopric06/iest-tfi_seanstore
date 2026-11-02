@@ -57,6 +57,9 @@ export const pedirAdmin = async (ruta, opciones = {}) => {
 
 export const obtenerProductosAdmin = () => pedirAdmin('/api/admin/productos')
 
+export const obtenerProductoAdmin = (id) =>
+  pedirAdmin(`/api/admin/productos/${encodeURIComponent(id)}`)
+
 export const editarRapidoProducto = (id, datos) =>
   pedirAdmin(`/api/admin/productos/${encodeURIComponent(id)}/edicion-rapida`, {
     method: 'PATCH',

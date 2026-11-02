@@ -1,57 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { Plus } from 'lucide-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Cargando from '../comunes/Cargando.jsx'
 import EstadoVacio from '../comunes/EstadoVacio.jsx'
 import MensajeError from '../comunes/MensajeError.jsx'
-import FormularioProducto from './FormularioProducto.jsx'
-import FotosProducto from './FotosProducto.jsx'
+import FiltrosProductos from './FiltrosProductos.jsx'
 import TablaProductos from './TablaProductos.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
-import {
-  cambiarEstadoProducto,
-  crearProducto,
-  editarProducto,
-  obtenerProductosAdmin,
-} from '../../services/api.js'
+import { cambiarEstadoProducto, obtenerProductosAdmin } from '../../services/api.js'
+import { FILTROS_VACIOS, categoriasDe, filtrarProductos } from '../../utils/filtrarProductos.js'
 import textos from '../../data/textos.js'
 
 const etiquetas = textos.panel.productos
 
-// Pestaña «Productos» del panel (004-T28): botón «Nuevo producto», formulario
-// de alta o edición y la tabla. Después de cada cambio vuelve a pedir la lista
-// para que el panel muestre lo mismo que quedó guardado en la base.
+// Pestaña «Productos» del panel: buscador, filtros, botón «Nuevo producto» y
+// la tabla. Crear y editar se hacen en su propia pantalla
+// (/admin/productos/nuevo y /admin/productos/:id, ver EditarProducto.jsx).
 const GestionProductos = () => {
   const { cargando, datos: productos, error, reintentar } = useObtenerDatos(obtenerProductosAdmin)
-  const [formulario, setFormulario] = useState(null)
-  const [aviso, setAviso] = useState(null)
+  const ubicacion = useLocation()
+  const navegar = useNavigate()
+  // Aviso que deja la pantalla de edición al volver («Producto actualizado.»).
+  const [aviso, setAviso] = useState(ubicacion.state?.aviso ?? null)
   const [cambiandoId, setCambiandoId] = useState(null)
-  const zonaFormulario = useRef(null)
-
-  // Al abrir el formulario lo lleva a la vista; si se abre desde una fila de abajo no queda escondido.
-  useEffect(() => {
-    if (formulario) zonaFormulario.current?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
-  }, [formulario])
-
-  const abrir = (producto = null) => {
-    setAviso(null)
-    setFormulario({ producto, clave: producto?.id ?? 'nuevo' })
-  }
-
-  const guardar = async (datos) => {
-    const producto = formulario.producto
-    if (producto) {
-      await editarProducto(producto.id, datos)
-      setFormulario(null)
-      setAviso({ tipo: 'status', texto: etiquetas.actualizado })
-    } else {
-      // Al crear, el formulario queda abierto en modo edición del producto nuevo
-      // para poder agregarle las fotos (antes de existir no tiene dónde guardarlas).
-      const nuevo = await crearProducto(datos)
-      setFormulario({ producto: { ...datos, ...nuevo }, clave: nuevo.id })
-      setAviso({ tipo: 'status', texto: etiquetas.creado })
-    }
-    reintentar()
-  }
+  const [filtros, setFiltros] = useState(FILTROS_VACIOS)
 
   const cambiarEstado = async (producto) => {
     setAviso(null)
@@ -71,48 +43,42 @@ const GestionProductos = () => {
     if (cargando) return <Cargando etiqueta={etiquetas.cargando} cantidad={3} />
     if (error) return <MensajeError alReintentar={reintentar} />
     if (productos.length === 0) return <EstadoVacio frase={etiquetas.vacio} />
+
+    const visibles = filtrarProductos(productos, filtros)
     return (
-      <TablaProductos
-        productos={productos}
-        cambiandoId={cambiandoId}
-        alEditar={abrir}
-        alCambiarEstado={cambiarEstado}
-      />
+      <>
+        <FiltrosProductos filtros={filtros} categorias={categoriasDe(productos)} alCambiar={setFiltros} />
+        <p className="text-sm text-grafito" aria-live="polite">
+          {etiquetas.mostrando.replace('{cantidad}', visibles.length).replace('{total}', productos.length)}
+        </p>
+        {visibles.length === 0 ? (
+          <p className="py-6 text-center text-grafito">{etiquetas.sinResultados}</p>
+        ) : (
+          <TablaProductos
+            productos={visibles}
+            cambiandoId={cambiandoId}
+            alEditar={(producto) => navegar(`/admin/productos/${producto.id}`)}
+            alCambiarEstado={cambiarEstado}
+          />
+        )}
+      </>
     )
   }
 
   return (
     <div className="flex flex-col gap-4 pt-4">
-      <div ref={zonaFormulario} className="flex scroll-mt-24 flex-col gap-4">
-        {!formulario && (
-          <button
-            type="button"
-            onClick={() => abrir()}
-            className="flex min-h-11 items-center gap-2 self-start rounded-marca bg-violeta px-5 font-bold text-white shadow-tarjeta transition-colors hover:bg-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2"
-          >
-            <Plus aria-hidden="true" size={20} />
-            {etiquetas.nuevo}
-          </button>
-        )}
-        {formulario && (
-          <FormularioProducto
-            key={`formulario-${formulario.clave}`}
-            producto={formulario.producto}
-            guardar={guardar}
-            onCancelar={() => setFormulario(null)}
-            antesDeBotones={
-              formulario.producto && (
-                <FotosProducto key={`fotos-${formulario.producto.id}`} producto={formulario.producto} alCambiar={reintentar} />
-              )
-            }
-          />
-        )}
-        {aviso && (
-          <p role={aviso.tipo} className={`font-bold ${aviso.tipo === 'alert' ? 'text-error' : 'text-violeta'}`}>
-            {aviso.texto}
-          </p>
-        )}
-      </div>
+      <Link
+        to="/admin/productos/nuevo"
+        className="flex min-h-11 items-center gap-2 self-start rounded-marca bg-violeta px-5 font-bold text-white shadow-tarjeta transition-colors hover:bg-magenta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2"
+      >
+        <Plus aria-hidden="true" size={20} />
+        {etiquetas.nuevo}
+      </Link>
+      {aviso && (
+        <p role={aviso.tipo} className={`font-bold ${aviso.tipo === 'alert' ? 'text-error' : 'text-violeta'}`}>
+          {aviso.texto}
+        </p>
+      )}
       {contenido()}
     </div>
   )

@@ -16,6 +16,7 @@ const DetalleProducto = lazy(() => import('./pages/tienda/DetalleProducto.jsx'))
 const NoEncontrada = lazy(() => import('./pages/tienda/NoEncontrada.jsx'))
 const Ingresar = lazy(() => import('./pages/admin/Ingresar.jsx'))
 const Panel = lazy(() => import('./pages/admin/Panel.jsx'))
+const EditarProducto = lazy(() => import('./pages/admin/EditarProducto.jsx'))
 
 function App() {
   const { sesion } = useSesion()
@@ -37,6 +38,7 @@ function App() {
             />
             <Route element={<RutaProtegida />}>
               <Route path="/admin" element={<Panel />} />
+              <Route path="/admin/productos/:id" element={<EditarProducto />} />
             </Route>
             <Route path="*" element={<NoEncontrada />} />
           </Routes>

@@ -10,7 +10,14 @@ const api = vi.hoisted(() => ({
 
 vi.mock("../src/services/api.js", () => api);
 
-import Panel from "../src/pages/admin/Panel.jsx";
+import { MemoryRouter } from "react-router-dom";
+import PanelSinRouter from "../src/pages/admin/Panel.jsx";
+
+const Panel = () => (
+  <MemoryRouter>
+    <PanelSinRouter />
+  </MemoryRouter>
+);
 
 const contenidoTaller = {
   titulo: "Nuestro taller",

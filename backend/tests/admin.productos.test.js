@@ -51,6 +51,29 @@ afterAll(() => {
   vi.unstubAllEnvs();
 });
 
+describe("GET /api/admin/productos/:id", () => {
+  it("devuelve un producto, aunque esté oculto, para la pantalla de edición", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [productos[1]] });
+
+    const respuesta = await comoAdmin("get", "/api/admin/productos/2");
+
+    expect(respuesta.status).toBe(200);
+    expect(respuesta.body).toEqual(productos[1]);
+    expect(consultaSimulada).toHaveBeenCalledWith(expect.stringMatching(/WHERE p\.id = \$1/), ["2"]);
+  });
+
+  it("responde 404 si no existe y 400 si el id no es un número", async () => {
+    consultaSimulada.mockResolvedValueOnce({ rows: [] });
+
+    expect((await comoAdmin("get", "/api/admin/productos/99")).status).toBe(404);
+    expect((await comoAdmin("get", "/api/admin/productos/abc")).status).toBe(400);
+  });
+
+  it("requiere sesión", async () => {
+    expect((await request(app).get("/api/admin/productos/2")).status).toBe(401);
+  });
+});
+
 describe("GET /api/admin/productos", () => {
   it("B1-R14 · lista productos activos e inactivos junto con el código", async () => {
     const respuesta = await comoAdmin("get", "/api/admin/productos");

@@ -108,3 +108,14 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
 ## Pendiente para después (29/10/2026)
 
 - Partir `admin.productos.controller.js` en archivos más chicos: `admin.productos.listar.controller.js`, `admin.productos.crear.controller.js`, `admin.productos.editar.controller.js` y `admin.productos.estado.controller.js` (hoy supera las ~150 líneas de la guía).
+
+## Cambios después de probar el panel (01/11/2026)
+
+Al probar el panel publicado, el estudiante pidió estos cambios. Los hizo Claude, con tests:
+
+- Se corrigió que el formulario de edición se repitiera al guardar y volver a editar (dos piezas con la misma `key` de React).
+- Guardar y Cancelar quedan debajo de las fotos, en productos y en Nuestro taller, y al crear un producto se abre su edición para agregarle fotos.
+- Crear y editar un producto tienen su propia pantalla (`/admin/productos/nuevo` y `/admin/productos/:id`) con «Volver a productos»; se agregó `GET /api/admin/productos/:id`.
+- La lista del panel tiene buscador por nombre o código y filtros por categoría y estado.
+- El menú de la tienda tiene «Inicio» y marca la sección en la que está la persona.
+

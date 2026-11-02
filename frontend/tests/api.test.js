@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
+  obtenerProductoAdmin,
   borrarFotoProducto,
   cambiarFotoTaller,
   elegirFotoPrincipal,
@@ -221,5 +222,17 @@ describe('api.js', () => {
     await llamar()
 
     expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}${ruta}`, expect.objectContaining({ method: metodo }))
+  })
+
+  it('pide un producto del panel con el token', async () => {
+    sesion.obtenerSesion.mockReturnValue('jwt-de-prueba')
+    fetchSimulado.mockResolvedValue({ ok: true, json: () => Promise.resolve({ id: 4 }) })
+    vi.stubGlobal('fetch', fetchSimulado)
+
+    await obtenerProductoAdmin(4)
+
+    expect(fetchSimulado).toHaveBeenCalledWith(`${URL_BASE}/api/admin/productos/4`, {
+      headers: { Authorization: 'Bearer jwt-de-prueba' },
+    })
   })
 })

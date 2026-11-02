@@ -3,7 +3,7 @@ import { validarProducto } from "../validaciones/producto.js";
 import { generarCodigo, prefijoDeNombre } from "../utils/generarCodigo.js";
 import { generarSlug } from "../utils/generarSlug.js";
 
-const SQL_LISTAR_PRODUCTOS = `
+const SQL_PRODUCTOS_BASE = `
   SELECT
     p.id,
     p.codigo,
@@ -24,8 +24,10 @@ const SQL_LISTAR_PRODUCTOS = `
   FROM productos p
   JOIN categorias c ON c.id = p.categoria_id
   LEFT JOIN producto_fotos f ON f.producto_id = p.id AND f.orden = 1
-  ORDER BY c.orden, p.nombre
 `;
+
+const SQL_LISTAR_PRODUCTOS = `${SQL_PRODUCTOS_BASE} ORDER BY c.orden, p.nombre`;
+const SQL_OBTENER_PRODUCTO = `${SQL_PRODUCTOS_BASE} WHERE p.id = $1`;
 
 const SQL_EDICION_RAPIDA = `
   UPDATE productos
@@ -58,6 +60,24 @@ export const listarProductosAdmin = async (_req, res, next) => {
   try {
     const { rows } = await consulta(SQL_LISTAR_PRODUCTOS, []);
     res.json(rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Un producto (activo u oculto) para la pantalla de edición del panel.
+export const obtenerProductoAdmin = async (req, res, next) => {
+  if (!esIdValido(req.params.id)) {
+    res.status(400).json({ error: "El producto no es válido." });
+    return;
+  }
+  try {
+    const { rows } = await consulta(SQL_OBTENER_PRODUCTO, [req.params.id]);
+    if (rows.length === 0) {
+      res.status(404).json({ error: "No encontramos este producto." });
+      return;
+    }
+    res.json(rows[0]);
   } catch (error) {
     next(error);
   }
