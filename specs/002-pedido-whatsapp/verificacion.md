@@ -6,7 +6,7 @@
 | --- | --- | --- | --- |
 | R1 | Cumple | `frontend/tests/SelectorVariante.test.jsx` › “un chip por color, solo texto, con el elegido marcado”, “un chip por talle, con el elegido marcado”, “sin talles no aparece la sección de talle” y “el campo con etiqueta visible corrige la cantidad al salir del campo”; integración en `frontend/tests/DetalleProducto.test.jsx` › “deshabilita el botón y muestra los avisos hasta elegir color y talle”. Código: `frontend/src/components/tienda/SelectorVariante.jsx` (`SelectorVariante`), `frontend/src/components/tienda/PedidoWhatsApp.jsx` y `frontend/src/pages/tienda/DetalleProducto.jsx`. | — |
 | R2 | Cumple | `frontend/tests/whatsapp.test.js` › “arma el mensaje exacto del pedido con producto, color, talle y cantidad” y “sin talles el mensaje omite la parte del talle (Talle único)”; integración en `frontend/tests/DetalleProducto.test.jsx` › “abre WhatsApp con el mensaje armado después de elegir las variantes”. Código: `frontend/src/utils/whatsapp.js` (`armarMensajePedido`, `armarEnlaceWhatsApp`) y `frontend/src/components/tienda/BotonWhatsApp.jsx` (`BotonWhatsApp`). | — |
-| R3 | Prueba manual pendiente | `frontend/tests/whatsapp.test.js` › “con stock = 0 pregunta por disponibilidad con color, talle y cantidad” y “con stock = 0 y sin talles omite la parte del talle”; `frontend/tests/BotonWhatsApp.test.jsx` también prueba el texto “Consultar por WhatsApp” y el enlace abierto. Código: `frontend/src/utils/whatsapp.js` (`armarMensajePedido`) y `frontend/src/components/tienda/PedidoWhatsApp.jsx` (`sinStock`). Falta confirmar el traspaso real a WhatsApp en celular para un producto sin stock. | — |
+| R3 | Cumple | `frontend/tests/whatsapp.test.js` › “con stock = 0 pregunta por disponibilidad con color, talle y cantidad” y “con stock = 0 y sin talles omite la parte del talle”; `frontend/tests/BotonWhatsApp.test.jsx` también prueba el texto “Consultar por WhatsApp” y el enlace abierto. Código: `frontend/src/utils/whatsapp.js` (`armarMensajePedido`) y `frontend/src/components/tienda/PedidoWhatsApp.jsx` (`sinStock`). Prueba manual del 02/11 en celular: con la Botella en stock 0, la ficha muestra «Sin stock» y el botón abrió WhatsApp con «Hola! Me interesa Botella, color Negro, cantidad 1. ¿Tienen disponibilidad?» (sin talle, porque la botella no tiene talles). | — |
 | R4 | Cumple | `frontend/tests/BotonWhatsApp.test.jsx` › “con stock el texto es ‘Pedir por WhatsApp’”, “sin stock el texto es ‘Consultar por WhatsApp’” y “usa los tokens de la marca y el ícono del globo de conversación”. Código: `frontend/src/components/tienda/BotonWhatsApp.jsx` usa `bg-whatsapp`, `text-whatsapp-texto`, `MessageCircle`, `min-h-11`, texto accesible visible y foco `focus-visible:ring-2`. | — |
 | R5 | Cumple | `frontend/tests/whatsapp.test.js` › “sin variable devuelve null” y “con la variable indefinida devuelve null”; `frontend/tests/BotonWhatsApp.test.jsx` › “sin la variable el botón no se renderiza (R5)”; `frontend/tests/BotonWhatsAppFlotante.test.jsx` › “no se renderiza si VITE_WHATSAPP está vacía”. Código: `frontend/src/utils/whatsapp.js` (`armarEnlaceWhatsApp`), `frontend/src/components/tienda/BotonWhatsApp.jsx` y `frontend/src/components/atencion/BotonWhatsAppFlotante.jsx`. | — |
 | R6 | Cumple | `frontend/tests/BotonWhatsAppFlotante.test.jsx` › “muestra el botón flotante accesible con área táctil de al menos 44 × 44 px” y “abre WhatsApp con el mensaje genérico en pestaña nueva y aislada”; `frontend/tests/App.test.jsx` › “muestra el botón flotante de WhatsApp en el layout de la tienda”. Código: `frontend/src/App.jsx` monta el botón fuera de las rutas y `frontend/src/components/atencion/BotonWhatsAppFlotante.jsx` lo fija abajo a la derecha con `MessageCircle` y `aria-label`. El estudiante informó que lo probó en todas las páginas de la tienda. | — |
@@ -17,9 +17,9 @@
 | R11 | Cumple | `frontend/tests/useSeleccionPedido.test.jsx` › “con un solo color disponible, viene ya elegido”, “con un solo talle disponible, viene ya elegido” y pruebas de ausencia de avisos para opción única; integración en `frontend/tests/DetalleProducto.test.jsx` › “preselecciona el color y talle únicos sin mostrar avisos”. Código: `frontend/src/hooks/useSeleccionPedido.js` preselecciona colores y talles únicos; `frontend/src/pages/tienda/DetalleProducto.jsx` remonta `PedidoWhatsApp` con `key={producto.slug}` al cambiar de producto. | — |
 
 ## Criterios de finalización
-- [ ] Todos los requisitos Alta cumplen: R3 queda pendiente de confirmar la apertura real de WhatsApp en celular para una consulta sin stock.
+- [x] Todos los requisitos Alta cumplen (R3 confirmado en celular el 02/11).
 - [x] Tests en verde (`npm test` en `frontend/`: 17 archivos y 116 tests; `npm test` en `backend/`: 4 archivos y 18 tests) y `npm run build` en `frontend/` sin errores.
-- [ ] Lighthouse de 80 o más en las cuatro categorías: pendiente de ejecutar y registrar.
+- [x] Lighthouse de 80 o más en las cuatro categorías: PageSpeed del 02/11 sobre sean-store.vercel.app dio 97, 100, 100 y 100 en celular y 100 en las cuatro en computadora.
 - [x] Revisado con la skill `revisar-marca` (T09 completada; excepción `rounded-full` documentada en `DESIGN.md`).
 
 ## Constitución
@@ -28,11 +28,13 @@
 - Principio 5 (tests): ok para esta verificación — frontend 116/116, backend 18/18 y build frontend correcto. `backend/package.json` no define un script `build`.
 - Principio 6 (seguridad): ok — `.env` y `.env.*` están ignorados por Git, `DATABASE_URL` se lee desde `process.env` en `backend/src/db/conexion.js` y no se guarda información personal de la consulta en esta funcionalidad.
 
-## Pruebas manuales que tiene que hacer el estudiante
+## Pruebas manuales del estudiante
+Las dos quedaron hechas el 02/11:
+
 1. En un celular con `VITE_WHATSAPP` configurada, abrir un producto sin stock, elegir sus opciones y tocar “Consultar por WhatsApp”; confirmar que abre WhatsApp y que el mensaje pregunta por disponibilidad con producto, color, talle (si corresponde) y cantidad. La generación del enlace ya está cubierta por los tests; falta confirmar el traspaso real para este caso.
 2. Ejecutar Lighthouse y registrar que las cuatro categorías alcanzan 80 o más.
 
 El estudiante informó que ya probó en `sean-store.vercel.app` un pedido de remera con color y talle, una taza con opción única y el botón flotante en todas las páginas; indicó que todo funcionó correctamente.
 
 ## Conclusión
-Cumplen 10 de 11 requisitos Alta; R3 tiene la prueba automatizada aprobada, pero queda pendiente la comprobación manual del flujo real en celular para stock cero. No se encontraron fallas de código ni de spec. Próximo paso: completar las pruebas manuales pendientes y actualizar esta verificación; no hace falta `/implementar` ni `/cambio` salvo que esas pruebas revelen un problema.
+Cumplen **11 de 11 requisitos Alta**. La prueba manual de R3 en celular (02/11) confirmó lo que ya cubrían los tests, y Lighthouse supera 80 en las cuatro categorías. No hubo fallas de código ni de spec.
