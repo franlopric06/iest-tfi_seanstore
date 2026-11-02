@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Cargando from '../comunes/Cargando.jsx'
 import MensajeError from '../comunes/MensajeError.jsx'
 import FormularioSubirFoto from './FormularioSubirFoto.jsx'
+import useAvisoTemporal from '../../hooks/useAvisoTemporal.js'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import {
   borrarFotoProducto,
@@ -26,7 +27,7 @@ const FotosProducto = ({ producto, alCambiar }) => {
   )
   const [confirmando, setConfirmando] = useState(null)
   const [ocupado, setOcupado] = useState(false)
-  const [aviso, setAviso] = useState(null)
+  const [aviso, setAviso] = useAvisoTemporal()
 
   const hacer = async (accion, textoExito) => {
     setOcupado(true)

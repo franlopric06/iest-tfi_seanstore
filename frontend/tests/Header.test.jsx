@@ -1,6 +1,6 @@
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Header from "../src/components/layout/Header.jsx";
 
@@ -75,7 +75,30 @@ describe("Header · navegación de administración", () => {
     expect(boton).toHaveAttribute("aria-controls", menu.id);
     expect(boton).toHaveAccessibleName("Cerrar menú");
     await usuario.keyboard("{Escape}");
-    expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument());
+  });
+
+  it("con el menú abierto la página no se desplaza y tocar afuera lo cierra", async () => {
+    const usuario = userEvent.setup();
+    renderizarHeader();
+
+    await usuario.click(screen.getByRole("button", { name: "Abrir menú" }));
+    expect(document.body.style.overflow).toBe("hidden");
+    await usuario.click(screen.getByTestId("fondo-menu"));
+
+    await waitFor(() => expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument());
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("tocar «Inicio» estando en el inicio sube al principio de la página", async () => {
+    const subir = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    const usuario = userEvent.setup();
+    renderizarHeader("/");
+
+    await usuario.click(screen.getByRole("link", { name: "Inicio" }));
+
+    await waitFor(() => expect(subir).toHaveBeenCalledWith(expect.objectContaining({ top: 0 })));
+    subir.mockRestore();
   });
 
   it("cierra el menú del celular al ir a otra página", async () => {
@@ -87,7 +110,7 @@ describe("Header · navegación de administración", () => {
     const menu = screen.getByRole("navigation", { name: "Menú" });
     await usuario.click(within(menu).getByRole("link", { name: "Panel" }));
 
-    expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument());
     expect(screen.getByRole("heading", { name: "Panel de administración" })).toBeInTheDocument();
   });
 

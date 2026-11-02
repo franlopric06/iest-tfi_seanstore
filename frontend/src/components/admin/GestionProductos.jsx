@@ -6,6 +6,7 @@ import EstadoVacio from '../comunes/EstadoVacio.jsx'
 import MensajeError from '../comunes/MensajeError.jsx'
 import FiltrosProductos from './FiltrosProductos.jsx'
 import TablaProductos from './TablaProductos.jsx'
+import useAvisoTemporal from '../../hooks/useAvisoTemporal.js'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { cambiarEstadoProducto, obtenerProductosAdmin } from '../../services/api.js'
 import { FILTROS_VACIOS, categoriasDe, filtrarProductos } from '../../utils/filtrarProductos.js'
@@ -21,7 +22,7 @@ const GestionProductos = () => {
   const ubicacion = useLocation()
   const navegar = useNavigate()
   // Aviso que deja la pantalla de edición al volver («Producto actualizado.»).
-  const [aviso, setAviso] = useState(ubicacion.state?.aviso ?? null)
+  const [aviso, setAviso] = useAvisoTemporal(ubicacion.state?.aviso ?? null)
   const [cambiandoId, setCambiandoId] = useState(null)
   const [filtros, setFiltros] = useState(FILTROS_VACIOS)
 

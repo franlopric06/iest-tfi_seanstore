@@ -121,3 +121,8 @@ Al probar el panel publicado, el estudiante pidió estos cambios. Los hizo Claud
 - Las listas desplegables del panel (filtros y categoría del producto) usan un componente propio, `ListaDesplegable`, con el estilo de la tienda en vez del `<select>` del navegador; es accesible con teclado (patrón combobox).
 - Los botones Guardar, Editar y Ocultar/Mostrar de la lista tienen el mismo tamaño (clases compartidas en `utils/clasesBotones.js`); el alto queda en 44 px por la regla de accesibilidad de `DESIGN.md`.
 - En el celular, el menú de arriba es un menú hamburguesa con el ícono en magenta.
+- En la edición rápida, Guardar queda apagado si no hay cambios, y los avisos de éxito del panel («Cambios guardados.», «Foto subida.», etc.) se borran solos a los 3 segundos (`useAvisoTemporal`); los de error quedan.
+- El menú del celular baja con una animación, es blanco con la sección actual en magenta, oscurece la página de atrás, no deja desplazar la página mientras está abierto y se cierra con la X, tocando afuera o con Escape.
+- Tocar un enlace de la página en la que ya se está (por ejemplo «Inicio» estando en el inicio) sube al principio.
+- El catálogo tiene un chip «Todos» para volver a ver todos los productos después de filtrar por categoría.
+

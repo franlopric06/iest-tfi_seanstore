@@ -5,6 +5,7 @@ import MensajeError from '../../components/comunes/MensajeError.jsx'
 import MetaPagina from '../../components/comunes/MetaPagina.jsx'
 import FormularioProducto from '../../components/admin/FormularioProducto.jsx'
 import FotosProducto from '../../components/admin/FotosProducto.jsx'
+import useAvisoTemporal from '../../hooks/useAvisoTemporal.js'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { crearProducto, editarProducto, obtenerProductoAdmin } from '../../services/api.js'
 import textos from '../../data/textos.js'
@@ -14,8 +15,7 @@ const etiquetas = textos.panel.productos
 // Pantalla propia para crear o editar un producto: /admin/productos/nuevo y
 // /admin/productos/:id. Al tener su dirección, el botón «atrás» del navegador
 // vuelve a la lista y se puede recargar sin perder el producto abierto.
-const EditarProducto = () => {
-  const { id } = useParams()
+const PantallaProducto = ({ id }) => {
   const esNuevo = id === 'nuevo'
   const navegar = useNavigate()
   const ubicacion = useLocation()
@@ -38,7 +38,7 @@ const EditarProducto = () => {
     navegar('/admin', { state: { aviso: { tipo: 'status', texto: etiquetas.actualizado } } })
   }
 
-  const aviso = ubicacion.state?.aviso
+  const [aviso] = useAvisoTemporal(ubicacion.state?.aviso ?? null)
 
   const contenido = () => {
     // Justo después de crear se cambia el id de la dirección: hasta que llegan los
@@ -72,6 +72,13 @@ const EditarProducto = () => {
       <div className="rounded-marca bg-white p-4 shadow-tarjeta md:p-6">{contenido()}</div>
     </section>
   )
+}
+
+// Con key={id}, al pasar de /nuevo a /7 después de crear, la pantalla arranca de
+// cero: vuelve a pedir el producto y toma el aviso nuevo de la navegación.
+const EditarProducto = () => {
+  const { id } = useParams()
+  return <PantallaProducto key={id} id={id} />
 }
 
 export default EditarProducto

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Cargando from '../comunes/Cargando.jsx'
 import MensajeError from '../comunes/MensajeError.jsx'
 import FotosTaller from './FotosTaller.jsx'
+import useAvisoTemporal from '../../hooks/useAvisoTemporal.js'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { guardarTextoTaller, obtenerTaller } from '../../services/api.js'
 import textos from '../../data/textos.js'
@@ -14,7 +15,7 @@ const FormularioTextoTaller = ({ contenido, antesDeBotones = null }) => {
   const [titulo, setTitulo] = useState(contenido.titulo)
   const [parrafo, setParrafo] = useState(contenido.parrafo)
   const [guardando, setGuardando] = useState(false)
-  const [aviso, setAviso] = useState(null)
+  const [aviso, setAviso] = useAvisoTemporal()
 
   const guardar = async (evento) => {
     evento.preventDefault()
@@ -22,9 +23,9 @@ const FormularioTextoTaller = ({ contenido, antesDeBotones = null }) => {
     setAviso(null)
     try {
       await guardarTextoTaller({ titulo, parrafo })
-      setAviso('guardado')
+      setAviso({ tipo: 'status' })
     } catch {
-      setAviso('error')
+      setAviso({ tipo: 'alert' })
     } finally {
       setGuardando(false)
     }
@@ -71,12 +72,12 @@ const FormularioTextoTaller = ({ contenido, antesDeBotones = null }) => {
       {/* Las fotos van entre el texto y el botón Guardar, igual que en productos;
           el botón sigue enviando el texto gracias al atributo form. */}
       {antesDeBotones}
-      {aviso === 'guardado' && (
+      {aviso?.tipo === 'status' && (
         <p role="status" className="mb-4 font-bold text-violeta">
           {textosTaller.guardado}
         </p>
       )}
-      {aviso === 'error' && (
+      {aviso?.tipo === 'alert' && (
         <p role="alert" className="mb-4 font-bold text-violeta">
           {textosTaller.errorGuardar}
         </p>

@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { act, cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 const api = vi.hoisted(() => ({ editarRapidoProducto: vi.fn() }));
@@ -116,5 +116,33 @@ describe("TablaProductos", () => {
       "Ingresá un precio y un stock válidos.",
     );
     expect(api.editarRapidoProducto).not.toHaveBeenCalled();
+  });
+
+  it("deja Guardar apagado mientras no haya cambios", async () => {
+    const usuario = userEvent.setup();
+    render(<TablaProductos productos={productos} />);
+
+    const tarjeta = screen.getByLabelText("Tarjeta de Taza de cerámica");
+    const guardar = within(tarjeta).getByRole("button", { name: "Guardar" });
+    expect(guardar).toBeDisabled();
+    await usuario.type(within(tarjeta).getByLabelText("Stock"), "1");
+    expect(guardar).toBeEnabled();
+  });
+
+  it("borra «Cambios guardados.» a los 3 segundos y vuelve a apagar Guardar", async () => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    api.editarRapidoProducto.mockResolvedValue({});
+    const usuario = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    render(<TablaProductos productos={productos} />);
+
+    const tarjeta = screen.getByLabelText("Tarjeta de Taza de cerámica");
+    await usuario.type(within(tarjeta).getByLabelText("Stock"), "1");
+    await usuario.click(within(tarjeta).getByRole("button", { name: "Guardar" }));
+    expect(await within(tarjeta).findByRole("status")).toHaveTextContent("Cambios guardados.");
+    expect(within(tarjeta).getByRole("button", { name: "Guardar" })).toBeDisabled();
+
+    await act(() => vi.advanceTimersByTime(3000));
+    expect(within(tarjeta).queryByRole("status")).not.toBeInTheDocument();
+    vi.useRealTimers();
   });
 });

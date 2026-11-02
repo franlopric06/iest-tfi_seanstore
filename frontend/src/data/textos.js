@@ -156,6 +156,7 @@ const textos = {
     titulo: 'Catálogo',
     cargando: 'Cargando productos',
     filtro: 'Filtrar por categoría',
+    todos: 'Todos',
     vacio: {
       frase: 'No encontramos productos con esta categoría',
       enlace: 'Ver todo el catálogo',

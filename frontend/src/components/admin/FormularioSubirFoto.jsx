@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import useAvisoTemporal from '../../hooks/useAvisoTemporal.js'
 import textos from '../../data/textos.js'
 import { TIPOS_FOTO, mensajeDeErrorFoto, problemaDeArchivo } from '../../utils/archivoFoto.js'
 
@@ -15,7 +16,7 @@ const FormularioSubirFoto = ({ idBase, textoBoton = etiquetas.subir, altInicial 
   const [alt, setAlt] = useState(altInicial)
   const [generadaConIA, setGeneradaConIA] = useState(false)
   const [enviando, setEnviando] = useState(false)
-  const [aviso, setAviso] = useState(null)
+  const [aviso, setAviso] = useAvisoTemporal()
   const [vuelta, setVuelta] = useState(0) // cambia la key del input para vaciarlo
 
   const enviar = async (evento) => {

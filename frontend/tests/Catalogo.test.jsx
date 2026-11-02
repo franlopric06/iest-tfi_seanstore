@@ -133,15 +133,28 @@ describe('Catálogo · filtro por categoría (R7)', () => {
       })
   })
 
-  it('R7 · sin slug pide todos los productos y ningún chip queda marcado', async () => {
+  it('R7 · sin slug pide todos los productos y queda marcado solo «Todos»', async () => {
     api.obtenerProductos.mockResolvedValue(productos)
     armar()
 
     await esperarTitulo()
     expect(api.obtenerProductos).toHaveBeenCalledWith()
+    const filtro = screen.getByRole('navigation', { name: 'Filtrar por categoría' })
+    expect(within(filtro).getByRole('link', { name: 'Todos' })).toHaveAttribute('aria-current', 'page')
     textos.franja.categorias.forEach(({ nombre }) => {
-      expect(screen.getByRole('link', { name: nombre })).not.toHaveAttribute('aria-current')
+      expect(within(filtro).getByRole('link', { name: nombre })).not.toHaveAttribute('aria-current')
     })
+  })
+
+  it('R7 · con una categoría elegida, «Todos» vuelve al catálogo completo', async () => {
+    api.obtenerProductos.mockResolvedValue(productos)
+    armar('/catalogo/indumentaria')
+
+    await esperarTitulo()
+    const filtro = screen.getByRole('navigation', { name: 'Filtrar por categoría' })
+    const todos = within(filtro).getByRole('link', { name: 'Todos' })
+    expect(todos).toHaveAttribute('href', '/catalogo')
+    expect(todos).not.toHaveAttribute('aria-current')
   })
 
   it("R7 · la página de categoría lleva su propio título y descripción SEO", async () => {

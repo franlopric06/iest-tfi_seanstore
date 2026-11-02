@@ -1,82 +1,21 @@
-import { useState } from 'react'
-import { editarRapidoProducto } from '../../services/api.js'
+import useEdicionRapida from '../../hooks/useEdicionRapida.js'
 import textos from '../../data/textos.js'
 import BotonesProducto from './BotonesProducto.jsx'
 import FotoProductoAdmin from './FotoProductoAdmin.jsx'
 import crearControlesEdicionRapida from './crearControlesEdicionRapida.jsx'
 
 const TablaProductos = ({ productos, cambiandoId = null, alEditar, alCambiarEstado }) => {
-  const [borradores, setBorradores] = useState({})
-  const [resultados, setResultados] = useState({})
+  const edicion = useEdicionRapida()
   const etiquetas = textos.panel.productos
-
-  const borradorInicial = (producto) => ({
-    precio: String(producto.precio),
-    stock: String(producto.stock),
-    destacado: producto.destacado,
-  })
-
-  const obtenerBorrador = (producto) =>
-    borradores[producto.id] ?? borradorInicial(producto)
-
-  const actualizar = (producto, campo, valor) => {
-    setBorradores((anteriores) => ({
-      ...anteriores,
-      [producto.id]: {
-        ...(anteriores[producto.id] ?? borradorInicial(producto)),
-        [campo]: valor,
-      },
-    }))
-    setResultados((anteriores) => ({ ...anteriores, [producto.id]: null }))
-  }
-
-  const guardar = async (producto) => {
-    const borrador = obtenerBorrador(producto)
-    if (
-      borrador.precio.trim() === '' ||
-      borrador.stock.trim() === '' ||
-      !Number.isFinite(Number(borrador.precio)) ||
-      Number(borrador.precio) < 0 ||
-      !Number.isInteger(Number(borrador.stock)) ||
-      Number(borrador.stock) < 0
-    ) {
-      setResultados((anteriores) => ({
-        ...anteriores,
-        [producto.id]: { invalido: true },
-      }))
-      return
-    }
-
-    setResultados((anteriores) => ({
-      ...anteriores,
-      [producto.id]: { cargando: true },
-    }))
-
-    try {
-      await editarRapidoProducto(producto.id, {
-        precio: Number(borrador.precio),
-        stock: Number(borrador.stock),
-        destacado: borrador.destacado,
-      })
-      setResultados((anteriores) => ({
-        ...anteriores,
-        [producto.id]: { exito: true },
-      }))
-    } catch {
-      setResultados((anteriores) => ({
-        ...anteriores,
-        [producto.id]: { error: true },
-      }))
-    }
-  }
 
   const controles = (producto) =>
     crearControlesEdicionRapida({
-      borrador: obtenerBorrador(producto),
+      borrador: edicion.borradorDe(producto),
       etiquetas,
-      resultado: resultados[producto.id],
-      alCambiar: (campo, valor) => actualizar(producto, campo, valor),
-      alGuardar: () => guardar(producto),
+      resultado: edicion.resultadoDe(producto),
+      sinCambios: !edicion.hayCambios(producto),
+      alCambiar: (campo, valor) => edicion.actualizar(producto, campo, valor),
+      alGuardar: () => edicion.guardar(producto),
     })
 
   const botones = (producto) => (

@@ -4,6 +4,7 @@ const crearControlesEdicionRapida = ({
   borrador,
   etiquetas,
   resultado,
+  sinCambios = false,
   alCambiar,
   alGuardar,
 }) => [
@@ -46,7 +47,8 @@ const crearControlesEdicionRapida = ({
   <div key="guardar" className="flex flex-col items-start gap-2">
     <button
       type="button"
-      disabled={resultado?.cargando}
+      // Sin cambios no hay nada que guardar: el botón queda apagado.
+      disabled={resultado?.cargando || sinCambios}
       onClick={alGuardar}
       className={BOTON_ACCION_PRINCIPAL}
     >
