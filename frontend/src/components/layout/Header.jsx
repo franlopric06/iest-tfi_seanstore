@@ -1,5 +1,5 @@
 import { LogIn } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import textos from '../../data/textos.js'
 import useSesion from '../../hooks/useSesion.js'
 
@@ -14,6 +14,11 @@ const Header = () => {
 
   const claseEnlace =
     "inline-flex min-h-11 shrink-0 items-center gap-1 px-2 text-sm font-bold text-white transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-violeta md:gap-2 md:px-3 md:text-lg"
+
+  // NavLink marca solo la sección en la que está la persona (subrayado amarillo
+  // y aria-current="page" para los lectores de pantalla).
+  const claseNavegacion = ({ isActive }) =>
+    `${claseEnlace} rounded-marca underline-offset-8 ${isActive ? 'underline decoration-amarillo decoration-2' : ''}`
 
   return (
     <header className="sticky top-0 z-30 bg-violeta shadow-tarjeta">
@@ -33,14 +38,17 @@ const Header = () => {
           aria-label="Navegación principal"
           className="flex flex-nowrap items-center gap-0.5 md:gap-2"
         >
-          <Link to="/catalogo" className={claseEnlace}>
+          <NavLink to="/" end className={claseNavegacion}>
+            {textos.header.textoInicio}
+          </NavLink>
+          <NavLink to="/catalogo" className={claseNavegacion}>
             {textos.header.enlaceCatalogo}
-          </Link>
+          </NavLink>
           {sesion ? (
             <>
-              <Link to="/admin" className={claseEnlace}>
+              <NavLink to="/admin" className={claseNavegacion}>
                 {textos.header.enlacePanel}
-              </Link>
+              </NavLink>
               <button
                 type="button"
                 onClick={cerrarSesion}

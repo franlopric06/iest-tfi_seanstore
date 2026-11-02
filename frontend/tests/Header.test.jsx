@@ -64,4 +64,22 @@ describe("Header · navegación de administración", () => {
     expect(enlaceIngresar).toHaveClass("min-h-11");
     expect(enlaceIngresar.querySelector("span")).toHaveClass("sr-only", "md:not-sr-only");
   });
+
+  it("muestra Inicio en el menú y marca la sección en la que está la persona", () => {
+    renderizarHeader("/catalogo");
+
+    const inicio = screen.getByRole("link", { name: "Inicio" });
+    const catalogo = screen.getByRole("link", { name: "Catálogo" });
+    expect(inicio).toHaveAttribute("href", "/");
+    expect(inicio).not.toHaveAttribute("aria-current");
+    expect(catalogo).toHaveAttribute("aria-current", "page");
+    expect(catalogo).toHaveClass("underline", "decoration-amarillo");
+  });
+
+  it("en el inicio marca solo Inicio", () => {
+    renderizarHeader("/");
+
+    expect(screen.getByRole("link", { name: "Inicio" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Catálogo" })).not.toHaveAttribute("aria-current");
+  });
 });
