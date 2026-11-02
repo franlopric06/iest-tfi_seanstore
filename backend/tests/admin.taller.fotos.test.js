@@ -30,6 +30,8 @@ const filaNueva = {
   foto_1_alt: "La prensa térmica del taller",
   foto_2_url: "/img/sitio/nuestro-taller-clienta.jpg",
   foto_2_alt: "Una clienta con su remera",
+  foto_1_ia: false,
+  foto_2_ia: true,
 };
 
 const cambiarFoto = (numero = "1", alt = "La prensa térmica del taller") =>
@@ -58,11 +60,23 @@ describe("PUT /api/admin/taller/fotos/:numero", () => {
     const respuesta = await cambiarFoto();
 
     expect(respuesta.status).toBe(200);
-    expect(respuesta.body.fotos[0]).toEqual({ url: URL_NUEVA, alt: "La prensa térmica del taller" });
+    expect(respuesta.body.fotos[0]).toEqual({ url: URL_NUEVA, alt: "La prensa térmica del taller", generada_con_ia: false });
     expect(consultaSimulada.mock.calls[1]).toEqual([
-      expect.stringMatching(/SET foto_1_url = \$1, foto_1_alt = \$2/),
-      [URL_NUEVA, "La prensa térmica del taller"],
+      expect.stringMatching(/SET foto_1_url = \$1, foto_1_alt = \$2, foto_1_ia = \$3/),
+      [URL_NUEVA, "La prensa térmica del taller", false],
     ]);
+  });
+
+  it("guarda la marca «Generado con IA» si se pide", async () => {
+    consultaSimulada
+      .mockResolvedValueOnce({ rows: [{ url: "/img/sitio/nuestro-taller-clienta.jpg" }] })
+      .mockResolvedValueOnce({ rows: [filaNueva] });
+
+    const respuesta = await cambiarFoto("2").field("generada_con_ia", "true");
+
+    expect(respuesta.status).toBe(200);
+    expect(consultaSimulada.mock.calls[1][1]).toEqual([URL_NUEVA, "La prensa térmica del taller", true]);
+    expect(respuesta.body.fotos[1].generada_con_ia).toBe(true);
   });
 
   it("B4-R7 · intenta limpiar la anterior recién después de guardar la nueva", async () => {

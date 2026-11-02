@@ -125,4 +125,5 @@ Al probar el panel publicado, el estudiante pidió estos cambios. Los hizo Claud
 - El menú del celular baja con una animación, es violeta con letras blancas y la sección actual con la barrita amarilla (igual que en la compu), oscurece la página de atrás, no deja desplazar la página mientras está abierto y se cierra con la X, tocando afuera o con Escape.
 - Tocar un enlace de la página en la que ya se está (por ejemplo «Inicio» estando en el inicio) sube al principio.
 - El catálogo tiene un chip «Todos» para volver a ver todos los productos después de filtrar por categoría.
+- Las fotos de Nuestro taller también tienen la casilla «La foto fue generada con IA» (columnas `foto_1_ia` y `foto_2_ia`, migración `backend/src/db/migracion-taller-ia.sql`); la tienda muestra la leyenda según esa marca.
 

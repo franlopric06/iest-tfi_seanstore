@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS contenido_taller (
   foto_1_alt     VARCHAR(160) NOT NULL,
   foto_2_url     VARCHAR(500) NOT NULL,
   foto_2_alt     VARCHAR(160) NOT NULL,
+  foto_1_ia      BOOLEAN NOT NULL DEFAULT FALSE,
+  foto_2_ia      BOOLEAN NOT NULL DEFAULT FALSE,
   actualizado_en TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -23,7 +25,9 @@ INSERT INTO contenido_taller (
   foto_1_url,
   foto_1_alt,
   foto_2_url,
-  foto_2_alt
+  foto_2_alt,
+  foto_1_ia,
+  foto_2_ia
 ) VALUES (
   1,
   'Nuestro taller',
@@ -31,6 +35,8 @@ INSERT INTO contenido_taller (
   '/img/sitio/nuestro-taller.jpg',
   'Interior del taller de sublimación con una prensa térmica y productos personalizados',
   '/img/sitio/nuestro-taller-clienta.jpg',
-  'Una clienta sostiene una remera personalizada en el taller de sublimación'
+  'Una clienta sostiene una remera personalizada en el taller de sublimación',
+  TRUE,
+  TRUE
 )
 ON CONFLICT (id) DO NOTHING;

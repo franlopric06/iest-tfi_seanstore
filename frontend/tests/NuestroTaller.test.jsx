@@ -16,10 +16,12 @@ const contenidoApi = {
   fotos: [
     {
       url: 'https://ejemplo.blob.vercel-storage.com/pren.webp',
+      generada_con_ia: true,
       alt: 'Prensa térmica del taller en funcionamiento',
     },
     {
       url: 'https://ejemplo.blob.vercel-storage.com/clienta.webp',
+      generada_con_ia: false,
       alt: 'Una clienta sostiene su remera estampada',
     },
   ],
@@ -43,10 +45,11 @@ describe('NuestroTaller', () => {
       expect(imagen).toHaveAttribute('decoding', 'async')
     })
 
-    // La leyenda va solo en las fotos del proyecto (rutas /img/...), que son de IA;
-    // una foto subida desde el panel (URL de Blob) es una foto real del negocio.
-    const fotosDelProyecto = contenidoApi.fotos.filter(({ url }) => url.startsWith('/'))
-    expect(within(seccion).queryAllByText(textos.generadoConIA)).toHaveLength(fotosDelProyecto.length)
+    // La leyenda va solo en las fotos marcadas como generadas con IA.
+    expect(within(seccion).queryAllByText(textos.generadoConIA)).toHaveLength(1)
+    expect(within(seccion).getByText(textos.generadoConIA).closest('figure')).toContainElement(
+      within(seccion).getByRole('img', { name: contenidoApi.fotos[0].alt }),
+    )
   })
 
   it('B4-R3 · usa los textos y fotos de respaldo cuando la API falla', async () => {

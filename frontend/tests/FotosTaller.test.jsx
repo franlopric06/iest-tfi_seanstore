@@ -8,8 +8,8 @@ vi.mock("../src/services/api.js", () => api);
 const { default: FotosTaller } = await import("../src/components/admin/FotosTaller.jsx");
 
 const fotos = [
-  { url: "/img/sitio/nuestro-taller.jpg", alt: "La prensa del taller" },
-  { url: "/img/sitio/nuestro-taller-clienta.jpg", alt: "Una clienta con su remera" },
+  { url: "/img/sitio/nuestro-taller.jpg", alt: "La prensa del taller", generada_con_ia: true },
+  { url: "/img/sitio/nuestro-taller-clienta.jpg", alt: "Una clienta con su remera", generada_con_ia: false },
 ];
 const URL_NUEVA = "https://abc.public.blob.vercel-storage.com/taller/nueva.jpg";
 
@@ -17,7 +17,9 @@ afterEach(cleanup);
 
 describe("FotosTaller", () => {
   it("B4-R5 · reemplaza la foto 2 manteniendo la descripción actual y muestra la nueva", async () => {
-    api.cambiarFotoTaller.mockResolvedValue({ fotos: [fotos[0], { url: URL_NUEVA, alt: fotos[1].alt }] });
+    api.cambiarFotoTaller.mockResolvedValue({
+      fotos: [fotos[0], { url: URL_NUEVA, alt: fotos[1].alt, generada_con_ia: true }],
+    });
     const usuario = userEvent.setup();
     render(<FotosTaller fotosIniciales={fotos} />);
 
@@ -25,9 +27,16 @@ describe("FotosTaller", () => {
     expect(within(foto2).getByLabelText("Descripción de la foto")).toHaveValue("Una clienta con su remera");
     const archivo = new File([new Uint8Array(10)], "taller.jpg", { type: "image/jpeg" });
     await usuario.upload(within(foto2).getByLabelText("Foto"), archivo);
+    expect(within(foto2).queryByText("«Generado con IA»")).not.toBeInTheDocument();
+    await usuario.click(within(foto2).getByLabelText("La foto fue generada con IA"));
     await usuario.click(within(foto2).getByRole("button", { name: "Cambiar foto" }));
 
-    expect(api.cambiarFotoTaller).toHaveBeenCalledWith(2, { archivo, alt: "Una clienta con su remera" });
+    expect(api.cambiarFotoTaller).toHaveBeenCalledWith(2, {
+      archivo,
+      alt: "Una clienta con su remera",
+      generadaConIA: true,
+    });
+    expect(await within(foto2).findByText("«Generado con IA»")).toBeInTheDocument();
     expect(await within(foto2).findByRole("status")).toHaveTextContent("Foto subida.");
     expect(within(foto2).getByRole("img", { name: "Una clienta con su remera" })).toHaveAttribute("src", URL_NUEVA);
   });

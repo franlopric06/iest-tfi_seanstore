@@ -1,7 +1,7 @@
 import { consulta } from "../db/conexion.js";
 
 const SQL_OBTENER = `
-  SELECT titulo, parrafo, foto_1_url, foto_1_alt, foto_2_url, foto_2_alt
+  SELECT titulo, parrafo, foto_1_url, foto_1_alt, foto_1_ia, foto_2_url, foto_2_alt, foto_2_ia
   FROM contenido_taller
   WHERE id = 1
 `;
@@ -10,8 +10,8 @@ const armarRespuesta = (fila) => ({
   titulo: fila.titulo,
   parrafo: fila.parrafo,
   fotos: [
-    { url: fila.foto_1_url, alt: fila.foto_1_alt },
-    { url: fila.foto_2_url, alt: fila.foto_2_alt },
+    { url: fila.foto_1_url, alt: fila.foto_1_alt, generada_con_ia: Boolean(fila.foto_1_ia) },
+    { url: fila.foto_2_url, alt: fila.foto_2_alt, generada_con_ia: Boolean(fila.foto_2_ia) },
   ],
 });
 

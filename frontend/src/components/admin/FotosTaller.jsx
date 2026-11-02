@@ -29,12 +29,20 @@ const FotosTaller = ({ fotosIniciales }) => {
             <article key={numero} aria-label={etiquetas.fotoTaller.replace('{numero}', numero)} className="flex flex-col gap-3">
               <h3 className="font-bold text-grafito">{etiquetas.fotoTaller.replace('{numero}', numero)}</h3>
               {foto.url && (
-                <img src={foto.url} alt={foto.alt} loading="lazy" className="aspect-video w-full rounded-marca object-cover" />
+                <div className="relative">
+                  <img src={foto.url} alt={foto.alt} loading="lazy" className="aspect-video w-full rounded-marca object-cover" />
+                  {foto.generada_con_ia && (
+                    <span className="absolute bottom-2 left-2 rounded-marca bg-grafito/70 px-2 py-0.5 text-[10px] font-semibold text-white">
+                      {textos.generadoConIA}
+                    </span>
+                  )}
+                </div>
               )}
               <FormularioSubirFoto
                 idBase={`foto-taller-${numero}`}
                 textoBoton={etiquetas.cambiar}
                 altInicial={foto.alt ?? ''}
+                conMarcaIA
                 alSubir={(nueva) => cambiar(numero, nueva)}
               />
             </article>

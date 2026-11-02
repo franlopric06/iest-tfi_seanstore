@@ -22,6 +22,8 @@ const fila = {
   foto_1_alt: "Interior del taller de sublimación con una prensa térmica",
   foto_2_url: "/img/sitio/nuestro-taller-clienta.jpg",
   foto_2_alt: "Una clienta sostiene una remera personalizada",
+  foto_1_ia: true,
+  foto_2_ia: false,
 };
 
 const comoAdmin = (metodo, ruta) =>
@@ -67,8 +69,8 @@ describe("PATCH /api/admin/taller", () => {
       titulo: "Así se sublima en Tinogasta",
       parrafo: "Atualizamos el taller con una prensa nueva.",
       fotos: [
-        { url: fila.foto_1_url, alt: fila.foto_1_alt },
-        { url: fila.foto_2_url, alt: fila.foto_2_alt },
+        { url: fila.foto_1_url, alt: fila.foto_1_alt, generada_con_ia: true },
+        { url: fila.foto_2_url, alt: fila.foto_2_alt, generada_con_ia: false },
       ],
     });
     expect(consultaSimulada).toHaveBeenCalledWith(

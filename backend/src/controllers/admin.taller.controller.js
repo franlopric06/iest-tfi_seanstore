@@ -11,7 +11,7 @@ const SQL_EDICION = `
   UPDATE contenido_taller
   SET titulo = $1, parrafo = $2, actualizado_en = NOW()
   WHERE id = 1
-  RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_2_url, foto_2_alt
+  RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_1_ia, foto_2_url, foto_2_alt, foto_2_ia
 `;
 
 const LIMITE_TITULO = 120;
@@ -62,10 +62,10 @@ const SQL_FOTO_ANTERIOR = {
   2: "SELECT foto_2_url AS url FROM contenido_taller WHERE id = 1",
 };
 const SQL_GUARDAR_FOTO = {
-  1: `UPDATE contenido_taller SET foto_1_url = $1, foto_1_alt = $2, actualizado_en = NOW()
-      WHERE id = 1 RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_2_url, foto_2_alt`,
-  2: `UPDATE contenido_taller SET foto_2_url = $1, foto_2_alt = $2, actualizado_en = NOW()
-      WHERE id = 1 RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_2_url, foto_2_alt`,
+  1: `UPDATE contenido_taller SET foto_1_url = $1, foto_1_alt = $2, foto_1_ia = $3, actualizado_en = NOW()
+      WHERE id = 1 RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_1_ia, foto_2_url, foto_2_alt, foto_2_ia`,
+  2: `UPDATE contenido_taller SET foto_2_url = $1, foto_2_alt = $2, foto_2_ia = $3, actualizado_en = NOW()
+      WHERE id = 1 RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_1_ia, foto_2_url, foto_2_alt, foto_2_ia`,
 };
 
 export const reemplazarFotoTaller = async (req, res, next) => {
@@ -91,7 +91,8 @@ export const reemplazarFotoTaller = async (req, res, next) => {
     }
 
     urlNueva = await subirFoto("taller", req.file.buffer, imagen.tipo);
-    const { rows } = await consulta(SQL_GUARDAR_FOTO[numero], [urlNueva, req.body.alt.trim()]);
+    const generadaConIA = req.body.generada_con_ia === "true";
+    const { rows } = await consulta(SQL_GUARDAR_FOTO[numero], [urlNueva, req.body.alt.trim(), generadaConIA]);
     urlNueva = null; // ya quedó guardada: no se borra aunque falle lo que sigue
 
     await borrarFoto(anterior.rows[0].url).catch((error) => {

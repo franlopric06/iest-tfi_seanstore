@@ -14,6 +14,8 @@ const fila = {
   foto_1_alt: "Interior del taller de sublimación con una prensa térmica",
   foto_2_url: "https://ejemplo.blob.vercel-storage.com/clienta.webp",
   foto_2_alt: "Una clienta sostiene una remera personalizada",
+  foto_1_ia: true,
+  foto_2_ia: false,
 };
 
 beforeEach(() => {
@@ -29,8 +31,8 @@ describe("GET /api/taller", () => {
       titulo: fila.titulo,
       parrafo: fila.parrafo,
       fotos: [
-        { url: fila.foto_1_url, alt: fila.foto_1_alt },
-        { url: fila.foto_2_url, alt: fila.foto_2_alt },
+        { url: fila.foto_1_url, alt: fila.foto_1_alt, generada_con_ia: true },
+        { url: fila.foto_2_url, alt: fila.foto_2_alt, generada_con_ia: false },
       ],
     });
     expect(consultaSimulada).toHaveBeenCalledOnce();
