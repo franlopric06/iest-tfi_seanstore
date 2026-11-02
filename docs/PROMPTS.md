@@ -8,6 +8,12 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 | --- | --- | --- | --- | --- |
 | 17/10/2026 | Arnés | OpenCode (Big Pickle) | «Leé el archivo AGENTS.md y explicame en tres líneas de qué se trata este proyecto. No modifiques ningún archivo.» | Resumen correcto del proyecto. Sirvió para comprobar que el agente lee el arnés. |
 | 17/10/2026 | Arnés | OpenCode (Big Pickle) | «Usá la herramienta de lectura de archivos para abrir MEMORY.md. Copiame textual, sin resumir, la línea que empieza con "Próxima tarea".» | Copió la línea exacta. Desde acá se pide siempre leer con la herramienta y citar textual. |
+| 20/10/2026 | Arnés | OpenCode (GLM-5.3-Flash Free) | «Leé ETAPA-1.md y resumí en tres líneas qué se construye en esta etapa. Después hacé un único commit de la reorganización.» | Resumen correcto y un solo commit. Desde acá, si un documento choca con ETAPA-1.md, manda ETAPA-1.md. |
+| 20/10/2026 | Imágenes | Google Gemini | «Fotografía realista de una taza de cerámica blanca sobre una mesa de madera con un florero chico, luz natural de tarde… con la iglesia del reloj de Tinogasta estampada. Sin texto, sin logos, sin marcas.» (estructura SUJETO + ACCIÓN + ENTORNO + LUZ + CÁMARA + ESTILO + MARCA + RESTRICCIONES) | Base de las 55 fotos de productos. Un chat por producto para que no cambie la foto equivocada. |
+| 28/10/2026 | 003 · Spec | GitHub Copilot (Agent) | «/spec 003-asistente: botón "¿Tenés dudas?" abajo a la izquierda, panel con seis preguntas frecuentes, búsqueda sin mayúsculas ni tildes y, si no encuentra, enlace a WhatsApp con lo buscado. Sin IA ni backend.» | Spec chica con 8 requisitos. El agente avisó que 06-DISENO-UI pedía más y preguntó antes de escribir. |
+| 28/10/2026 | Video | Kling 2.5 Turbo | «La cámara entra despacio al taller, la luz de la ventana se mueve apenas, polvo suave en el aire. Sin personas.» (con la foto del taller como primer cuadro) | Clip del taller en un intento. |
+| 29/10/2026 | 004 · Implementación | OpenCode (GLM-5.3-Flash Free) | «/implementar 004-panel T27 y T28: formulario de producto con nombre, categoría desde /api/categorias, precio, stock, descripción, talles y colores separados por comas, destacado; botones "Nuevo producto", "Editar" y "Ocultar"/"Mostrar". Mostrame los archivos y commiteá cada tarea después de mi ok.» | Quedó a medias por el límite gratuito; lo terminó Claude (ver errores N° 16 y N° 17). |
+| 01/11/2026 | 004 · Cambio | Claude | «/cambio: los botones Guardar y Cancelar tienen que quedar debajo de las fotos, porque la foto es lo último que se sube.» | Botones abajo en productos y en el taller; al crear un producto se abre su edición para agregarle fotos. |
 
 ## Errores de la IA
 
@@ -123,3 +129,74 @@ Registro de los pedidos más importantes que se le hicieron a la IA durante el p
 - **Cómo se detectó:** lo detectó el estudiante al leer la explicación: el build había anduvo bien, así que pidió registrar el error.
 - **Corrección humana:** el estudiante lo marcó en la misma conversación; la explicación queda con solo lo que pasó de verdad (refactor del condicional y test nuevo en rojo primero).
 - **Para que no se repita:** las explicaciones describen únicamente lo que pasó en la tarea, sin inventar fallos, pasos ni errores: si el build no falló, no se dice que falló; cada detalle del relato se puede verificar con la salida de los comandos que corrieron.
+
+### Error N° 12 · Desactivó la verificación del certificado de la base
+
+- **Fecha y fase:** 21/10/2026 · Implementación de 001-catalogo, tarea T09 (`conexion.js`)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** crear la conexión a Neon con `pg.Pool` y la variable `DATABASE_URL`.
+- **Qué hizo mal la IA:** configuró `ssl: { rejectUnauthorized: false }`. Así la conexión se cifra, pero no se comprueba que del otro lado esté de verdad Neon.
+- **Cómo se detectó:** al revisar el archivo antes del commit (estudiante con Claude).
+- **Corrección humana:** se cambió a `ssl: true` antes del commit.
+- **Para que no se repita:** en conexiones a servicios externos no se apaga ninguna verificación de seguridad para que algo «ande»; si falla, se busca la causa.
+
+### Error N° 13 · Marcó la spec como aprobada sin preguntar
+
+- **Fecha y fase:** 27/10/2026 · Clarificación de 002-pedido-whatsapp
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** cerrar la clarificación con las decisiones del estudiante.
+- **Qué hizo mal la IA:** además de anotar las decisiones, escribió en la spec que estaba «aprobada», cuando eso lo decide el estudiante.
+- **Cómo se detectó:** el estudiante lo vio al revisar el diff.
+- **Corrección humana:** se revisó la spec completa y se aprobó recién después.
+- **Para que no se repita:** el agente nunca marca nada como aprobado; propone y espera el ok.
+
+### Error N° 14 · Commiteó sin mostrar el código
+
+- **Fecha y fase:** 29/10/2026 · Implementación de 004-panel, tareas T01–T02 y T18
+- **Herramienta:** GitHub Copilot (modo Agent)
+- **Qué se pidió:** implementar las tareas, mostrar los archivos y commitear después del ok del estudiante (paso 4 de `/implementar`).
+- **Qué hizo mal la IA:** hizo el commit directamente, sin mostrar los archivos ni esperar el ok.
+- **Cómo se detectó:** el estudiante vio el commit en el historial antes de haber revisado el código.
+- **Corrección humana:** se revisaron los archivos después del commit (estaban bien) y se le recordó la regla en los pedidos siguientes.
+- **Para que no se repita:** en cada pedido se repite «mostrame los archivos y esperá mi ok antes de commitear».
+
+### Error N° 15 · Faltaba PUT en CORS y el ingreso delataba qué emails existían
+
+- **Fecha y fase:** 29/10/2026 · Plan e implementación de 004-panel, bloque 1
+- **Herramienta:** GitHub Copilot (modo Agent)
+- **Qué se pidió:** configurar CORS para el panel y el ingreso con email y contraseña.
+- **Qué hizo mal la IA:** (1) dejó CORS sin el método `PUT`, que después necesitaban las fotos del taller; (2) cuando el email no existía, respondía sin comparar ninguna contraseña, así que contestaba más rápido y alguien podía medir el tiempo para saber qué emails están registrados.
+- **Cómo se detectó:** en la revisión de los archivos (Claude, con el estudiante).
+- **Corrección humana:** se agregó `PUT` con su test, y el ingreso compara siempre contra un hash falso (`HASH_FALSO`) cuando el email no existe, así tarda lo mismo.
+- **Para que no se repita:** en todo lo que es seguridad, revisar también lo que la respuesta deja adivinar, no solo lo que dice.
+
+### Error N° 16 · Dejó dos tests mal hechos al cortarse
+
+- **Fecha y fase:** 29/10/2026 · Implementación de 004-panel, tarea T27 (formulario de producto)
+- **Herramienta:** OpenCode (GLM-5.3-Flash Free)
+- **Qué se pidió:** el formulario de producto con sus tests.
+- **Qué hizo mal la IA:** se quedó sin cuota a mitad de la tarea y dejó dos tests que fallaban: uno escribía un nombre y después esperaba el aviso de «nombre vacío»; el otro dependía de que el navegador dejara enviar un precio negativo, pero el navegador lo frenaba antes de que el formulario mostrara su aviso.
+- **Cómo se detectó:** al correr `npm test` con lo que dejó el agente.
+- **Corrección humana:** Claude terminó la tarea: corrigió los dos tests, agregó `noValidate` al formulario para que los avisos sean los propios y separó las funciones en `utils/formularioProducto.js`.
+- **Para que no se repita:** un test tiene que fallar por la razón correcta; antes de aceptarlo, leer qué prepara y qué espera.
+
+### Error N° 17 · Dos piezas con la misma llave repetían el formulario
+
+- **Fecha y fase:** 29/10 al 01/11/2026 · Implementación de 004-panel, bloque 3 (fotos de productos)
+- **Herramienta:** Claude (terminó el panel cuando los agentes gratuitos no tenían cuota)
+- **Qué se pidió:** mostrar las fotos del producto debajo del formulario de edición.
+- **Qué hizo mal la IA:** el formulario y las fotos usaban la misma `key` de React (el id del producto). Al guardar y volver a editar, React dejaba copias viejas y el formulario aparecía repetido dos, tres o más veces.
+- **Cómo se detectó:** el estudiante, usando el panel publicado. Los tests no lo veían porque nunca repetían el ciclo editar y guardar.
+- **Corrección humana:** llaves distintas (`formulario-…` y `fotos-…`) y un test que guarda y vuelve a abrir tres veces. Primero se descartó que fuera la base con una consulta en Neon.
+- **Para que no se repita:** las `key` tienen que ser únicas entre piezas hermanas; y probar los flujos repetidos, no solo una vez.
+
+### Error N° 18 · La casilla «Generado con IA» del taller no se guardaba
+
+- **Fecha y fase:** 01/11/2026 · Cambio en 004-panel (marca de IA en las fotos del taller)
+- **Herramienta:** Claude
+- **Qué se pidió:** poder marcar las fotos del taller como generadas con IA, igual que las de productos.
+- **Qué hizo mal la IA:** la casilla solo funcionaba al subir un archivo nuevo y siempre aparecía vacía; si se marcaba y se tocaba Guardar, no se enviaba y al recargar volvía a estar desmarcada.
+- **Cómo se detectó:** el estudiante, probándolo en el panel publicado.
+- **Corrección humana:** la casilla muestra cómo está guardada cada foto y se guarda con el botón Guardar junto con el texto; se agregaron tests.
+- **Para que no se repita:** un control del panel tiene que mostrar el valor guardado y guardarse con el botón que la persona espera.
+
