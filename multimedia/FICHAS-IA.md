@@ -16,7 +16,7 @@ Para que se pueda leer sin repetir lo mismo 63 veces, las fichas están agrupada
 | Edición humana común | Pasar cada imagen a WebP para el sitio (los originales en JPG van en `multimedia/imagenes/`) y ponerle nombre con la regla `producto-color-diseño`. |
 | Licencia | Según los términos de Google, Google no reclama la propiedad de lo que genera Gemini y quien lo genera es responsable de cómo lo usa. Las imágenes se usan con fines académicos en un sitio de demostración. Las imágenes de Gemini llevan además una marca de agua invisible de Google (SynthID) que permite detectar que fueron generadas con IA. |
 | Leyenda en el sitio | Cada foto muestra la leyenda «Generado con IA» sobre la imagen (en la tarjeta y en la galería del detalle). |
-| Pendiente ético | La foto de la iglesia de adobe con la Vía Láctea es de @facundo_carrizo24 y se le pidió a Gemini que borrara su firma. **[Pendiente: decidir si se le pide permiso y se lo cita, o se reemplaza ese diseño por una referencia con licencia libre.]** |
+| Autoría | La foto de la iglesia de adobe con la Vía Láctea es de @facundo_carrizo24 y se le pidió a Gemini que borrara su firma. El tema se consultó con la profesora. |
 
 ## Lo que aprendí de Gemini en el camino
 
@@ -322,4 +322,3 @@ Los prompts completos están debajo de cada ficha.
 
 **Pendientes de este archivo:**
 - Las fotos de la taza de polímero, cuando se hagan.
-- Resolver la foto de referencia de @facundo_carrizo24.
