@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { elegirOpcion, esperarCategorias } from "./ayudas/listaDesplegable.js";
 
 const api = vi.hoisted(() => ({ obtenerCategorias: vi.fn() }));
 
@@ -66,11 +67,10 @@ describe("FormularioProducto", () => {
   it("carga las categorías de la API en la lista desplegable", async () => {
     render(<FormularioProducto guardar={vi.fn()} onCancelar={vi.fn()} />);
 
-    const select = screen.getByLabelText("Categoría");
-    expect(
-      await within(select).findByRole("option", { name: "Tazas y termos" }),
-    ).toBeInTheDocument();
-    expect(within(select).getByRole("option", { name: "Indumentaria" })).toBeInTheDocument();
+    await esperarCategorias();
+    await userEvent.setup().click(screen.getByLabelText("Categoría"));
+    expect(screen.getByRole("option", { name: "Tazas y termos" })).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "Indumentaria" })).toBeInTheDocument();
     expect(api.obtenerCategorias).toHaveBeenCalled();
   });
 
@@ -89,9 +89,8 @@ describe("FormularioProducto", () => {
     expect(await screen.findByText("No pudimos cargar las categorías.")).toBeInTheDocument();
     await usuario.click(screen.getByRole("button", { name: "Reintentar" }));
 
-    expect(
-      await screen.findByRole("option", { name: "Tazas y termos" }),
-    ).toBeInTheDocument();
+    await esperarCategorias();
+    expect(screen.queryByText("No pudimos cargar las categorías.")).not.toBeInTheDocument();
   });
 
   it("envía solo los campos editables y convierte talles y colores en listas", async () => {
@@ -99,9 +98,9 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={guardar} onCancelar={vi.fn()} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.type(screen.getByLabelText("Nombre"), "Taza nueva");
-    await usuario.selectOptions(screen.getByLabelText("Categoría"), "1");
+    await elegirOpcion(usuario, "Categoría", "Tazas y termos");
     await usuario.type(screen.getByLabelText("Precio"), "12500");
     await usuario.type(screen.getByLabelText("Stock"), "12");
     await usuario.type(screen.getByLabelText("Talles"), "S, M, , L");
@@ -132,7 +131,7 @@ describe("FormularioProducto", () => {
       await screen.findByRole("heading", { name: "Editar producto" }),
     ).toBeInTheDocument();
     expect(screen.getByLabelText("Nombre")).toHaveValue("Taza de cerámica");
-    expect(screen.getByLabelText("Categoría")).toHaveValue("2");
+    await waitFor(() => expect(screen.getByLabelText("Categoría")).toHaveTextContent("Indumentaria"));
     expect(screen.getByLabelText("Precio")).toHaveValue(12000);
     expect(screen.getByLabelText("Stock")).toHaveValue(8);
     expect(screen.getByLabelText("Descripción")).toHaveValue(
@@ -149,7 +148,7 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={guardar} onCancelar={vi.fn()} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.type(screen.getByLabelText("Precio"), "-3");
     await usuario.type(screen.getByLabelText("Stock"), "2.5");
     await usuario.type(screen.getByLabelText("Colores"), "Rojo");
@@ -175,9 +174,9 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={guardar} onCancelar={vi.fn()} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.type(screen.getByLabelText("Nombre"), "Taza nueva");
-    await usuario.selectOptions(screen.getByLabelText("Categoría"), "1");
+    await elegirOpcion(usuario, "Categoría", "Tazas y termos");
     await usuario.type(screen.getByLabelText("Precio"), "12500");
     await usuario.type(screen.getByLabelText("Stock"), "12");
     await usuario.type(screen.getByLabelText("Colores"), "Rojo");
@@ -196,9 +195,9 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={guardar} onCancelar={vi.fn()} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.type(screen.getByLabelText("Nombre"), "Taza nueva");
-    await usuario.selectOptions(screen.getByLabelText("Categoría"), "1");
+    await elegirOpcion(usuario, "Categoría", "Tazas y termos");
     await usuario.type(screen.getByLabelText("Precio"), "12500");
     await usuario.type(screen.getByLabelText("Stock"), "12");
     await usuario.type(screen.getByLabelText("Colores"), "Rojo");
@@ -211,7 +210,7 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={vi.fn()} onCancelar={vi.fn()} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.click(screen.getByRole("button", { name: "Guardar" }));
 
     const nombre = screen.getByLabelText("Nombre");
@@ -227,9 +226,9 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={guardar} onCancelar={vi.fn()} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.type(screen.getByLabelText("Nombre"), "Taza nueva");
-    await usuario.selectOptions(screen.getByLabelText("Categoría"), "1");
+    await elegirOpcion(usuario, "Categoría", "Tazas y termos");
     await usuario.type(screen.getByLabelText("Precio"), "12500");
     await usuario.type(screen.getByLabelText("Stock"), "12");
     await usuario.type(screen.getByLabelText("Colores"), "Rojo");
@@ -245,7 +244,7 @@ describe("FormularioProducto", () => {
     const usuario = userEvent.setup();
     render(<FormularioProducto guardar={guardar} onCancelar={onCancelar} />);
 
-    await screen.findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias();
     await usuario.click(screen.getByRole("button", { name: "Cancelar" }));
 
     expect(onCancelar).toHaveBeenCalledOnce();

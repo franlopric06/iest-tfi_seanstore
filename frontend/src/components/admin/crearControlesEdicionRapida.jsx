@@ -1,3 +1,5 @@
+import { BOTON_ACCION_PRINCIPAL } from '../../utils/clasesBotones.js'
+
 const crearControlesEdicionRapida = ({
   borrador,
   etiquetas,
@@ -46,13 +48,13 @@ const crearControlesEdicionRapida = ({
       type="button"
       disabled={resultado?.cargando}
       onClick={alGuardar}
-      className="min-h-11 rounded-marca bg-violeta px-4 font-bold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 disabled:opacity-60"
+      className={BOTON_ACCION_PRINCIPAL}
     >
       {resultado?.cargando ? etiquetas.guardando : etiquetas.guardar}
     </button>
-    {resultado?.exito && <p role="status">{etiquetas.guardado}</p>}
-    {resultado?.error && <p role="alert">{etiquetas.errorGuardar}</p>}
-    {resultado?.invalido && <p role="alert">{etiquetas.datosInvalidos}</p>}
+    {resultado?.exito && <p role="status" className="w-24 text-xs font-bold text-violeta">{etiquetas.guardado}</p>}
+    {resultado?.error && <p role="alert" className="w-24 text-xs font-bold text-error">{etiquetas.errorGuardar}</p>}
+    {resultado?.invalido && <p role="alert" className="w-24 text-xs font-bold text-error">{etiquetas.datosInvalidos}</p>}
   </div>,
 ]
 

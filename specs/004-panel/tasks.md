@@ -118,4 +118,6 @@ Al probar el panel publicado, el estudiante pidió estos cambios. Los hizo Claud
 - Crear y editar un producto tienen su propia pantalla (`/admin/productos/nuevo` y `/admin/productos/:id`) con «Volver a productos»; se agregó `GET /api/admin/productos/:id`.
 - La lista del panel tiene buscador por nombre o código y filtros por categoría y estado.
 - El menú de la tienda tiene «Inicio» y marca la sección en la que está la persona.
-
+- Las listas desplegables del panel (filtros y categoría del producto) usan un componente propio, `ListaDesplegable`, con el estilo de la tienda en vez del `<select>` del navegador; es accesible con teclado (patrón combobox).
+- Los botones Guardar, Editar y Ocultar/Mostrar de la lista tienen el mismo tamaño (clases compartidas en `utils/clasesBotones.js`); el alto queda en 44 px por la regla de accesibilidad de `DESIGN.md`.
+- En el celular, el menú de arriba es un menú hamburguesa con el ícono en magenta.

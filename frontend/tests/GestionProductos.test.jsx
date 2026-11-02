@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { elegirOpcion } from "./ayudas/listaDesplegable.js";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 
 const api = vi.hoisted(() => ({
@@ -92,8 +93,9 @@ describe("GestionProductos", () => {
     const usuario = userEvent.setup();
     renderizar();
 
-    await usuario.selectOptions(await screen.findByLabelText("Categoría"), "Indumentaria");
-    await usuario.selectOptions(screen.getByLabelText("Estado"), "ocultos");
+    await screen.findByLabelText("Categoría");
+    await elegirOpcion(usuario, "Categoría", "Indumentaria");
+    await elegirOpcion(usuario, "Estado", "Solo ocultos");
 
     const tabla = screen.getByRole("table", { name: "Productos" });
     expect(within(tabla).getByText("Remera")).toBeInTheDocument();

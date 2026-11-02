@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react'
+import ListaDesplegable from '../comunes/ListaDesplegable.jsx'
 import textos from '../../data/textos.js'
 
 const etiquetas = textos.panel.productos
@@ -9,7 +10,7 @@ const CLASE_CAMPO =
 // Buscador y filtros arriba de la tabla del panel. No guarda nada: avisa cada
 // cambio con alCambiar y la lista se filtra en GestionProductos.
 const FiltrosProductos = ({ filtros, categorias, alCambiar }) => {
-  const cambiar = (campo) => (evento) => alCambiar({ ...filtros, [campo]: evento.target.value })
+  const cambiar = (campo) => (valor) => alCambiar({ ...filtros, [campo]: valor })
 
   return (
     <div role="search" className="grid gap-3 md:grid-cols-[2fr_1fr_1fr]">
@@ -21,26 +22,34 @@ const FiltrosProductos = ({ filtros, categorias, alCambiar }) => {
           type="search"
           placeholder={etiquetas.buscar}
           value={filtros.texto}
-          onChange={cambiar('texto')}
+          onChange={(evento) => cambiar('texto')(evento.target.value)}
           className={`${CLASE_CAMPO} pl-10`}
         />
       </div>
       <div>
         <label htmlFor="filtro-categoria" className="sr-only">{etiquetas.filtroCategoria}</label>
-        <select id="filtro-categoria" value={filtros.categoria} onChange={cambiar('categoria')} className={CLASE_CAMPO}>
-          <option value="">{etiquetas.todasCategorias}</option>
-          {categorias.map((categoria) => (
-            <option key={categoria} value={categoria}>{categoria}</option>
-          ))}
-        </select>
+        <ListaDesplegable
+          id="filtro-categoria"
+          valor={filtros.categoria}
+          alCambiar={cambiar('categoria')}
+          opciones={[
+            { valor: '', texto: etiquetas.todasCategorias },
+            ...categorias.map((categoria) => ({ valor: categoria, texto: categoria })),
+          ]}
+        />
       </div>
       <div>
         <label htmlFor="filtro-estado" className="sr-only">{etiquetas.filtroEstado}</label>
-        <select id="filtro-estado" value={filtros.estado} onChange={cambiar('estado')} className={CLASE_CAMPO}>
-          <option value="todos">{etiquetas.todos}</option>
-          <option value="activos">{etiquetas.soloActivos}</option>
-          <option value="ocultos">{etiquetas.soloOcultos}</option>
-        </select>
+        <ListaDesplegable
+          id="filtro-estado"
+          valor={filtros.estado}
+          alCambiar={cambiar('estado')}
+          opciones={[
+            { valor: 'todos', texto: etiquetas.todos },
+            { valor: 'activos', texto: etiquetas.soloActivos },
+            { valor: 'ocultos', texto: etiquetas.soloOcultos },
+          ]}
+        />
       </div>
     </div>
   )

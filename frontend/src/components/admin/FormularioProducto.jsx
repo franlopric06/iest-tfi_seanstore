@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import ListaDesplegable from '../comunes/ListaDesplegable.jsx'
 import useObtenerDatos from '../../hooks/useObtenerDatos.js'
 import { obtenerCategorias } from '../../services/api.js'
 import textos from '../../data/textos.js'
@@ -77,12 +78,16 @@ const FormularioProducto = ({ producto = null, guardar, onCancelar, antesDeBoton
             <input type="text" maxLength={120} {...propsDe('nombre')} className={CLASE_CAMPO} />
           </Campo>
           <Campo id="producto-categoria_id" etiqueta={etiquetas.categoria} aviso={avisos.categoria_id}>
-            <select {...propsDe('categoria_id')} disabled={categorias.cargando || Boolean(categorias.error)} className={CLASE_CAMPO}>
-              <option value="">{categorias.cargando ? etiquetas.cargandoCategorias : etiquetas.seleccionarCategoria}</option>
-              {(categorias.datos ?? []).map((categoria) => (
-                <option key={categoria.id} value={String(categoria.id)}>{categoria.nombre}</option>
-              ))}
-            </select>
+            <ListaDesplegable
+              id="producto-categoria_id"
+              valor={borrador.categoria_id}
+              alCambiar={(valor) => alCambiar('categoria_id', valor)}
+              textoVacio={categorias.cargando ? etiquetas.cargandoCategorias : etiquetas.seleccionarCategoria}
+              deshabilitada={categorias.cargando || Boolean(categorias.error)}
+              invalida={Boolean(avisos.categoria_id)}
+              describedBy={avisos.categoria_id ? 'producto-categoria_id-aviso' : undefined}
+              opciones={(categorias.datos ?? []).map((categoria) => ({ valor: String(categoria.id), texto: categoria.nombre }))}
+            />
             {categorias.error && (
               <p role="alert" className="flex flex-wrap items-center gap-2 text-sm text-grafito">
                 {etiquetas.errorCategorias}

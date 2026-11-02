@@ -1,9 +1,9 @@
 import textos from '../../data/textos.js'
+import { BOTON_ACCION_SECUNDARIO } from '../../utils/clasesBotones.js'
 
 const etiquetas = textos.panel.productos
 
-const CLASE_BOTON =
-  'min-h-11 rounded-marca border border-violeta bg-white px-4 text-sm font-bold text-violeta transition-colors hover:bg-gris-claro focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta disabled:opacity-60'
+const CLASE_BOTON = BOTON_ACCION_SECUNDARIO
 
 // Botones «Editar» y «Ocultar»/«Mostrar» de cada producto (004-T28).
 // El nombre del producto va en aria-label para que el lector de pantalla
@@ -12,7 +12,7 @@ const BotonesProducto = ({ producto, ocupado, alEditar, alCambiarEstado }) => {
   const textoEstado = producto.activo ? etiquetas.ocultar : etiquetas.mostrar
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 md:flex-col">
       <button
         type="button"
         aria-label={`${etiquetas.editar} ${producto.nombre}`}

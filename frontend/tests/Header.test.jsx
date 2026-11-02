@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
@@ -53,16 +53,42 @@ describe("Header · navegación de administración", () => {
     expect(sessionStorage.getItem("seanstore_admin_token")).toBeNull();
   });
 
-  it("mantiene los controles en una fila y permite ocultar el texto Ingresar en celular", () => {
+  it("en la compu muestra el menú en una fila y lo esconde en el celular", () => {
     renderizarHeader();
 
-    expect(screen.getByRole("navigation", { name: "Navegación principal" })).toHaveClass(
-      "flex-nowrap",
-    );
-    const enlaceIngresar = screen.getByRole("link", { name: "Ingresar" });
-    expect(enlaceIngresar).toHaveAttribute("aria-label", "Ingresar");
-    expect(enlaceIngresar).toHaveClass("min-h-11");
-    expect(enlaceIngresar.querySelector("span")).toHaveClass("sr-only", "md:not-sr-only");
+    const navegacion = screen.getByRole("navigation", { name: "Navegación principal" });
+    expect(navegacion).toHaveClass("hidden", "md:flex");
+    expect(screen.getByRole("link", { name: "Ingresar" })).toHaveClass("min-h-11");
+  });
+
+  it("en el celular abre y cierra el menú hamburguesa (ícono rosado)", async () => {
+    const usuario = userEvent.setup();
+    renderizarHeader();
+
+    const boton = screen.getByRole("button", { name: "Abrir menú" });
+    expect(boton).toHaveClass("md:hidden", "text-magenta");
+    expect(boton).toHaveAttribute("aria-expanded", "false");
+    await usuario.click(boton);
+
+    const menu = screen.getByRole("navigation", { name: "Menú" });
+    expect(boton).toHaveAttribute("aria-expanded", "true");
+    expect(boton).toHaveAttribute("aria-controls", menu.id);
+    expect(boton).toHaveAccessibleName("Cerrar menú");
+    await usuario.keyboard("{Escape}");
+    expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument();
+  });
+
+  it("cierra el menú del celular al ir a otra página", async () => {
+    sessionStorage.setItem("seanstore_admin_token", TOKEN);
+    const usuario = userEvent.setup();
+    renderizarHeader();
+
+    await usuario.click(screen.getByRole("button", { name: "Abrir menú" }));
+    const menu = screen.getByRole("navigation", { name: "Menú" });
+    await usuario.click(within(menu).getByRole("link", { name: "Panel" }));
+
+    expect(screen.queryByRole("navigation", { name: "Menú" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Panel de administración" })).toBeInTheDocument();
   });
 
   it("muestra Inicio en el menú y marca la sección en la que está la persona", () => {

@@ -15,6 +15,10 @@ const textos = {
     enlaceIngresar: 'Ingresar',
     enlacePanel: 'Panel',
     botonSalir: 'Salir',
+    navegacion: 'Navegación principal',
+    menuCelular: 'Menú',
+    abrirMenu: 'Abrir menú',
+    cerrarMenu: 'Cerrar menú',
   },
   ingresar: {
     titulo: 'Ingresar al panel',

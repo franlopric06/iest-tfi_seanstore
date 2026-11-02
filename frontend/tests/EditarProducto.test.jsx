@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { cleanup, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { elegirOpcion, esperarCategorias } from "./ayudas/listaDesplegable.js";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 
 const api = vi.hoisted(() => ({
@@ -53,9 +54,9 @@ afterEach(cleanup);
 
 const completarAlta = async (usuario) => {
   const zona = await screen.findByRole("region", { name: "Agregar producto" });
-  await within(zona).findByRole("option", { name: "Tazas y termos" });
+  await esperarCategorias(within(zona));
   await usuario.type(within(zona).getByLabelText("Nombre"), "Llavero");
-  await usuario.selectOptions(within(zona).getByLabelText("Categoría"), "1");
+  await elegirOpcion(usuario, "Categoría", "Tazas y termos", within(zona));
   await usuario.type(within(zona).getByLabelText("Precio"), "3500");
   await usuario.type(within(zona).getByLabelText("Stock"), "20");
   await usuario.type(within(zona).getByLabelText("Colores"), "Blanco");
@@ -86,7 +87,7 @@ describe("EditarProducto", () => {
     renderizar("/admin/productos/1");
 
     const zona = await screen.findByRole("region", { name: "Editar producto" });
-    await within(zona).findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias(within(zona));
     await usuario.click(within(zona).getByRole("button", { name: "Guardar" }));
 
     expect(api.editarProducto).toHaveBeenCalledWith(1, expect.objectContaining({ nombre: "Taza de cerámica" }));
@@ -131,7 +132,7 @@ describe("EditarProducto", () => {
     renderizar("/admin/productos/1");
 
     const zona = await screen.findByRole("region", { name: "Editar producto" });
-    await within(zona).findByRole("option", { name: "Tazas y termos" });
+    await esperarCategorias(within(zona));
     expect(screen.getAllByRole("form", { name: "Editar producto" })).toHaveLength(1);
   });
 });
