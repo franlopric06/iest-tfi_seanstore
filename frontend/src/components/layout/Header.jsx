@@ -13,10 +13,11 @@ const claseCompu = (activo = false) =>
     activo ? 'underline decoration-amarillo decoration-2' : ''
   }`
 
-// Enlaces del menú del celular: violetas sobre blanco, la sección actual en magenta.
+// Enlaces del menú del celular: iguales a los de la compu (blancos sobre violeta,
+// la sección actual con la barrita amarilla), pero uno debajo del otro.
 const claseCelular = (activo = false) =>
-  `flex min-h-12 items-center gap-2 rounded-marca px-3 text-lg font-bold ${FOCO} ${
-    activo ? 'bg-gris-claro text-magenta' : 'text-violeta hover:bg-gris-claro'
+  `flex min-h-12 items-center gap-2 rounded-marca px-3 text-lg font-bold text-white underline-offset-8 transition-colors hover:bg-white/10 ${FOCO} focus-visible:ring-offset-violeta ${
+    activo ? 'underline decoration-amarillo decoration-2' : ''
   }`
 
 // Los enlaces son los mismos en la compu y en el celular; cambia el estilo.
@@ -116,7 +117,7 @@ const Header = () => {
               transition={{ duration: quieto ? 0 : 0.2 }}
               className="fixed inset-x-0 bottom-0 top-16 bg-grafito/50 md:hidden"
             />
-            {/* El menú baja desde el header (de 0 a su alto natural). */}
+            {/* El menú baja desde el header (de 0 a su alto natural), con el mismo violeta. */}
             <motion.nav
               key="menu"
               id="menu-celular"
@@ -125,7 +126,7 @@ const Header = () => {
               animate={{ height: 'auto' }}
               exit={{ height: 0 }}
               transition={{ duration: quieto ? 0 : 0.25, ease: 'easeOut' }}
-              className="absolute inset-x-0 top-full overflow-hidden rounded-b-marca bg-white shadow-elevada md:hidden"
+              className="absolute inset-x-0 top-full overflow-hidden rounded-b-marca border-t border-white/15 bg-violeta shadow-elevada md:hidden"
             >
               <div className="flex flex-col gap-1 p-3">
                 <Enlaces sesion={sesion} alSalir={cerrarSesion} clase={claseCelular} />
