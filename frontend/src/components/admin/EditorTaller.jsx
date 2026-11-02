@@ -11,8 +11,10 @@ const textosTaller = textos.panel.taller
 
 const ID_FORMULARIO = 'formulario-taller'
 
-const FormularioTextoTaller = ({ contenido, antesDeBotones = null }) => {
+const FormularioTextoTaller = ({ contenido }) => {
   const [titulo, setTitulo] = useState(contenido.titulo)
+  // Marca «Generado con IA» de cada foto, tal como está guardada.
+  const [marcas, setMarcas] = useState(contenido.fotos.map((foto) => Boolean(foto.generada_con_ia)))
   const [parrafo, setParrafo] = useState(contenido.parrafo)
   const [guardando, setGuardando] = useState(false)
   const [aviso, setAviso] = useAvisoTemporal()
@@ -22,7 +24,9 @@ const FormularioTextoTaller = ({ contenido, antesDeBotones = null }) => {
     setGuardando(true)
     setAviso(null)
     try {
-      await guardarTextoTaller({ titulo, parrafo })
+      const datos = { titulo, parrafo }
+      if (marcas.length === 2) Object.assign(datos, { foto_1_ia: marcas[0], foto_2_ia: marcas[1] })
+      await guardarTextoTaller(datos)
       setAviso({ tipo: 'status' })
     } catch {
       setAviso({ tipo: 'alert' })
@@ -70,8 +74,17 @@ const FormularioTextoTaller = ({ contenido, antesDeBotones = null }) => {
         </div>
       </form>
       {/* Las fotos van entre el texto y el botón Guardar, igual que en productos;
-          el botón sigue enviando el texto gracias al atributo form. */}
-      {antesDeBotones}
+          el botón sigue enviando el formulario gracias al atributo form. */}
+      {contenido.fotos.length > 0 && (
+        <FotosTaller
+          fotosIniciales={contenido.fotos}
+          marcas={marcas}
+          alMarcar={(indice, valor) => {
+            setMarcas((anteriores) => anteriores.map((marca, i) => (i === indice ? valor : marca)))
+            setAviso(null)
+          }}
+        />
+      )}
       {aviso?.tipo === 'status' && (
         <p role="status" className="mb-4 font-bold text-violeta">
           {textosTaller.guardado}
@@ -110,12 +123,8 @@ const EditorTaller = () => {
       contenido={{
         titulo: typeof datos?.titulo === 'string' ? datos.titulo : '',
         parrafo: typeof datos?.parrafo === 'string' ? datos.parrafo : '',
+        fotos: Array.isArray(datos?.fotos) ? datos.fotos : [],
       }}
-      antesDeBotones={
-        Array.isArray(datos?.fotos) && datos.fotos.length > 0 && (
-          <FotosTaller fotosIniciales={datos.fotos} />
-        )
-      }
     />
   )
 }

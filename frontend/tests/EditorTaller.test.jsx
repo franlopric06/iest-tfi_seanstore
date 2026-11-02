@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react'
+import { cleanup, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -23,8 +23,8 @@ const contenido = {
   titulo: 'Nuestro taller',
   parrafo: 'Cada pedido se diseña y se estampa en nuestro taller de Tinogasta.',
   fotos: [
-    { url: '/img/sitio/nuestro-taller.jpg', alt: 'Interior del taller' },
-    { url: '/img/sitio/nuestro-taller-clienta.jpg', alt: 'Clienta con remera' },
+    { url: '/img/sitio/nuestro-taller.jpg', alt: 'Interior del taller', generada_con_ia: true },
+    { url: '/img/sitio/nuestro-taller-clienta.jpg', alt: 'Clienta con remera', generada_con_ia: false },
   ],
 }
 
@@ -64,6 +64,8 @@ describe('EditorTaller', () => {
     expect(api.guardarTextoTaller).toHaveBeenCalledWith({
       titulo: 'Nuestro taller de Tinogasta',
       parrafo: contenido.parrafo,
+      foto_1_ia: true,
+      foto_2_ia: false,
     })
     expect(await screen.findByRole('status')).toHaveTextContent(textosTaller.guardado)
   })
@@ -119,5 +121,25 @@ describe('EditorTaller', () => {
     const guardar = screen.getByRole('button', { name: textosTaller.guardar })
     expect(fotos.compareDocumentPosition(guardar) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
     expect(guardar).toHaveAttribute('form', 'formulario-taller')
+  })
+
+  it('muestra las marcas de IA guardadas y las guarda con el botón Guardar', async () => {
+    api.obtenerTaller.mockResolvedValue(contenido)
+    api.guardarTextoTaller.mockResolvedValue(contenido)
+    const usuario = userEvent.setup()
+    render(<EditorTaller />)
+
+    const foto1 = await screen.findByRole('article', { name: 'Foto 1' })
+    const foto2 = screen.getByRole('article', { name: 'Foto 2' })
+    expect(within(foto1).getByLabelText('La foto fue generada con IA')).toBeChecked()
+    expect(within(foto2).getByLabelText('La foto fue generada con IA')).not.toBeChecked()
+
+    await usuario.click(within(foto2).getByLabelText('La foto fue generada con IA'))
+    expect(within(foto2).getByText('«Generado con IA»')).toBeInTheDocument()
+    await usuario.click(screen.getByRole('button', { name: textosTaller.guardar }))
+
+    expect(api.guardarTextoTaller).toHaveBeenCalledWith(
+      expect.objectContaining({ foto_1_ia: true, foto_2_ia: true }),
+    )
   })
 })

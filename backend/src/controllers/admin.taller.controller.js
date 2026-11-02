@@ -9,7 +9,9 @@ import {
 
 const SQL_EDICION = `
   UPDATE contenido_taller
-  SET titulo = $1, parrafo = $2, actualizado_en = NOW()
+  SET titulo = $1, parrafo = $2,
+      foto_1_ia = COALESCE($3, foto_1_ia), foto_2_ia = COALESCE($4, foto_2_ia),
+      actualizado_en = NOW()
   WHERE id = 1
   RETURNING titulo, parrafo, foto_1_url, foto_1_alt, foto_1_ia, foto_2_url, foto_2_alt, foto_2_ia
 `;
@@ -18,13 +20,20 @@ const LIMITE_TITULO = 120;
 
 const esTextoValido = (texto) => typeof texto === "string" && texto.trim().length > 0;
 
+// Título y párrafo son obligatorios. Las marcas «Generado con IA» de las dos
+// fotos son opcionales: si no vienen, quedan como estaban (COALESCE en el SQL).
+const CAMPOS_PERMITIDOS = new Set(["titulo", "parrafo", "foto_1_ia", "foto_2_ia"]);
+const marcaValida = (valor) => valor === undefined || typeof valor === "boolean";
+
 const datosValidos = (datos) =>
   datos &&
   typeof datos === "object" &&
   !Array.isArray(datos) &&
   Object.hasOwn(datos, "titulo") &&
   Object.hasOwn(datos, "parrafo") &&
-  Object.keys(datos).length === 2 &&
+  Object.keys(datos).every((campo) => CAMPOS_PERMITIDOS.has(campo)) &&
+  marcaValida(datos.foto_1_ia) &&
+  marcaValida(datos.foto_2_ia) &&
   esTextoValido(datos.titulo) &&
   datos.titulo.trim().length <= LIMITE_TITULO &&
   esTextoValido(datos.parrafo);
@@ -41,6 +50,8 @@ export const editarTaller = async (req, res, next) => {
     const { rows } = await consulta(SQL_EDICION, [
       req.body.titulo.trim(),
       req.body.parrafo.trim(),
+      req.body.foto_1_ia ?? null,
+      req.body.foto_2_ia ?? null,
     ]);
 
     if (rows.length === 0) {

@@ -5,7 +5,20 @@ import userEvent from "@testing-library/user-event";
 const api = vi.hoisted(() => ({ cambiarFotoTaller: vi.fn() }));
 vi.mock("../src/services/api.js", () => api);
 
-const { default: FotosTaller } = await import("../src/components/admin/FotosTaller.jsx");
+const { default: FotosTallerSolo } = await import("../src/components/admin/FotosTaller.jsx");
+const { useState } = await import("react");
+
+// Las marcas viven en EditorTaller; acá se simulan con un estado propio.
+const FotosTaller = ({ fotosIniciales }) => {
+  const [marcas, setMarcas] = useState(fotosIniciales.map((foto) => Boolean(foto.generada_con_ia)));
+  return (
+    <FotosTallerSolo
+      fotosIniciales={fotosIniciales}
+      marcas={marcas}
+      alMarcar={(indice, valor) => setMarcas((m) => m.map((x, i) => (i === indice ? valor : x)))}
+    />
+  );
+};
 
 const fotos = [
   { url: "/img/sitio/nuestro-taller.jpg", alt: "La prensa del taller", generada_con_ia: true },

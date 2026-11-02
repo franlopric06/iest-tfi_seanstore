@@ -77,8 +77,34 @@ describe("PATCH /api/admin/taller", () => {
       expect.stringMatching(
         /UPDATE contenido_taller[\s\S]*titulo\s*=\s*\$1[\s\S]*parrafo\s*=\s*\$2[\s\S]*RETURNING/i,
       ),
-      ["Así se sublima en Tinogasta", "Atualizamos el taller con una prensa nueva."],
+      ["Así se sublima en Tinogasta", "Atualizamos el taller con una prensa nueva.", null, null],
     );
+  });
+
+  it("guarda las marcas «Generado con IA» de las fotos junto con el texto", async () => {
+    const respuesta = await comoAdmin("patch", "/api/admin/taller").send({
+      titulo: "Nuestro taller",
+      parrafo: "Texto.",
+      foto_1_ia: false,
+      foto_2_ia: true,
+    });
+
+    expect(respuesta.status).toBe(200);
+    expect(consultaSimulada).toHaveBeenCalledWith(
+      expect.stringMatching(/foto_1_ia = COALESCE\(\$3, foto_1_ia\)[\s\S]*foto_2_ia = COALESCE\(\$4, foto_2_ia\)/),
+      ["Nuestro taller", "Texto.", false, true],
+    );
+  });
+
+  it("rechaza marcas de IA que no son sí o no", async () => {
+    const respuesta = await comoAdmin("patch", "/api/admin/taller").send({
+      titulo: "Nuestro taller",
+      parrafo: "Texto.",
+      foto_1_ia: "sí",
+    });
+
+    expect(respuesta.status).toBe(400);
+    expect(consultaSimulada).not.toHaveBeenCalled();
   });
 
   it.each([

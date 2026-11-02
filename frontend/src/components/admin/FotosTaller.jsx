@@ -5,14 +5,15 @@ import textos from '../../data/textos.js'
 
 const etiquetas = textos.panel.fotos
 
-// Las dos fotos de «Nuestro taller» en el panel (004-T41, parte de fotos).
-// Cada una se reemplaza por separado; la descripción viene cargada con la
-// actual para no tener que escribirla de nuevo si no cambia.
-const FotosTaller = ({ fotosIniciales }) => {
+// Las dos fotos de «Nuestro taller» en el panel. Cada una se reemplaza por
+// separado con «Cambiar foto». La casilla «Generado con IA» muestra cómo está
+// guardada cada foto: se cambia acá y se guarda con el botón Guardar de abajo
+// (o junto con la foto nueva, si se sube una).
+const FotosTaller = ({ fotosIniciales, marcas, alMarcar }) => {
   const [fotos, setFotos] = useState(fotosIniciales)
 
   const cambiar = async (numero, foto) => {
-    const respuesta = await cambiarFotoTaller(numero, foto)
+    const respuesta = await cambiarFotoTaller(numero, { ...foto, generadaConIA: marcas[numero - 1] })
     if (Array.isArray(respuesta?.fotos)) setFotos(respuesta.fotos)
   }
 
@@ -25,24 +26,33 @@ const FotosTaller = ({ fotosIniciales }) => {
       <div className="grid gap-6 md:grid-cols-2">
         {fotos.map((foto, indice) => {
           const numero = indice + 1
+          const titulo = etiquetas.fotoTaller.replace('{numero}', numero)
           return (
-            <article key={numero} aria-label={etiquetas.fotoTaller.replace('{numero}', numero)} className="flex flex-col gap-3">
-              <h3 className="font-bold text-grafito">{etiquetas.fotoTaller.replace('{numero}', numero)}</h3>
+            <article key={numero} aria-label={titulo} className="flex flex-col gap-3">
+              <h3 className="font-bold text-grafito">{titulo}</h3>
               {foto.url && (
                 <div className="relative">
                   <img src={foto.url} alt={foto.alt} loading="lazy" className="aspect-video w-full rounded-marca object-cover" />
-                  {foto.generada_con_ia && (
+                  {marcas[indice] && (
                     <span className="absolute bottom-2 left-2 rounded-marca bg-grafito/70 px-2 py-0.5 text-[10px] font-semibold text-white">
                       {textos.generadoConIA}
                     </span>
                   )}
                 </div>
               )}
+              <label className="flex min-h-11 items-center gap-2 text-sm text-grafito">
+                <input
+                  type="checkbox"
+                  checked={marcas[indice]}
+                  onChange={(evento) => alMarcar(indice, evento.target.checked)}
+                  className="size-5 accent-violeta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
+                />
+                {etiquetas.generadaConIA}
+              </label>
               <FormularioSubirFoto
                 idBase={`foto-taller-${numero}`}
                 textoBoton={etiquetas.cambiar}
                 altInicial={foto.alt ?? ''}
-                conMarcaIA
                 alSubir={(nueva) => cambiar(numero, nueva)}
               />
             </article>
