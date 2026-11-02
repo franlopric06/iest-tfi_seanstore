@@ -49,9 +49,9 @@ Cada tarea estima menos de 30 minutos y no se avanza a otro bloque hasta que el 
   **Listo cuando:** precio, stock y destacado se guardan por fila y la tabla conserva los datos previos si falla la API.
 - [x] **T20** · Integrar sección de productos en el panel · Requisitos: B1-R14, B1-R15 · Duración: 20 min · Archivos: `frontend/tests/Panel.test.jsx`, `frontend/src/pages/admin/Panel.jsx` · Test primero: estados de carga, vacío y error para la lista de productos.
   **Listo cuando:** la sección muestra cada estado y permite reintentar un error de carga.
-- [ ] **T21** · Configurar Neon y secretos del entorno · Requisitos: B1-R3, B1-R8, B3-R2 · Duración: 25 min · Archivos: `specs/004-panel/tasks.md` (marcar tarea cumplida, sin valores secretos) · Validación manual: revisar `esquema-panel.sql`; ejecutarlo en Neon; generar hash localmente y crear administrador con SQL; configurar `JWT_SECRET` y `BLOB_READ_WRITE_TOKEN` en Vercel sin compartirlos.
+- [x] **T21** · Configurar Neon y secretos del entorno · Requisitos: B1-R3, B1-R8, B3-R2 · Duración: 25 min · Archivos: `specs/004-panel/tasks.md` (marcar tarea cumplida, sin valores secretos) · Validación manual: revisar `esquema-panel.sql`; ejecutarlo en Neon; generar hash localmente y crear administrador con SQL; configurar `JWT_SECRET` y `BLOB_READ_WRITE_TOKEN` en Vercel sin compartirlos.
   **Listo cuando:** tablas y cuenta están creadas y ambas variables privadas están cargadas en Vercel; no se copia ningún valor secreto al repo, commits ni chat.
-  **Estado (29/10/2026):** casi completa por el estudiante: ejecutó `esquema-panel.sql` en Neon, creó el administrador y cargó `JWT_SECRET` en `.env` y Vercel. Falta `BLOB_READ_WRITE_TOKEN`, que se carga con el bloque 3.
+  **Estado (29/10/2026):** casi completa por el estudiante: ejecutó `esquema-panel.sql` en Neon, creó el administrador y cargó `JWT_SECRET` en `.env` y Vercel. Falta `BLOB_READ_WRITE_TOKEN`, que se carga con el bloque 3. **Completa (29/10/2026):** el estudiante creó el Blob `seanstore-fotos` y lo conectó al proyecto de la API; Vercel lo conectó con `BLOB_STORE_ID` (OIDC) en vez de `BLOB_READ_WRITE_TOKEN` (ver cambio de B3-R2).
 
 ## Bloque 2 · Productos completos
 
