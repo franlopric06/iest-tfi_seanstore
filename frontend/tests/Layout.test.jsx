@@ -39,4 +39,12 @@ describe('Layout · Header y Footer de la primera etapa', () => {
     armar(<Footer />)
     expect(screen.getByText(textos.footer.aviso)).toBeInTheDocument()
   })
+
+  it('El footer enlaza al video promocional en YouTube, en otra pestaña', () => {
+    armar(<Footer />)
+    const enlace = screen.getByRole('link', { name: textos.footer.videoAccesible })
+    expect(enlace).toHaveAttribute('href', 'https://youtu.be/aAZ-9OFBkmg')
+    expect(enlace).toHaveAttribute('target', '_blank')
+    expect(enlace).toHaveAttribute('rel', 'noopener noreferrer')
+  })
 })

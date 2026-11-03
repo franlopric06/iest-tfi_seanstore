@@ -192,6 +192,9 @@ const textos = {
     contactoTitulo: 'Contacto',
     contacto: 'Te atendemos por WhatsApp',
     aviso: 'Sitio de demostración: precios y datos de ejemplo.',
+    video: 'Mirá nuestro video',
+    videoAccesible: 'Mirá nuestro video en YouTube (se abre en otra pestaña)',
+    urlVideo: 'https://youtu.be/aAZ-9OFBkmg',
   },
   hero: {
     titulo: 'Tu diseño, en lo que quieras.',
